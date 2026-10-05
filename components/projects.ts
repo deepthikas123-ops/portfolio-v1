@@ -96,7 +96,7 @@ const list: ProjectInput[] = [
     subtitle: 'Blind drawing through the body, interpreted by a machine',
     discipline: 'Creative AI',
     live: true,
-    cover: '/images/kaaya-cover-placeholder.jpg',
+    cover: '/images/kaaya-cover-placeholder.png',
   },
   {
     slug: 'vapours',
