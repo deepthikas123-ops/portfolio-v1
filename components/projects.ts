@@ -86,7 +86,7 @@ const list: ProjectInput[] = [
       'Gaze-driven product generation, an objective iconicity classifier and a four-generation preference study',
     discipline: 'Design Research',
     live: true,
-    cover: '/images/flavovr-system-architecture.jpg',
+    cover: '/images/flavovr-system-architecture.png',
     coverClass: 'fit-contain',
     featured: true,
   },
