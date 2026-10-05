@@ -14,37 +14,37 @@ const research = [
   {
     slug: 'flavovr',
     t: 'Neophilic and Neophobic Design Preferences Across Generational Cohorts: Consumer Attraction to Conventional and Unconventional Product Aesthetics',
-    v: 'Journal manuscript, submitted',
+    v: 'Journal of Business Research, Elsevier (submitted)',
   },
   {
     slug: 'aesthetic-fingerprint',
     t: 'Where the Gaze Lingers: From Immersive Free-Viewing to a Stable Aesthetic Fingerprint',
-    v: 'VRST 2026',
+    v: 'VRST 2026 (accepted)',
   },
   {
     slug: 'kaaya',
     t: 'KAAYA: The Body Draws What the Eye Never Sees',
-    v: 'NeurIPS 2026 · Creative AI Track · with B. Sankar (IISc)',
+    v: 'NeurIPS 2026, Creative AI Track (accepted)',
   },
   {
     slug: 'vapours',
     t: 'VAPOURS: Sculpting Fog to Find the Form Before the Form',
-    v: 'NeurIPS 2026 · Creative AI Track · with B. Sankar (IISc)',
+    v: ' ',
   },
   {
     slug: 'calculator-fallacy',
     t: 'The Calculator Fallacy: Learners Blindly Trust Confident AI, Even When It Is Wrong',
-    v: 'with Pawni Yadav and B. Sankar',
+    v: '16th International Conference of the European Academy of Design (TRUST-DISTRUST) (submitted)',
   },
   {
     slug: 'llm-conformity',
     t: 'When the Majority Is Wrong: Would AI Still Follow the Crowd? Studying Conformity and Authority Bias in Multi-Agent LLM Systems',
-    v: 'with Ganesan M',
+    v: '13th IEEE UPCON 2026 (submitted)',
   },
   {
     slug: 'atomic-user-model',
     t: 'Creating an Atomic User Model for Personality-Aware LLM Interaction',
-    v: 'Position paper · EMNLP 2026',
+    v: ' ',
   },
 ];
 
