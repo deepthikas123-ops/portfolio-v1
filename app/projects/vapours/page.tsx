@@ -13,29 +13,9 @@ export const metadata: Metadata = {
     title: 'VAPOURS — Sculpting Fog to Find the Form Before the Form',
     description:
       'A VR medium that deliberately forgets: dissipating fog, bare-hand gestures and two memories of every session.',
+    images: ['/images/vapours-session-concept.jpg'],
   },
 };
-
-/* ---- decay chart: pure exponential decay at the specified half-lives ---- */
-const W = 720;
-const H = 360;
-const X0 = 70;
-const X1 = 690;
-const Y0 = 30;
-const Y1 = 300;
-const TMAX = 180;
-const x = (t: number) => X0 + ((X1 - X0) * t) / TMAX;
-const y = (v: number) => Y1 - (Y1 - Y0) * v;
-const curve = (half: number) =>
-  Array.from({ length: 91 }, (_, i) => {
-    const t = (i * TMAX) / 90;
-    return `${i === 0 ? 'M' : 'L'}${x(t).toFixed(1)},${y(Math.pow(0.5, t / half)).toFixed(1)}`;
-  }).join(' ');
-const curves = [
-  { half: 20, label: '20 s', note: 'shortest allowed', stroke: 'var(--ink-soft)', dash: '5 5' },
-  { half: 45, label: '45 s', note: 'default', stroke: 'var(--lime)', dash: '' },
-  { half: 90, label: '90 s', note: 'longest allowed', stroke: 'var(--ink)', dash: '2 4' },
-];
 
 const gestures = [
   {
@@ -164,6 +144,24 @@ export default function VapoursPage() {
         </div>
       </section>
 
+      {/* ---------- Concept photograph ---------- */}
+      <section className="band">
+        <div className="wrap">
+          <Reveal className="fig-card fig-wide" y={0}>
+            <img
+              src="/images/vapours-session-concept.jpg"
+              alt="A pair of bare hands in a dark void gathering a dissolving white fog mass into the rough stance of a table lamp — a wide base, a narrow neck and a shaded top"
+            />
+            <figcaption>
+              Concept visualization of a VAPOURS session (generated image, not a screenshot). The
+              designer’s bare hands gather a dissolving fog mass towards the rough stance of a
+              table lamp. Nothing in the scene will hold this shape; the medium is already
+              forgetting it.
+            </figcaption>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ---------- The problem ---------- */}
       <section className="paper-narrative">
         <div className="wrap">
@@ -233,60 +231,16 @@ export default function VapoursPage() {
           </Reveal>
           <div className="split">
             <Reveal as="figure" className="photo" y={0}>
-              <svg
-                className="decay-chart"
-                viewBox={`0 0 ${W} ${H}`}
-                role="img"
-                aria-label="Three exponential decay curves showing the share of an unattended fog mass remaining over 180 seconds for half-lives of 20, 45 and 90 seconds."
-              >
-                {[0, 0.25, 0.5, 0.75, 1].map((v) => (
-                  <g key={v}>
-                    <line x1={X0} x2={X1} y1={y(v)} y2={y(v)} stroke="rgba(45,45,38,0.1)" />
-                    <text x={X0 - 10} y={y(v) + 4} textAnchor="end" fontSize="15" fill="#55554c">
-                      {Math.round(v * 100)}%
-                    </text>
-                  </g>
-                ))}
-                {[0, 30, 60, 90, 120, 150, 180].map((t) => (
-                  <text key={t} x={x(t)} y={Y1 + 22} textAnchor="middle" fontSize="15" fill="#55554c">
-                    {t}s
-                  </text>
-                ))}
-                <text x={(X0 + X1) / 2} y={H - 8} textAnchor="middle" fontSize="15" fill="#55554c">
-                  Time since the mass was last gathered
-                </text>
-                {curves.map((c) => (
-                  <path
-                    key={c.half}
-                    d={curve(c.half)}
-                    fill="none"
-                    stroke={c.stroke}
-                    strokeWidth={c.half === 45 ? 4 : 2.2}
-                    strokeDasharray={c.dash || undefined}
-                    strokeLinecap="round"
-                  />
-                ))}
-                {curves.map((c, i) => (
-                  <g key={`l${c.half}`} transform={`translate(${X1 - 245}, ${Y0 + 8 + i * 28})`}>
-                    <line
-                      x1="0"
-                      x2="26"
-                      y1="0"
-                      y2="0"
-                      stroke={c.stroke}
-                      strokeWidth={c.half === 45 ? 4 : 2.2}
-                      strokeDasharray={c.dash || undefined}
-                    />
-                    <text x="36" y="4" fontSize="15.5" fill="#2d2d26">
-                      half-life {c.label} — {c.note}
-                    </text>
-                  </g>
-                ))}
-              </svg>
+              <img
+                src="/images/vapours-decay-simulation.png"
+                alt="Chart titled 'In a medium that forgets, persistence is maintenance, and maintenance is intention'. A maintained mass is repeatedly gathered back above a dashed salience threshold through a sawtooth pattern of decay and regathering; an abandoned mass decays smoothly from its last touch at 28 seconds and falls below the threshold within a minute. Below, red and grey tick marks show when an observer agent would have captured each mass. Session time runs from 0 to 250 seconds at a 45 second half-life."
+              />
               <figcaption>
-                How much of an unattended fog mass remains, at the half-lives the specification
-                allows. Drawn directly from the stated parameters (exponential decay; 45 s default,
-                20–90 s range) — an illustration of the medium, not system output.
+                Simulation of the specified medium behaviour (no system has been built; the curves
+                realise the design parameters of Section 4). One mass is maintained by repeated
+                gather gestures against a 45 second half-life and one is abandoned after 28
+                seconds. The observer captures whenever density stays above the salience threshold
+                for a sustained window. Persistence under decay is legible as care.
               </figcaption>
             </Reveal>
             <Reveal className="copy-block" delay={0.1}>
@@ -396,6 +350,18 @@ export default function VapoursPage() {
               <strong> The disagreement is not an error to reconcile. It is the artefact.</strong>
             </p>
           </Reveal>
+          <Reveal className="fig-card fig-wide" y={0}>
+            <img
+              src="/images/vapours-ledger-timeline.png"
+              alt="Timeline titled 'One session, two accounts of what mattered (illustrative)'. Across an eighteen-minute session, the asserted ledger (designer pinched) marks four moments and the inferred ledger (observer captured) marks seven, highlighted bands showing three moments where both ledgers agree, one assertion the observer judged unremarkable, and five moments the machine kept that were never chosen."
+            />
+            <figcaption>
+              An illustrative session timeline (synthetic; no session has been run). The asserted
+              and inferred ledgers of one imagined eighteen minute session agree three times and
+              disagree six times. The disagreements, in both directions, are what the aftermath is
+              designed to surface.
+            </figcaption>
+          </Reveal>
         </div>
       </section>
 
@@ -410,6 +376,19 @@ export default function VapoursPage() {
               independent memories record the session; the aftermath places them side by side.
             </p>
           </Reveal>
+          <Reveal className="fig-card fig-wide" y={0}>
+            <img
+              src="/images/vapours-architecture.png"
+              alt="Architecture diagram. Bare hands (Quest Pro hand tracking over PC Link) feed gesture field mapping (gather: palms condense, carve: fingers displace, sweep: palm disperses), which acts on the fog volume (Unity VFX Graph GPU particle density field, half-life 45s from 20 to 90s, no pause, no undo, no save). A pinch sends a snapshot to the asserted ledger. The fog volume is separately watched by an observer agent (silhouette persistence salience, captures without being asked), which feeds the inferred ledger. Both ledgers feed the aftermath: two-shelf gallery, Gemini generation, preform sketches and renders. A note states the observer only watches and never touches the fog; co-sculpting is reserved as future work."
+            />
+            <figcaption>
+              The VAPOURS architecture. Hands act on a dissipating particle volume through three
+              gesture fields. Two independent memories record the session: an asserted ledger of
+              moments the designer pinched to keep, and an inferred ledger of moments the observer
+              judged maintained. The aftermath places the two records side by side and generates
+              preform sketches from both.
+            </figcaption>
+          </Reveal>
           <Stagger className="sequence c4">
             {architecture.map((a, i) => (
               <StaggerItem key={a.k}>
@@ -422,11 +401,7 @@ export default function VapoursPage() {
               </StaggerItem>
             ))}
           </Stagger>
-          <p className="figure-note">
-            Architecture drawn from the written system specification.
-          </p>
-
-          <div className="split" style={{ marginBottom: 0 }}>
+          <div className="split" style={{ marginTop: 10 }}>
             <Reveal className="copy-block">
               <h3>Generation happens after, never during</h3>
               <p>
@@ -446,6 +421,18 @@ export default function VapoursPage() {
               </p>
             </Reveal>
           </div>
+
+          <Reveal className="fig-card fig-wide" y={0}>
+            <img
+              src="/images/vapours-generation-stage.jpg"
+              alt="Three columns — table lamp, kettle, desk speaker — each showing a captured fog state (a glowing white volumetric mass on black) above a generated monochrome massing sketch that reproduces only its silhouette and proportion"
+            />
+            <figcaption>
+              Concept visualization of the generation stage (generated imagery, not system
+              output). A captured fog state commits to stance and proportion only, and the massing
+              sketch generated from it inherits exactly that commitment and nothing more.
+            </figcaption>
+          </Reveal>
         </div>
       </section>
 
