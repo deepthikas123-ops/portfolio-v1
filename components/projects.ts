@@ -96,7 +96,7 @@ const list: ProjectInput[] = [
     subtitle: 'Blind drawing through the body, interpreted by a machine',
     discipline: 'Creative AI',
     live: true,
-    cover: '/images/kaaya-machine-interpretation.jpg',
+    cover: '/images/kaaya-cover-placeholder.jpg',
   },
   {
     slug: 'vapours',
@@ -112,8 +112,7 @@ const list: ProjectInput[] = [
     subtitle: 'Learners blindly trust confident AI, even when it is wrong',
     discipline: 'Human–AI Trust',
     live: true,
-    cover: '/images/calculator-fallacy-trust-index.png',
-    coverClass: 'fit-contain',
+    cover: '/images/calculator-fallacy-cover-placeholder.jpg',
   },
   {
     slug: 'llm-conformity',
@@ -121,8 +120,7 @@ const list: ProjectInput[] = [
     subtitle: 'Would AI still follow the crowd? Conformity in multi-agent LLMs',
     discipline: 'AI Research',
     live: true,
-    cover: '/images/llm-conformity-rate-matrix.png',
-    coverClass: 'fit-contain',
+    cover: '/images/llm-conformity-cover-placeholder.jpg',
   },
 ];
 
