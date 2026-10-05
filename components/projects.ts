@@ -50,6 +50,7 @@ const list: ProjectInput[] = [
     discipline: 'Biomimetic Design',
     live: true,
     cover: '/images/eco-shield-cover.jpg',
+    featured: true,
   },
   {
     slug: 'morse-code-vault',
