@@ -1,0 +1,307 @@
+/* ECO-SHIELD case study — page-specific styles.
+   Built on the same vocabulary as the SETU hero and the research case studies. */
+
+/* ---- hero (mirrors .setu-hero) ---- */
+.eco-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: #3a3226;
+}
+.eco-hero .bg {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(90deg, rgba(28, 24, 18, 0.15) 0%, rgba(28, 24, 18, 0.55) 55%, rgba(28, 24, 18, 0.72) 100%),
+    url('/images/eco-shield-hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+}
+.eco-hero .ghost {
+  position: absolute;
+  top: 2vw;
+  left: 3vw;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(90px, 13vw, 190px);
+  line-height: 1;
+  color: rgba(254, 255, 251, 0.22);
+  letter-spacing: -0.02em;
+  user-select: none;
+  z-index: 1;
+}
+.eco-hero .hero-grid {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 120px var(--pad) 80px;
+  display: grid;
+  grid-template-columns: minmax(0, 460px) minmax(0, 1fr);
+  gap: clamp(32px, 8vw, 130px);
+  align-items: center;
+}
+.eco-hero .card {
+  margin: 0;
+}
+.eco-hero .card img {
+  width: 100%;
+  display: block;
+  border-radius: 4px;
+  box-shadow: 0 30px 80px rgba(20, 16, 10, 0.4);
+}
+.eco-hero .card figcaption {
+  margin-top: 12px;
+  font-size: 12px;
+  color: rgba(253, 254, 249, 0.78);
+  line-height: 1.5;
+}
+.eco-hero .copy {
+  color: #fdfef9;
+  max-width: 520px;
+}
+.eco-hero .kicker {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 16px;
+}
+.eco-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(40px, 5.6vw, 72px);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.eco-hero .sub {
+  font-weight: 300;
+  font-size: clamp(17px, 1.7vw, 21px);
+  margin-top: 14px;
+}
+.eco-hero .desc {
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.75;
+  margin-top: 22px;
+  opacity: 0.92;
+}
+.eco-hero .sdg-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 28px;
+}
+.eco-hero .sdg-row img {
+  width: 56px;
+  height: 56px;
+  display: block;
+  border-radius: 2px;
+}
+@media (max-width: 860px) {
+  .eco-hero .hero-grid {
+    grid-template-columns: 1fr;
+    padding-top: 150px;
+  }
+  .eco-hero .card {
+    max-width: 420px;
+  }
+}
+
+/* ---- 01 problem: full-bleed photograph (mirrors .flood) ---- */
+.eco-sun {
+  position: relative;
+  min-height: 78vh;
+  display: flex;
+  align-items: flex-start;
+  overflow: hidden;
+  color: #fdfef9;
+  background: #2f2a22;
+}
+.eco-sun .bg {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(180deg, rgba(22, 18, 12, 0.72) 0%, rgba(22, 18, 12, 0.35) 45%, rgba(22, 18, 12, 0.1) 100%),
+    url('/images/eco-shield-solar-sunset.jpg');
+  background-size: cover;
+  background-position: center 60%;
+}
+.eco-sun .inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(80px, 10vw, 130px) var(--pad) 60px;
+}
+.eco-sun .kicker {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 18px;
+}
+.eco-sun h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(28px, 4vw, 52px);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  max-width: 900px;
+}
+.eco-sun p {
+  max-width: 560px;
+  margin-top: 22px;
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: rgba(253, 254, 249, 0.88);
+}
+.eco-sun p strong {
+  color: #fdfef9;
+  font-weight: 600;
+}
+
+/* stats: label in bold above the description */
+.eco-stats .stat .k strong {
+  display: block;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+/* ---- 03 nature ---- */
+.nature-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 5vw, 72px);
+  margin-top: 46px;
+}
+.organism .hero-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  display: block;
+  background: #fff;
+  border-radius: 4px;
+}
+.organism h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(24px, 2.6vw, 32px);
+  margin-top: 26px;
+}
+.organism .lede {
+  margin-top: 10px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+.organism .circles {
+  display: flex;
+  gap: clamp(18px, 3vw, 34px);
+  margin-top: 28px;
+}
+.organism .circles figure {
+  margin: 0;
+  text-align: center;
+}
+.organism .circles img {
+  width: clamp(110px, 12vw, 150px);
+  height: clamp(110px, 12vw, 150px);
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  border: 1px solid rgba(45, 45, 38, 0.35);
+}
+.organism .circles figcaption {
+  margin-top: 10px;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+.organism .mechanism {
+  margin-top: 26px;
+  padding: 16px 20px;
+  background: var(--panel);
+  border-left: 3px solid var(--lime);
+  font-size: 14px;
+  line-height: 1.7;
+  border-radius: 2px;
+}
+@media (max-width: 760px) {
+  .nature-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- 04 ideation ---- */
+.split.eco-ideation {
+  grid-template-columns: minmax(0, 1.68fr) minmax(0, 1fr);
+  align-items: start;
+  margin: 0;
+}
+.eco-ideation img {
+  background: #fff;
+}
+
+/* ---- 05 introducing ---- */
+.eco-title {
+  font-size: clamp(34px, 5vw, 60px);
+}
+.split.eco-intro {
+  grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
+  align-items: center;
+  margin: 30px 0 10px;
+}
+@media (max-width: 860px) {
+  .split.eco-ideation,
+  .split.eco-intro {
+    grid-template-columns: 1fr;
+  }
+  .eco-intro .photo:first-child {
+    max-width: 380px;
+  }
+}
+
+/* ---- 06 applications ---- */
+.apps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2.6vw, 34px);
+  margin-top: 44px;
+}
+.app img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
+}
+.app .app-n {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(30px, 3.4vw, 42px);
+  line-height: 1;
+  margin-top: 22px;
+  color: var(--lime);
+}
+.app h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+  margin-top: 10px;
+}
+.app p {
+  margin-top: 8px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+@media (max-width: 760px) {
+  .apps {
+    grid-template-columns: 1fr;
+  }
+}
