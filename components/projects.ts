@@ -39,7 +39,7 @@ const list: ProjectInput[] = [
     subtitle: 'Rapid Deployment Emergency Logistics System',
     discipline: 'Product Design · Electronics',
     live: true,
-    cover: '/images/flood.jpg',
+    cover: '/images/setucover.png',
     featured: true,
   },
   {
