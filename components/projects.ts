@@ -120,7 +120,7 @@ const list: ProjectInput[] = [
     subtitle: 'Would AI still follow the crowd? Conformity in multi-agent LLMs',
     discipline: 'AI Research',
     live: true,
-    cover: '/images/llm-conformity-cover-placeholder.jpg',
+    cover: '/images/llm-conformity-cover-placeholder.png',
   },
 ];
 
