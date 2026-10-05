@@ -49,7 +49,7 @@ const list: ProjectInput[] = [
     subtitle: 'Biomimetic UV protective coating for solar panels',
     discipline: 'Biomimetic Design',
     live: true,
-    cover: '/images/eco-shield-cover.jpg',
+    cover: '/images/ecoshieldcover.png',
     featured: true,
   },
   {
