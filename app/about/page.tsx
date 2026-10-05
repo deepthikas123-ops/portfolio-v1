@@ -135,7 +135,7 @@ export default function About() {
               <p className="v">
                 B.Tech, Electronics and Communication Engineering
                 <br />
-                <span className="muted">Amrita Vishwa Vidyapeetham, Coimbatore · CGPA 7.9/10</span>
+                <span className="muted">Amrita Vishwa Vidyapeetham, Coimbatore · CGPA 7.99/10</span>
               </p>
             </div>
           </Reveal>
