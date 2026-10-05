@@ -104,7 +104,7 @@ const list: ProjectInput[] = [
     subtitle: 'Sculpting fog in VR to find the form before the form',
     discipline: 'Creative AI · Immersive',
     live: true,
-    coverClass: 'fog-cover',
+    cover: '/images/vapour-cover-placeholder.png',
   },
   {
     slug: 'calculator-fallacy',
