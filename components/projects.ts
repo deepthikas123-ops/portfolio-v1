@@ -112,7 +112,7 @@ const list: ProjectInput[] = [
     subtitle: 'Learners blindly trust confident AI, even when it is wrong',
     discipline: 'Human–AI Trust',
     live: true,
-    cover: '/images/calculator-fallacy-cover-placeholder.jpg',
+    cover: '/images/calculator-fallacy-cover-placeholder.png',
   },
   {
     slug: 'llm-conformity',
