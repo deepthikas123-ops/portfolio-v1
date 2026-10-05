@@ -25,6 +25,7 @@ export type Project = {
 
 type ProjectInput = Omit<Project, 'index'>;
 
+
 const list: ProjectInput[] = [
   {
     slug: 'tactile-trails',
@@ -47,7 +48,8 @@ const list: ProjectInput[] = [
     title: 'ECO-SHIELD',
     subtitle: 'Biomimetic UV protective coating for solar panels',
     discipline: 'Biomimetic Design',
-    live: false,
+    live: true,
+    cover: '/images/eco-shield-cover.jpg',
   },
   {
     slug: 'morse-code-vault',
