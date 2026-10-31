@@ -1,0 +1,304 @@
+/* Morse Code Logic Game — page-specific styles.
+   Same hero pattern as SETU and ECO-SHIELD; the board's red is used
+   sparingly as this project's accent. */
+
+.morse-red {
+  color: #b3261e;
+}
+
+/* ---- hero ---- */
+.morse-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: #3a2422;
+}
+.morse-hero .bg {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(90deg, rgba(24, 14, 12, 0.2) 0%, rgba(24, 14, 12, 0.58) 55%, rgba(24, 14, 12, 0.74) 100%),
+    url('/images/morse-hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+}
+.morse-hero .ghost {
+  position: absolute;
+  top: 2vw;
+  left: 3vw;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(90px, 13vw, 190px);
+  line-height: 1;
+  color: rgba(254, 255, 251, 0.22);
+  letter-spacing: -0.02em;
+  user-select: none;
+  z-index: 1;
+}
+.morse-hero .hero-grid {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 120px var(--pad) 80px;
+  display: grid;
+  grid-template-columns: minmax(0, 500px) minmax(0, 1fr);
+  gap: clamp(32px, 7vw, 120px);
+  align-items: center;
+}
+.morse-hero .card {
+  margin: 0;
+}
+.morse-hero .card img {
+  width: 100%;
+  display: block;
+  border-radius: 4px;
+  box-shadow: 0 30px 80px rgba(20, 10, 8, 0.45);
+}
+.morse-hero .card figcaption {
+  margin-top: 12px;
+  font-size: 12px;
+  color: rgba(253, 254, 249, 0.8);
+  line-height: 1.5;
+}
+.morse-hero .copy {
+  color: #fdfef9;
+  max-width: 540px;
+}
+.morse-hero .kicker {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 16px;
+}
+.morse-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(38px, 5vw, 66px);
+  letter-spacing: -0.01em;
+  line-height: 1.02;
+}
+.morse-hero .sub {
+  font-weight: 300;
+  font-size: clamp(17px, 1.7vw, 21px);
+  margin-top: 14px;
+}
+.morse-hero .desc {
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.75;
+  margin-top: 22px;
+  opacity: 0.92;
+}
+.morse-hero .sdg-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 28px;
+}
+.morse-hero .sdg-row img {
+  width: 56px;
+  height: 56px;
+  display: block;
+  border-radius: 2px;
+}
+@media (max-width: 860px) {
+  .morse-hero .hero-grid {
+    grid-template-columns: 1fr;
+    padding-top: 150px;
+  }
+  .morse-hero .card {
+    max-width: 440px;
+  }
+}
+
+/* ---- problem ---- */
+.split.morse-problem {
+  margin-top: 0;
+}
+.morse-problem .section-title {
+  margin-bottom: 4px;
+}
+.morse-problem .fig-card,
+.abstract-fig {
+  margin: 0;
+}
+.abstract-fig {
+  margin-top: 24px;
+  max-width: 460px;
+}
+.opportunity {
+  background: var(--paper);
+  border-left: 4px solid #b3261e;
+  padding: clamp(22px, 3vw, 34px);
+  border-radius: 2px;
+}
+.opportunity h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(21px, 2.3vw, 27px);
+  line-height: 1.25;
+  margin-top: 6px;
+}
+.opportunity p {
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+.opportunity p strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.opportunity .arrow-line {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.opportunity .tag {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #b3261e;
+  font-weight: 500;
+}
+
+/* ---- the game ---- */
+.signal-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(30px, 4.2vw, 52px);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+}
+
+/* ---- seven steps ---- */
+.play-steps {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: clamp(10px, 1.4vw, 18px);
+}
+.play-step {
+  background: var(--paper);
+  border-radius: 4px;
+  padding: 0 0 18px;
+  overflow: hidden;
+}
+.play-step img {
+  width: 100%;
+  aspect-ratio: 10 / 9;
+  object-fit: cover;
+  display: block;
+}
+.play-step .ps-n {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  color: #b3261e;
+  margin: 14px 14px 0;
+}
+.play-step h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 4px 14px 0;
+  line-height: 1.3;
+}
+.play-step p {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 8px 14px 0;
+}
+.play-step .who {
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  color: #5f7f05;
+  font-weight: 500;
+  margin-top: 6px;
+}
+.play-step .who.gm {
+  color: #b3261e;
+}
+@media (max-width: 1100px) {
+  .play-steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .play-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---- levels ---- */
+.levels-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2.6vw, 34px);
+  margin-top: 44px;
+}
+.level-card img {
+  width: 100%;
+  aspect-ratio: 6 / 5;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
+}
+.level-card .lv-k {
+  margin-top: 18px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #b3261e;
+  font-weight: 500;
+}
+.level-card h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  margin-top: 6px;
+}
+.level-card p:last-child {
+  margin-top: 8px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+@media (max-width: 760px) {
+  .levels-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- full-bleed photographs ---- */
+.morse-full figure {
+  margin: 0;
+}
+.morse-full img {
+  width: 100%;
+  display: block;
+}
+.morse-full figcaption {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  padding-top: 14px;
+  padding-bottom: 10px;
+}
+
+/* ---- redesign renders ---- */
+.split.render-pair {
+  align-items: end;
+  margin: 46px 0 40px;
+}
+.render-pair img {
+  background: var(--paper);
+}
