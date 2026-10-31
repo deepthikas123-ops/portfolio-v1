@@ -54,10 +54,10 @@ const list: ProjectInput[] = [
   },
   {
     slug: 'morse-code-vault',
-    title: 'Morse Code Logic Vault',
-    subtitle: 'Multi-level secure-access logic vault game',
+    title: 'Morse Code Logic Game',
+    subtitle: 'A game of signals, switches and logic',
     discipline: 'Electronics',
-    live: false,
+    live: true,
   },
   {
     slug: 'chain-snatch-alert',
