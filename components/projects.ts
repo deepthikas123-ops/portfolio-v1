@@ -58,6 +58,8 @@ const list: ProjectInput[] = [
     subtitle: 'A game of signals, switches and logic',
     discipline: 'Electronics',
     live: true,
+    cover: '/images/morse-cover.jpg',
+    featured: true,
   },
   {
     slug: 'chain-snatch-alert',
