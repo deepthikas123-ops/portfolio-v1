@@ -62,13 +62,6 @@ const list: ProjectInput[] = [
     featured: true,
   },
   {
-    slug: 'chain-snatch-alert',
-    title: 'Chain-Snatch Alert',
-    subtitle: 'IoT wearable for chain-snatching detection and alerts',
-    discipline: 'Electronics',
-    live: false,
-  },
-  {
     slug: 'atomic-user-model',
     title: 'Atomic User Model',
     subtitle: 'A structured representation for personality-aware LLM interaction',
