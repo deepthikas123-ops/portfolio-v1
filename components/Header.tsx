@@ -91,6 +91,9 @@ export default function Header() {
               About
             </Link>
             <a href="mailto:deepthikas123@gmail.com">Contact</a>
+            <a href="/Deepthika-S-Resume.pdf" download className="header-resume-link">
+              Résumé
+            </a>
           </nav>
 
           <button className="menu-btn" onClick={() => setMobile(true)} aria-label="Open menu">
