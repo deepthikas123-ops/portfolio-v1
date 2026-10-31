@@ -14,37 +14,37 @@ const research = [
   {
     slug: 'flavovr',
     t: 'Neophilic and Neophobic Design Preferences Across Generational Cohorts: Consumer Attraction to Conventional and Unconventional Product Aesthetics',
-    v: 'Journal of Business Research, Elsevier (submitted)',
+    v: 'Journal manuscript, submitted',
   },
   {
     slug: 'aesthetic-fingerprint',
     t: 'Where the Gaze Lingers: From Immersive Free-Viewing to a Stable Aesthetic Fingerprint',
-    v: 'VRST 2026 (accepted)',
+    v: 'VRST 2026',
   },
   {
     slug: 'kaaya',
     t: 'KAAYA: The Body Draws What the Eye Never Sees',
-    v: 'NeurIPS 2026, Creative AI Track (accepted)',
+    v: 'NeurIPS 2026 · Creative AI Track · with B. Sankar (IISc)',
   },
   {
     slug: 'vapours',
     t: 'VAPOURS: Sculpting Fog to Find the Form Before the Form',
-    v: ' ',
+    v: 'NeurIPS 2026 · Creative AI Track · with B. Sankar (IISc)',
   },
   {
     slug: 'calculator-fallacy',
     t: 'The Calculator Fallacy: Learners Blindly Trust Confident AI, Even When It Is Wrong',
-    v: '16th International Conference of the European Academy of Design (TRUST-DISTRUST) (submitted)',
+    v: 'with Pawni Yadav and B. Sankar',
   },
   {
     slug: 'llm-conformity',
     t: 'When the Majority Is Wrong: Would AI Still Follow the Crowd? Studying Conformity and Authority Bias in Multi-Agent LLM Systems',
-    v: '13th IEEE UPCON 2026 (submitted)',
+    v: 'with Ganesan M',
   },
   {
     slug: 'atomic-user-model',
     t: 'Creating an Atomic User Model for Personality-Aware LLM Interaction',
-    v: ' ',
+    v: 'Position paper · EMNLP 2026',
   },
 ];
 
@@ -115,6 +115,18 @@ export default function About() {
               Hello, I'm Deepthika, currently pursuing a B.Tech in Electronics and Communication Engineering. Along the way, I've become increasingly fascinated by how design shapes the way people experience technology.
               Design has always been an integral part of my life; from creating impactful visual content to exploring how technology can be shaped into user-centric solutions. I believe that great products are built when design leads, and engineering shapes it into reality. Following this approach, I developed a strong interest in human-centered design and product innovation, focusing on building technology that truly serves people.
             </Reveal>
+            <Reveal delay={0.3}>
+              <a
+                href="/Deepthika-S-Resume.pdf"
+                download
+                className="resume-btn"
+              >
+                Download Résumé
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M8 1v9.5M4.5 7 8 10.5 11.5 7M2 13.5h12" />
+                </svg>
+              </a>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -130,7 +142,7 @@ export default function About() {
               <p className="v">
                 B.Tech, Electronics and Communication Engineering
                 <br />
-                <span className="muted">Amrita Vishwa Vidyapeetham, Coimbatore · CGPA 7.99/10</span>
+                <span className="muted">Amrita Vishwa Vidyapeetham, Coimbatore · CGPA 7.9/10</span>
               </p>
             </div>
           </Reveal>
