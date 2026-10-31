@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
+import { Analytics } from "@vercel/analytics/next";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
@@ -63,6 +64,7 @@ export default function RootLayout({
         <Footer />
         <BackToTop />
         <div className="page-grain" aria-hidden="true" />
+        <Analytics />
       </body>
     </html>
   );
