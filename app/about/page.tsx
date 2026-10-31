@@ -109,16 +109,11 @@ export default function About() {
               Engineered to last<span className="dot" style={{ color: 'var(--lime)' }}>.</span>
             </Reveal>
             <Reveal as="p" className="role" delay={0.1}>
-              Product Design · B.Tech ECE · Amrita Vishwa Vidyapeetham
+              Product Design · Design Research · Human-Computer Interaction
             </Reveal>
             <Reveal as="p" className="lede" delay={0.2}>
-              Passionate ECE student with a strong interest in{' '}
-              <strong>product design and user-centric product development</strong>. I believe that
-              great products are built when design leads and engineering shapes them into reality.
-              With a strong foundation in electronics and an appreciation for good design, I aim to
-              bridge the gap between technology and usability in everything I create. Alongside
-              physical products, my research spans immersive VR and eye tracking, human–AI trust,
-              multi-agent LLM behaviour and creative AI.
+              Hello, I'm Deepthika, currently pursuing a B.Tech in Electronics and Communication Engineering. Along the way, I've become increasingly fascinated by how design shapes the way people experience technology.
+              Design has always been an integral part of my life; from creating impactful visual content to exploring how technology can be shaped into user-centric solutions. I believe that great products are built when design leads, and engineering shapes it into reality. Following this approach, I developed a strong interest in human-centered design and product innovation, focusing on building technology that truly serves people.
             </Reveal>
           </div>
         </div>
