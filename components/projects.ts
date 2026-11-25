@@ -34,7 +34,8 @@ const list: ProjectInput[] = [
     title: 'Tactile Trails',
     subtitle: 'Cognitive-sensory playmat for neurodivergent children — IIT Madras',
     discipline: 'Human-Centred Design',
-    live: false,
+    live: true,
+    cover: '/images/tactile-trails/card.jpg',
   },
   {
     slug: 'setu',
@@ -70,7 +71,7 @@ const list: ProjectInput[] = [
     subtitle: 'The wearable IMU-to-generative-art system behind the paper: hardware build and prototype documentation',
     discipline: 'Wearable · Electronics',
     live: false,
-    cover: '/images/kaaya-cover-placeholder.png',
+    cover: '/images/kaaya-cover.jpg',
   },
   // ---- Research (live case studies first, then placeholders) ----
   {
