@@ -1,33 +1,5 @@
 import { Reveal } from '@/components/Motion';
 
-/** Metal D-ring, swivel and clip that hold the badge. Pure SVG, no raster art. */
-function Clip() {
-  return (
-    <svg className="bh-clip" viewBox="0 0 140 210" aria-hidden="true" focusable="false">
-      <defs>
-        <linearGradient id="bhm" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor="#8d9096" />
-          <stop offset=".22" stopColor="#f4f5f7" />
-          <stop offset=".5" stopColor="#b9bcc2" />
-          <stop offset=".78" stopColor="#eef0f2" />
-          <stop offset="1" stopColor="#80838a" />
-        </linearGradient>
-        <linearGradient id="bhv" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#fafafa" />
-          <stop offset=".55" stopColor="#c5c8cd" />
-          <stop offset="1" stopColor="#9a9da3" />
-        </linearGradient>
-      </defs>
-      <rect x="8" y="6" width="124" height="76" rx="24" fill="none" stroke="url(#bhm)" strokeWidth="7" />
-      <rect x="48" y="74" width="44" height="44" rx="14" fill="url(#bhv)" stroke="#8a8d93" strokeWidth="1" />
-      <path d="M34 112h72a10 10 0 0 1 10 10v50a6 6 0 0 1-6 6H30a6 6 0 0 1-6-6v-50a10 10 0 0 1 10-10z" fill="url(#bhm)" stroke="#8a8d93" strokeWidth="1" />
-      <ellipse cx="70" cy="146" rx="13" ry="14" fill="url(#bhv)" stroke="#7d8087" strokeWidth="1.5" />
-      <circle cx="70" cy="146" r="4.5" fill="#6f7279" />
-      <rect x="4" y="182" width="132" height="18" rx="7" fill="url(#bhm)" stroke="#8a8d93" strokeWidth="1" />
-    </svg>
-  );
-}
-
 export default function BadgeHero() {
   return (
     <section className="badge-hero" aria-labelledby="bh-title">
@@ -35,27 +7,38 @@ export default function BadgeHero() {
         <p className="bh-meta bh-meta-left" aria-hidden="true">THE DEEPTHIKA INDEX</p>
         <p className="bh-meta bh-meta-right">A PERSONAL ARCHIVE<br />OF IDEAS, OBJECTS &amp;<br />EXPERIMENTS</p>
 
+        {/*
+          Badge layers (bottom → top), each an independent element:
+            strap   – hangs from the navigation bar
+            hanger  – group that will swing as one rigid body (pivot = clip ring, see --bh-swing in hero-badge.css)
+              pouch  – acrylic shell (shell image + card + gloss)
+              clip   – metal swivel clip, attached through the shell's slot
+        */}
         <Reveal className="bh-badge-wrap" y={20}>
-          <div className="bh-strap" aria-hidden="true" />
-          <Clip />
-          <figure className="bh-holder">
-            <div className="bh-card">
-              <p className="bh-card-title">CURATOR<br />&amp; MAKER</p>
-              <img
-                className="bh-photo"
-                src="/images/deepthika-badge.jpg"
-                width={800}
-                height={842}
-                alt="Portrait of Deepthika S, smiling, in a tweed blazer and white shirt"
-                fetchPriority="high"
-                decoding="async"
-              />
-              <p className="bh-row bh-row-1"><b>NAME</b><span>DEEPTHIKA S.</span></p>
-              <p className="bh-row bh-row-2"><b>INTERESTS</b><span>ART × DESIGN × ENGINEERING</span></p>
-              <i className="bh-bar" aria-hidden="true" />
-              <p className="bh-acc">ACCESSION NO. 001</p>
+          <img className="bh-layer bh-strap" data-layer="strap" src="/images/badge/strap.png" alt="" aria-hidden="true" width={130} height={415} decoding="async" />
+          <div className="bh-hanger" data-layer="hanger">
+            <div className="bh-pouch" data-layer="pouch">
+              <img className="bh-layer bh-shell" data-layer="shell" src="/images/badge/shell.png" alt="" aria-hidden="true" width={670} height={840} decoding="async" />
+              <div className="bh-card" data-layer="card">
+                <p className="bh-card-title">CURATOR<br />&amp; MAKER</p>
+                <img
+                  className="bh-photo"
+                  src="/images/deepthika-badge.jpg"
+                  width={800}
+                  height={812}
+                  alt="Portrait of Deepthika S, smiling, in a tweed blazer and white shirt"
+                  fetchPriority="high"
+                  decoding="async"
+                />
+                <p className="bh-row bh-row-1"><b>NAME</b><span><img src="/images/badge/handwritten-name.png" alt="DEEPTHIKA S." /></span></p>
+                <p className="bh-row bh-row-2"><b>INTERESTS</b><span><img src="/images/badge/handwritten-interests.png" alt="Art × Design × Engineering" /></span></p>
+                <i className="bh-bar" aria-hidden="true" />
+                <p className="bh-acc">ACCESSION NO. 001</p>
+              </div>
+              <img className="bh-layer bh-gloss" data-layer="gloss" src="/images/badge/shell-gloss.png" alt="" aria-hidden="true" width={670} height={840} decoding="async" />
             </div>
-          </figure>
+            <img className="bh-layer bh-clip" data-layer="clip" src="/images/badge/clip.png" alt="" aria-hidden="true" width={470} height={630} decoding="async" />
+          </div>
         </Reveal>
 
         <Reveal delay={0.12} y={24}>

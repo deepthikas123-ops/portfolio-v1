@@ -7,22 +7,30 @@
 .bh-meta-left{left:clamp(20px,3vw,32px)}
 .bh-meta-right{right:clamp(20px,3vw,32px);text-align:right}
 
-.bh-badge-wrap{position:relative;width:calc(40.55*var(--k));margin:0 auto;padding-top:calc(16.04*var(--k))}
-.bh-strap{position:absolute;left:50%;width:calc(8.9*var(--k));margin-left:calc(-4.45*var(--k));bottom:calc(100% - 7.8*var(--k));height:100vh;transform:none;background:linear-gradient(90deg,#0d0d0d,#2a2a2a 45%,#0d0d0d);}
-.bh-strap:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 6px,rgba(255,255,255,.035) 6px 7px)}
-.bh-clip{position:absolute;left:50%;top:calc(2.67*var(--k));width:calc(11.85*var(--k));margin-left:calc(-5.925*var(--k));height:auto;z-index:3;filter:drop-shadow(0 2px 2px rgba(0,0,0,.18))}
-.bh-holder{position:relative;margin:0;width:100%;aspect-ratio:455/680;border-radius:calc(2.4*var(--k));background:linear-gradient(135deg,rgba(255,255,255,.78),rgba(236,236,236,.55) 55%,rgba(255,255,255,.7));border:1px solid rgba(0,0,0,.09);box-shadow:inset 0 0 0 calc(.35*var(--k)) rgba(255,255,255,.7),0 calc(1.1*var(--k)) calc(2.2*var(--k)) rgba(0,0,0,.1)}
-.bh-card{container-type:inline-size;position:absolute;left:8.35%;width:84.4%;top:9.56%;aspect-ratio:384/575;background:#fff;border-radius:calc(.7*var(--k));box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+/* ---- badge: photographic layers, positioned in stage units (--k) ---- */
+.bh-badge-wrap{position:relative;width:calc(48*var(--k));margin:0 auto;padding-top:calc(18*var(--k))}
+.bh-layer{display:block;max-width:none;user-select:none;-webkit-user-drag:none;pointer-events:none}
+.bh-strap{position:absolute;left:50%;width:calc(10*var(--k));height:auto;margin-left:calc(-5*var(--k));bottom:calc(100% - 8.6*var(--k));z-index:1}
+/* hanger = clip + pouch. Swing hook: set --bh-swing (deg) on .bh-hanger; pivot is the clip ring. */
+.bh-hanger{position:relative;z-index:2;transform:rotate(var(--bh-swing,0deg));transform-origin:50% calc(-12*var(--k));
+  filter:drop-shadow(0 calc(1.4*var(--k)) calc(1.6*var(--k)) rgba(30,25,20,.22)) drop-shadow(0 calc(.2*var(--k)) calc(.3*var(--k)) rgba(30,25,20,.25))}
+.bh-pouch{position:relative;width:100%;aspect-ratio:335/420}
+.bh-shell{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.bh-gloss{position:absolute;inset:0;width:100%;height:100%;z-index:3;mix-blend-mode:screen;opacity:.55}
+.bh-clip{position:absolute;z-index:4;left:31.2%;width:42%;height:auto;top:-30%;filter:drop-shadow(0 .5cqw .6cqw rgba(0,0,0,.28))}
+.bh-card{container-type:inline-size;position:absolute;z-index:2;left:18.2%;width:62.7%;top:18.8%;aspect-ratio:620/920;background:url(/images/badge/card.png) center/100% 100% no-repeat;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.3))}
 .bh-card>*{position:absolute;margin:0}
-.bh-card-title{left:7.8cqw;top:7.2cqw;font-weight:800;font-size:15.2cqw;line-height:.93;letter-spacing:-.045em}
-.bh-photo{left:19.7cqw;top:40.4cqw;width:60.7cqw;height:auto;aspect-ratio:800/842;object-fit:cover;display:block;filter:none!important}
-main .badge-hero img{filter:none!important;transition:none}
-.bh-row{left:4.9cqw;right:4.4cqw;display:flex;align-items:baseline;gap:2.6cqw;font-size:4.2cqw;line-height:1.2;white-space:nowrap}
-.bh-row b{font-weight:700}
-.bh-row span{flex:1;font-weight:400;border-bottom:.3cqw dotted rgba(0,0,0,.55);padding-bottom:1.3cqw;overflow:hidden;text-overflow:clip}
-.bh-row-1{top:110.4cqw}.bh-row-2{top:121.6cqw}
-.bh-bar{left:4.9cqw;right:4.4cqw;top:134.1cqw;height:2.6cqw;background:var(--accent)}
-.bh-acc{right:4.4cqw;top:139.6cqw;font-weight:700;font-size:4.1cqw;letter-spacing:.01em}
+.bh-card-title{left:7.8cqw;top:7.2cqw;font-weight:800;font-size:14.6cqw;line-height:.93;letter-spacing:-.045em;color:#171717}
+.bh-photo{left:19.5cqw;top:36.8cqw;width:61cqw;height:auto;aspect-ratio:800/812;object-fit:cover;display:block}
+main .badge-hero img{filter:none;transition:none}
+.bh-row{left:5.4cqw;right:5cqw;display:flex;align-items:flex-end;gap:2.4cqw;font-size:4.2cqw;line-height:1.2;white-space:nowrap;color:#171717}
+.bh-row b{font-weight:700;padding-bottom:1.2cqw}
+.bh-row span{flex:1;position:relative;border-bottom:.3cqw dotted rgba(0,0,0,.5);height:10cqw}
+.bh-row span img{position:absolute;left:1cqw;bottom:.4cqw;height:11cqw;width:auto;max-width:100%}
+.bh-row-1{top:103.6cqw}.bh-row-2{top:117cqw}
+.bh-row-2 span img{height:7.6cqw;bottom:.6cqw}
+.bh-bar{left:5.4cqw;right:5cqw;top:131.2cqw;height:2.4cqw;background:var(--accent)}
+.bh-acc{right:5cqw;top:136.4cqw;font-weight:700;font-size:3.9cqw;letter-spacing:.01em;color:#171717}
 
 /* headline: THE sits beside the lower edge of the badge, DEEPTHIKA INDEX spans the page */
 .bh-title{position:relative;z-index:1;margin:calc(-11*var(--k)) 0 0;font-weight:800;font-size:calc(var(--hs,12.05)*var(--k));line-height:.9;letter-spacing:-.06em;text-transform:uppercase;white-space:nowrap}
@@ -40,11 +48,8 @@ main .badge-hero img{filter:none!important;transition:none}
 /* mobile: badge enlarged, headline stacked on three lines, columns stacked */
 @media(max-width:700px){
   .badge-hero{padding-top:72px}
-  .badge-hero .bh-stage{--k:1.78cqw;padding-bottom:56px}
+  .badge-hero .bh-stage{--k:1.5cqw;padding-bottom:56px}
   .bh-meta{font-size:9.5px;top:16px;letter-spacing:.02em}
-  .bh-badge-wrap{padding-top:calc(23.4*var(--k))}
-  .bh-clip{top:calc(10*var(--k))}
-  .bh-strap{bottom:calc(100% - 15.1*var(--k))}
   .bh-title{margin-top:calc(2.4*var(--k));font-size:calc(10.45*var(--k));line-height:.9;letter-spacing:-.06em;white-space:normal}
   .bh-title span{display:block}
   .bh-title .t1{margin-bottom:0}
