@@ -68,12 +68,6 @@ export default function Home() {
     <section className="index-curiosities" id="curiosities"><div className="wrap">
       <div className="index-section-heading"><div><p className="index-section-kicker">05 / CABINET OF CURIOSITIES</p></div><p>A few interests that find their way into the way I think and make.</p></div>
       <Corkboard />
-      <div className="curiosity-grid">
-        <article className="curiosity-card curiosity-large"><span>COLLECTING / 001</span><h3>Visual stories</h3><p>Graphic design, composition, colour, and the small details that make an image stay with you.</p></article>
-        <article className="curiosity-card curiosity-green"><span>COLLECTING / 002</span><h3>Making by hand</h3><p>Art, calligraphy, journaling and the pleasure of working things out on paper.</p></article>
-        <article className="curiosity-card curiosity-photo"><span>COLLECTING / 003</span><h3>Growing things</h3><p>Gardening, slow observations and learning to be patient with a process.</p></article>
-        <article className="curiosity-card curiosity-small"><span>COLLECTING / 004</span><h3>How things work</h3><p>Everyday objects, mechanisms, interfaces and the decisions hiding inside them.</p></article>
-      </div><p className="index-curiosity-foot">Some exhibits are unfinished. The curator insists they’re works in progress.</p>
     </div></section>
 
     <section className="index-endnote"><div className="wrap index-endnote-inner"><p className="index-section-kicker">06 / BEFORE YOU LEAVE</p><h2>Have something<br /><em>interesting in mind?</em></h2><p>I’m always happy to talk about design, research, making, and ideas that refuse to sit in one category.</p><a href="mailto:deepthikas123@gmail.com" className="index-primary-link">Get in touch ↗</a></div></section>

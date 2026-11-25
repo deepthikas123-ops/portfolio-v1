@@ -3,7 +3,11 @@
 @font-face{font-family:"Caveat";font-weight:500;font-style:normal;font-display:swap;src:url(/fonts/caveat-500.woff2) format("woff2")}
 @font-face{font-family:"Caveat";font-weight:600;font-style:normal;font-display:swap;src:url(/fonts/caveat-600.woff2) format("woff2")}
 
-.cb{margin:0 0 clamp(44px,5vw,68px)}
+.cb{margin:0 auto;max-width:max(480px,calc((100dvh - 290px) * 1.5456))}
+
+/* Section 05 now holds only the corkboard: tighten its padding so heading + board + controls fit one screen. */
+section.index-curiosities{padding:104px 0 36px}
+section.index-curiosities .index-section-heading{margin-bottom:24px}
 .cb-wrap{container-type:inline-size;width:100%}
 
 /* The board. The wood frame is a 9-slice border-image so it keeps its proportions at any aspect ratio. */
@@ -126,6 +130,8 @@
 
 /* ── Phones: a composed, taller board rather than a shrunken desktop one ─────────────────── */
 @media (max-width:720px){
+  section.index-curiosities{padding:88px 0 32px}
+  .cb{max-width:max(300px,calc((100dvh - 340px) / 1.275))}
   .cb-board{aspect-ratio:4/5.1;--bw:max(12px,4.4cqw)}
   .cb-controls{flex-direction:column;align-items:stretch;margin-top:18px}
   .cb-buttons .cb-btn{flex:1}

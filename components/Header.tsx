@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { projects } from './projects';
-import SoftAsterisk from './SoftAsterisk';
 
 type NavItem = { label: string; href: string; section?: string; collection?: 'project' | 'research' };
 
@@ -117,8 +116,7 @@ export default function Header() {
       <header className={`site-header index-header ${scrolled ? 'scrolled' : ''}`}>
         <div className="header-inner">
           <Link href="/" className="brand" aria-label="The Deepthika Studio — home">
-            <SoftAsterisk size="1.9em" hoverScope="parent" className="brand-mark" />
-            <span>THE DEEPTHIKA STUDIO<span className="dot">.</span></span>
+            THE DEEPTHIKA STUDIO<span className="dot">.</span>
           </Link>
           <nav className="nav" aria-label="Primary">
             {navigation.map((item) => {
@@ -164,8 +162,7 @@ export default function Header() {
         <div ref={dialog} className="mobile-nav index-mobile-nav" role="dialog" aria-modal="true" aria-label="Navigation">
           <div className="top">
             <span className="brand">
-              <SoftAsterisk size="1.9em" hoverScope="parent" className="brand-mark" />
-              <span>THE DEEPTHIKA STUDIO<span className="dot">.</span></span>
+              THE DEEPTHIKA STUDIO<span className="dot">.</span>
             </span>
             <button onClick={closeMenu} aria-label="Close menu">
               Close ×

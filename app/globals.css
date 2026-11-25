@@ -194,14 +194,6 @@ button {
 .brand .dot {
   color: var(--accent);
 }
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7em;
-}
-.brand .brand-mark {
-  margin-top: -0.1em;
-}
 .nav {
   display: flex;
   align-items: center;

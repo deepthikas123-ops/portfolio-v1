@@ -82,6 +82,20 @@ export const boardItems: BoardItem[] = [
     desktop: { x: 86, y: 74, w: 2.8, r: -10, z: 12 }, mobile: { x: 85, y: 87, w: 6.5, r: -10, z: 12 } },
   { id: 'pin-c', kind: 'pin', label: '', src: `${D}/pin-10.png`,
     desktop: { x: 40.2, y: 73.6, w: 2.6, r: 12, z: 12 }, mobile: { x: 14, y: 14, w: 6, r: 12, z: 12 } },
+
+  // Six extra push pins — free to move anywhere on the board
+  { id: 'pin-d', kind: 'pin', label: '', src: `${D}/pin-2.png`,
+    desktop: { x: 10, y: 17, w: 2.6, r: -8, z: 13 }, mobile: { x: 9, y: 36, w: 6, r: -8, z: 13 } },
+  { id: 'pin-e', kind: 'pin', label: '', src: `${D}/pin-4.png`,
+    desktop: { x: 54, y: 44, w: 2.6, r: 14, z: 13 }, mobile: { x: 88, y: 38, w: 6, r: 14, z: 13 } },
+  { id: 'pin-f', kind: 'pin', label: '', src: `${D}/pin-7.png`,
+    desktop: { x: 83, y: 38, w: 2.6, r: -6, z: 13 }, mobile: { x: 10, y: 72, w: 6, r: -6, z: 13 } },
+  { id: 'pin-g', kind: 'pin', label: '', src: `${D}/pin-8.png`,
+    desktop: { x: 91, y: 88, w: 2.6, r: 10, z: 13 }, mobile: { x: 52, y: 91, w: 6, r: 10, z: 13 } },
+  { id: 'pin-h', kind: 'pin', label: '', src: `${D}/pin-9.png`,
+    desktop: { x: 24, y: 91, w: 2.6, r: -12, z: 13 }, mobile: { x: 92, y: 20, w: 6, r: -12, z: 13 } },
+  { id: 'pin-i', kind: 'pin', label: '', src: `${D}/pin-11.png`,
+    desktop: { x: 55, y: 14, w: 2.6, r: 6, z: 13 }, mobile: { x: 30, y: 80, w: 6, r: 6, z: 13 } },
 ];
 
 export const NOTE_HEADING = 'A book that found me at the right time.';
