@@ -148,8 +148,8 @@ section.index-curiosities .index-section-heading{margin-bottom:24px}
 /* ── Phones: a composed, taller board rather than a shrunken desktop one ─────────────────── */
 @media (max-width:720px){
   section.index-curiosities{padding:88px 0 32px}
-  .cb{max-width:max(300px,calc((100dvh - 340px) / 1.575))}
-  .cb-board{aspect-ratio:4/6.3;--bw:max(12px,4.4cqw)}
+  .cb{max-width:none}
+  .cb-board{aspect-ratio:4/7;--bw:max(12px,4.4cqw)}
   .cb-controls{flex-direction:column;align-items:stretch;margin-top:18px}
   .cb-buttons .cb-btn{flex:1}
   .cbn-paper-in{font-size:5.2cqw;padding:8cqw 6cqw 6cqw 9cqw}

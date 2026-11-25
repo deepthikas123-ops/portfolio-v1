@@ -9,7 +9,7 @@ type Layout = 'desktop' | 'mobile';
 type State = { x: number; y: number; r: number; z: number };
 type Positions = Record<string, State>;
 
-const STORAGE = 'deepthika-corkboard-v2';
+const STORAGE = 'deepthika-corkboard-v3';
 const MOBILE_QUERY = '(max-width: 720px)';
 const DRAG_THRESHOLD = 5;
 
@@ -194,26 +194,68 @@ export default function Corkboard({ items = boardItems }: { items?: BoardItem[] 
     setPos(defaults(layout, items));
   };
 
+  /**
+   * Shuffle moves whole groups: every object that is attached to a host (caption, tape, clip, pin…) keeps its
+   * arrangement relative to that host and turns with it. Groups are placed so they overlap as little as possible.
+   */
   const shuffle = () => {
     const stage = stageRef.current?.getBoundingClientRect(); if (!stage || !pos) return;
     settle();
-    const next: Positions = {};
-    const placed: { x: number; y: number }[] = [];
-    // Larger objects first, so they keep their breathing room; small decor lands wherever it likes.
-    const order = [...items].sort((a, b) => b[layout].w - a[layout].w);
-    for (const it of order) {
-      const el = els.current[it.id]; if (!el) { next[it.id] = pos[it.id]; continue; }
-      const major = it.kind === 'photo' || it.kind === 'book' || it.kind === 'note';
-      const r = (Math.random() * 2 - 1) * (major ? 8 : 24);
-      let best = { x: 50, y: 50 }, bestD = -1;
-      for (let i = 0; i < (major ? 40 : 1); i++) {
-        const c = clampCentre(8 + Math.random() * 84, 8 + Math.random() * 84, r, el, stage);
-        const dist = placed.length ? Math.min(...placed.map((q) => Math.hypot((q.x - c.x) * (stage.width / stage.height), q.y - c.y))) : 99;
-        if (dist > bestD) { best = c; bestD = dist; }
-      }
-      if (major) placed.push(best);
-      next[it.id] = { x: best.x, y: best.y, r, z: ++zTop.current };
+    const byId = new Map(items.map((i) => [i.id, i]));
+    const rootOf = (it: BoardItem): BoardItem => (it.attach && byId.get(it.attach) ? rootOf(byId.get(it.attach)!) : it);
+    const depth = (it: BoardItem): number => (it.attach && byId.get(it.attach) ? 1 + depth(byId.get(it.attach)!) : 0);
+    const groups = new Map<string, BoardItem[]>();
+    for (const it of [...items].sort((a, b) => depth(a) - depth(b))) {
+      const r = rootOf(it).id; groups.set(r, [...(groups.get(r) ?? []), it]);
     }
+    const W = stage.width, H = stage.height;
+    type Box = { l: number; t: number; r: number; b: number };
+    const half = (it: BoardItem, rot: number) => {
+      const el = els.current[it.id]; const w = el?.offsetWidth ?? 0, h = el?.offsetHeight ?? 0;
+      const c = Math.abs(Math.cos((rot * Math.PI) / 180)), s = Math.abs(Math.sin((rot * Math.PI) / 180));
+      return { hw: (w * c + h * s) / 2, hh: (w * s + h * c) / 2 };
+    };
+    // lay a group out around a root centre (px) and rotation; returns member states in px and its bounding box
+    const lay = (members: BoardItem[], root: BoardItem, cx: number, cy: number, rot: number) => {
+      const R = root[layout], d = ((rot - R.r) * Math.PI) / 180, cs = Math.cos(d), sn = Math.sin(d);
+      const out = members.map((m) => {
+        const M = m[layout], ox = ((M.x - R.x) / 100) * W, oy = ((M.y - R.y) / 100) * H;
+        const x = cx + ox * cs - oy * sn, y = cy + ox * sn + oy * cs, r = M.r + (rot - R.r);
+        const { hw, hh } = half(m, r);
+        return { m, x, y, r, hw, hh };
+      });
+      const box: Box = {
+        l: Math.min(...out.map((o) => o.x - o.hw)), r: Math.max(...out.map((o) => o.x + o.hw)),
+        t: Math.min(...out.map((o) => o.y - o.hh)), b: Math.max(...out.map((o) => o.y + o.hh)),
+      };
+      return { out, box };
+    };
+    const overlap = (a: Box, b: Box) => Math.max(0, Math.min(a.r, b.r) - Math.max(a.l, b.l) + 6) * Math.max(0, Math.min(a.b, b.b) - Math.max(a.t, b.t) + 6);
+
+    const order = Array.from(groups.entries()).map(([id, members]) => {
+      const root = byId.get(id)!; const g = lay(members, root, 0, 0, root[layout].r);
+      return { id, members, root, area: (g.box.r - g.box.l) * (g.box.b - g.box.t) };
+    }).sort((a, b) => b.area - a.area);
+
+    const placed: Box[] = [];
+    const next: Positions = {};
+    for (const { members, root } of order) {
+      const rot = root[layout].r + (Math.random() * 2 - 1) * 8;
+      let best: ReturnType<typeof lay> | null = null, bestScore = Infinity;
+      for (let i = 0; i < 260 && bestScore > 0; i++) {
+        let g = lay(members, root, 0.1 * W + Math.random() * 0.8 * W, 0.1 * H + Math.random() * 0.8 * H, rot);
+        // slide the whole group back inside the cork if it pokes out
+        const sx = g.box.l < 4 ? 4 - g.box.l : g.box.r > W - 4 ? W - 4 - g.box.r : 0;
+        const sy = g.box.t < 4 ? 4 - g.box.t : g.box.b > H - 4 ? H - 4 - g.box.b : 0;
+        if (sx || sy) g = { out: g.out.map((o) => ({ ...o, x: o.x + sx, y: o.y + sy })), box: { l: g.box.l + sx, r: g.box.r + sx, t: g.box.t + sy, b: g.box.b + sy } };
+        const score = placed.reduce((n, p) => n + overlap(g.box, p), 0);
+        if (score < bestScore) { best = g; bestScore = score; }
+      }
+      if (!best) continue;
+      placed.push(best.box);
+      for (const o of best.out) next[o.m.id] = { x: (o.x / W) * 100, y: (o.y / H) * 100, r: o.r, z: ++zTop.current };
+    }
+    for (const it of items) if (!next[it.id]) next[it.id] = pos[it.id];
     setPos(next);
   };
 
