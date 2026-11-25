@@ -202,3 +202,45 @@ main button,main .button,main .cta{border-radius:0}
  .footer-base{gap:12px;flex-direction:column}
 }
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+/* Project case studies — same white / black / orange editorial system */
+.paper-hero,.setu-hero{min-height:auto!important;padding:128px 0 76px;background:#fff!important;color:#171717!important}
+.paper-hero .glow,.setu-hero .bg{display:none!important}
+.paper-hero .ghost,.setu-hero .ghost{color:#f05223!important;opacity:.13;font-size:clamp(120px,22vw,280px)!important;letter-spacing:-.1em}
+.paper-hero .hero-grid,.setu-hero .hero-grid{max-width:1440px;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(30px,6vw,90px);padding:68px var(--pad) 36px}
+.paper-hero .copy,.setu-hero .copy{color:#171717!important;max-width:680px}
+.paper-hero .kicker,.setu-hero .kicker{color:#f05223!important;font:700 10px ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase}
+.paper-hero h1,.setu-hero h1{font-size:clamp(48px,7vw,90px);line-height:.9;letter-spacing:-.085em;font-weight:800}
+.paper-hero h1 .small,.setu-hero h1 .small{display:block;font-size:.27em;line-height:1.2;letter-spacing:-.025em;font-weight:550;margin-top:16px;max-width:550px}
+.paper-hero .sub,.setu-hero .sub{color:#666;font-size:14px;margin-top:18px}
+.paper-hero .desc,.setu-hero .desc{color:#555;font-size:13px;line-height:1.8;font-weight:400}
+.paper-hero .card img,.setu-hero .card img{box-shadow:none!important;filter:grayscale(1);transition:filter .45s,transform .6s}
+.paper-hero .card:hover img,.setu-hero .card:hover img{filter:grayscale(.2);transform:scale(1.02)}
+.paper-hero .tags span,.setu-hero .tags span{background:#f1f1ef;border:1px solid #ddd;border-radius:0;color:#555;padding:7px 10px;font:9px ui-monospace,monospace;text-transform:uppercase}
+.paper-narrative,.pipeline,.logistics,.ideation,.band,.paper-section,.methodology,.results,.conclusion{background:#fff!important;color:#171717!important}
+.paper-narrative,.pipeline,.logistics,.ideation{padding-top:clamp(64px,8vw,110px);padding-bottom:clamp(64px,8vw,110px)}
+.paper-narrative p,.pipeline p,.logistics p,.ideation p{color:#555}
+.section-title{font-size:clamp(34px,5vw,62px);font-weight:800;letter-spacing:-.075em;line-height:.96}
+.dark-section,.dark-fig,.quote-band,.statement-band{background:#f1f1ef!important;color:#171717!important}
+.dark-section .glow{display:none!important}
+.dark-section .accent,.accent{color:#f05223!important}
+.dark-section h1,.dark-section h2,.dark-section h3{color:#171717}
+.dark-section p{color:#555}
+.dark-section.quote-band,.dark-section.statement-band{border-block:1px solid rgba(0,0,0,.14)}
+.dark-section.quote-band .wrap>p{font-size:clamp(28px,5vw,60px);font-weight:750;letter-spacing:-.065em;line-height:1.05;max-width:1000px;color:#171717}
+.dark-section.statement-band .wrap>p{font-size:clamp(24px,4vw,48px);font-weight:700;letter-spacing:-.06em;line-height:1.1;color:#171717}
+.dark-section .triad .part,.dark-section .part{background:#fff!important;color:#171717!important;border:1px solid rgba(0,0,0,.14);border-radius:0}
+.dark-section .triad .part p,.dark-section .triad .part h3{color:#171717!important}
+.dark-section .triad .t-n,.dark-section .triad .t-role,.pipeline .s-n,.logi-item .num{color:#f05223!important}
+.figure-note,figcaption{color:#777!important;font:10px ui-monospace,monospace;line-height:1.6}
+.fig-card,.fig-wide,.photo,.card,.iter-panel,.logi-item{border-radius:0!important}
+.closeup img,.fig-card img,.photo img,.logi-item img{filter:grayscale(1);transition:filter .45s}
+.closeup img:hover,.fig-card:hover img,.photo:hover img,.logi-item:hover img{filter:grayscale(.2)}
+.pill,.iter-col .pill{background:#ffe1d6!important;color:#b8320b!important;border-radius:0!important}
+.flood .bg{filter:grayscale(1)}
+.chip{background:#f05223!important;color:#fff!important;border-radius:0!important;box-shadow:none!important}
+.project-nav,.project-navigation,.project-next,.project-prev{border-color:rgba(0,0,0,.16)}
+main a:focus-visible,main button:focus-visible{outline:2px solid #f05223;outline-offset:4px}
+@media(max-width:850px){.paper-hero .hero-grid,.setu-hero .hero-grid{grid-template-columns:1fr;padding-top:48px}.paper-hero,.setu-hero{padding-top:104px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
