@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   title: 'The Deepthika Studio — A Personal Collection by Deepthika S',
   description,
   keywords: ['Deepthika S', 'product design', 'human-centred design', 'electronics', 'interaction design', 'creative AI', 'design research'],
-  openGraph: { title: 'The Deepthika Studio — A Personal Collection by Deepthika S', description, type: 'website', siteName: 'The Deepthika Studio', images: [{ url: '/images/og-index.png', width: 1200, height: 630, alt: 'The Deepthika Studio — a personal collection by Deepthika S' }] },
-  twitter: { card: 'summary_large_image' },
+  openGraph: { title: 'The Deepthika Studio — A Personal Collection by Deepthika S', description, type: 'website', siteName: 'The Deepthika Studio', images: [{ url: '/images/og-studio.png', width: 1200, height: 630, alt: 'The Deepthika Studio — a personal collection by Deepthika S' }] },
+  twitter: { card: 'summary_large_image', title: 'The Deepthika Studio — A Personal Collection by Deepthika S', description, images: ['/images/og-studio.png'] },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
