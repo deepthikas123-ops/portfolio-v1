@@ -2,9 +2,6 @@ import Link from 'next/link';
 import { Reveal, Stagger, StaggerItem } from '@/components/Motion';
 import { projects } from '@/components/projects';
 
-const researchSlugs = ['atomic-user-model', 'aesthetic-fingerprint', 'flavovr', 'calculator-fallacy', 'llm-conformity'];
-const projectSlugs = ['setu', 'eco-shield', 'morse-code-vault', 'kaaya', 'vapours'];
-
 function Cards({ items }: { items: typeof projects }) {
   return <Stagger className="index-card-grid">{items.map((p) => (
     <StaggerItem key={p.slug}>
@@ -24,8 +21,8 @@ function Cards({ items }: { items: typeof projects }) {
 }
 
 export default function Home() {
-  const liveProjects = projects.filter((p) => p.live && projectSlugs.includes(p.slug));
-  const research = projects.filter((p) => p.live && researchSlugs.includes(p.slug));
+  const liveProjects = projects.filter((p) => p.live && p.collection === 'project');
+  const research = projects.filter((p) => p.live && p.collection === 'research');
   const archived = projects.filter((p) => !p.live);
   return <>
     <section className="index-hero">
