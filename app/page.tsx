@@ -2,21 +2,18 @@ import Link from 'next/link';
 import { Reveal, Stagger, StaggerItem } from '@/components/Motion';
 import { projects } from '@/components/projects';
 
-function Cards({ items, prefix }: { items: typeof projects; prefix: string }) {
-  return <Stagger className={`index-card-grid ${prefix}-grid`}>{items.map((p, i) => (
+function Cards({ items }: { items: typeof projects }) {
+  return <Stagger className="index-card-grid">{items.map((p) => (
     <StaggerItem key={p.slug}>
       <Link href={`/projects/${p.slug}`} className="index-card">
-        <div className="index-card-head">
-          <span className="index-card-number">{p.index}</span>
-          <span className="index-card-title">{p.title}</span>
-        </div>
         <div className={`index-card-image ${p.coverClass ?? ''}`}>
-          {p.cover ? <img src={p.cover} alt={p.title} loading="lazy" /> : <span className="index-card-placeholder">IMAGE<br />DOCUMENTATION<br />IN PROGRESS</span>}
-          <span className="index-card-arrow" aria-hidden="true">↗</span>
+          {p.cover ? <img src={p.cover} alt={p.title} loading="lazy" /> : <span>{p.title}</span>}
+          <span className="index-card-number">EXHIBIT {p.index}</span>
         </div>
         <div className="index-card-copy">
-          <p className="index-card-hook">{p.subtitle}</p>
           <span className="index-card-discipline">{p.discipline}</span>
+          <h3>{p.title}</h3><p>{p.subtitle}</p>
+          <span className="index-card-link">Explore case study ↗</span>
         </div>
       </Link>
     </StaggerItem>
@@ -35,39 +32,39 @@ export default function Home() {
           <p className="index-eyebrow">THE DEEPTHIKA INDEX <span>— NO. 001</span></p>
           <h1>An index of<br /><em>things that make me.</em></h1>
           <p className="index-intro">A growing collection of objects, ideas, experiments and questions. Part design practice, part engineering notebook, part personal archive. Curated by Deepthika S.</p>
-          <div className="index-hero-actions"><a href="#projects" className="index-primary-link">View selected work <span>↓</span></a><Link href="/about" className="index-secondary-link">Read the curator’s note ↗</Link></div>
+          <div className="index-hero-actions"><a href="#collection" className="index-primary-link">Enter the collection <span>↓</span></a><Link href="/about" className="index-secondary-link">Read the curator’s note ↗</Link></div>
         </Reveal>
         <Reveal className="index-hero-art" delay={0.18}>
           <div className="index-art-frame"><span className="index-art-label label-top">A STUDY IN CURIOSITY</span><div className="index-art-orbit orbit-one" /><div className="index-art-orbit orbit-two" /><div className="index-art-object"><span>DS</span></div><span className="index-art-label label-bottom">ART × DESIGN × ENGINEERING</span></div>
-          <p className="index-art-caption">FIG. 01 — A MIND IN SEVERAL DIRECTIONS</p>
+          <p className="index-art-caption">Fig. 01 — A mind in several directions</p>
         </Reveal>
       </div>
-      <div className="index-hero-foot"><span>ART × DESIGN × ENGINEERING</span><span>SCROLL TO EXPLORE ↓</span></div>
+      <div className="index-hero-foot"><span>PLEASE TOUCH THE EXHIBITS. SOME OF THEM ARE INTERACTIVE.</span><span>SCROLL TO EXPLORE ↓</span></div>
     </section>
 
     <section className="index-note" id="collection"><div className="wrap index-note-grid">
-      <Reveal><p className="index-section-kicker">00 / THE COLLECTION</p><h2>Not quite a portfolio.<br /><em>Not quite a diary.</em></h2></Reveal>
+      <Reveal><p className="index-section-kicker">01 / THE COLLECTION</p><h2>Not quite a portfolio.<br /><em>Not quite a diary.</em></h2></Reveal>
       <Reveal className="index-note-copy" delay={0.12}><p>I’m an electronics engineering student drawn to the space where useful things meet thoughtful experiences. I move between making, observing and asking questions: building physical prototypes, exploring digital interactions, and studying how people respond to technology.</p><p>This index brings those different threads together. There is no particular order to the exhibition. Neither is there to my brain.</p><Link href="/about" className="text-link">A little more about the curator ↗</Link></Reveal>
     </div></section>
 
     <section className="index-collection-section" id="projects"><div className="wrap">
-      <div className="index-section-heading"><div><p className="index-section-kicker">01 / SELECTED WORK</p><h2>Projects</h2></div><p>Products, prototypes and playful attempts at making an idea tangible.</p></div>
-      <Cards items={liveProjects} prefix="projects" />
-      {archived.length > 0 && <div className="index-archive"><p className="index-section-kicker">IN THE WORKSHOP / DOCUMENTATION IN PROGRESS</p>{archived.map((p) => <Link href={`/projects/${p.slug}`} className="index-archive-row" key={p.slug}><span>{p.index}</span><strong>{p.title}</strong><span>{p.subtitle}</span><span>VIEW ENTRY ↗</span></Link>)}</div>}
+      <div className="index-section-heading"><div><p className="index-section-kicker">02 / THINGS I HAVE MADE</p><h2>Projects <span>({String(liveProjects.length).padStart(2,'0')})</span></h2></div><p>Prototypes, products and playful attempts at making an idea tangible.</p></div>
+      <Cards items={liveProjects} />
+      {archived.length > 0 && <div className="index-archive"><p className="index-section-kicker">IN THE WORKSHOP / STILL TAKING SHAPE</p>{archived.map((p) => <div className="index-archive-row" key={p.slug}><span>EXHIBIT {p.index}</span><strong>{p.title}</strong><span>{p.subtitle}</span><span>Documentation in progress</span></div>)}</div>}
     </div></section>
 
     <section className="index-research-section" id="research"><div className="wrap">
-      <div className="index-section-heading"><div><p className="index-section-kicker">02 / INVESTIGATIONS</p><h2>Research</h2></div><p>Studies into perception, interaction, creativity and the ways people relate to AI.</p></div>
-      <Cards items={research} prefix="research" />
+      <div className="index-section-heading"><div><p className="index-section-kicker">03 / QUESTIONS I KEEP FOLLOWING</p><h2>Research <span>({String(research.length).padStart(2,'0')})</span></h2></div><p>Investigations into perception, interaction, creativity and the ways people relate to AI.</p></div>
+      <Cards items={research} />
     </div></section>
 
     <section className="index-maker-section" id="maker"><div className="wrap">
-      <p className="index-section-kicker">03 / THE MAKER</p><div className="index-maker-grid"><div><h2>Somewhere between<br /><em>art, design & engineering.</em></h2><p className="index-maker-intro">I like ideas that can be felt, tested, questioned and made real. My work often begins with a human observation, takes shape through design, and finds its way into the world through technology.</p><Link href="/about" className="text-link">Meet the maker ↗</Link></div>
+      <p className="index-section-kicker">04 / THE MAKER</p><div className="index-maker-grid"><div><h2>Somewhere between<br /><em>art, design & engineering.</em></h2><p className="index-maker-intro">I like ideas that can be felt, tested, questioned and made real. My work often begins with a human observation, takes shape through design, and finds its way into the world through technology.</p><Link href="/about" className="text-link">Meet the maker ↗</Link></div>
       <div className="index-intersection" aria-label="Art, design and engineering overlap in my practice"><div className="intersection-circle circle-art"><span>ART</span></div><div className="intersection-circle circle-design"><span>DESIGN</span></div><div className="intersection-circle circle-engineering"><span>ENGINEERING</span></div><span className="intersection-centre">ME</span></div></div>
     </div></section>
 
     <section className="index-curiosities" id="curiosities"><div className="wrap">
-      <div className="index-section-heading"><div><p className="index-section-kicker">04 / CABINET OF CURIOSITIES</p><h2>Things I keep close.</h2></div><p>A few interests that find their way into the way I think and make.</p></div>
+      <div className="index-section-heading"><div><p className="index-section-kicker">05 / CABINET OF CURIOSITIES</p><h2>Things I keep close.</h2></div><p>A few interests that find their way into the way I think and make.</p></div>
       <div className="curiosity-grid">
         <article className="curiosity-card curiosity-large"><span>COLLECTING / 001</span><h3>Visual stories</h3><p>Graphic design, composition, colour, and the small details that make an image stay with you.</p></article>
         <article className="curiosity-card curiosity-green"><span>COLLECTING / 002</span><h3>Making by hand</h3><p>Art, calligraphy, journaling and the pleasure of working things out on paper.</p></article>
@@ -76,6 +73,6 @@ export default function Home() {
       </div><p className="index-curiosity-foot">Some exhibits are unfinished. The curator insists they’re works in progress.</p>
     </div></section>
 
-    <section className="index-endnote"><div className="wrap index-endnote-inner"><p className="index-section-kicker">05 / CONTACT</p><h2>Have something<br /><em>interesting in mind?</em></h2><p>I’m always happy to talk about design, research, making, and ideas that refuse to sit in one category.</p><a href="mailto:deepthikas123@gmail.com" className="index-primary-link">Get in touch ↗</a></div></section>
+    <section className="index-endnote"><div className="wrap index-endnote-inner"><p className="index-section-kicker">06 / BEFORE YOU LEAVE</p><h2>Have something<br /><em>interesting in mind?</em></h2><p>I’m always happy to talk about design, research, making, and ideas that refuse to sit in one category.</p><a href="mailto:deepthikas123@gmail.com" className="index-primary-link">Get in touch ↗</a></div></section>
   </>;
 }
