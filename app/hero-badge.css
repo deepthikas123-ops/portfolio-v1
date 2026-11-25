@@ -81,7 +81,7 @@ main .badge-hero .bh-photo:hover{filter:grayscale(0)}
 .bh-cursor.is-on{opacity:1;scale:1}
 .bh-cursor.is-hold{scale:.92}
 @media (hover:hover) and (pointer:fine){
-  .bh-grab,.bh-grab-pouch{cursor:none}
+  .bh-grab,.bh-grab-pouch,.bh-grab-pouch *,main .badge-hero .bh-grab-pouch .bh-photo{cursor:none}
   .bh-grab-pouch{touch-action:none;-webkit-user-select:none;user-select:none}
   body.bh-dragging,body.bh-dragging *{cursor:none!important}
 }

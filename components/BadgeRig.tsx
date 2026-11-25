@@ -77,7 +77,11 @@ export default function BadgeRig() {
   };
 
   const onMove = (e: React.PointerEvent) => {
-    if (finePointer(e)) place(e);
+    if (finePointer(e)) {
+      place(e);
+      // safety net: any movement over the strap, clip, shell or card shows the pill, even if the enter event was missed
+      if (!drag.current) setMode((m) => (m === 'off' ? 'grab' : m));
+    }
     const d = drag.current; if (!d || e.pointerId !== d.id) return;
     const now = performance.now();
     d.samples.push({ t: now, x: e.clientX, y: e.clientY });
