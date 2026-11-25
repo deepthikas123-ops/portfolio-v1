@@ -1,0 +1,63 @@
+/* Additive motion layer. Nothing here changes how the site looks at rest. */
+@media (prefers-reduced-motion:no-preference){
+  main.page-enter{animation:pageIn .45s ease-out both}
+  @keyframes pageIn{from{opacity:0}to{opacity:1}}
+}
+#read-progress{position:fixed;top:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;z-index:60;pointer-events:none;will-change:transform}
+
+/* press feedback */
+.index-primary-link:active,.index-secondary-link:active,.text-link:active,.index-card:active{transform:scale(.985)}
+
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  /* animated nav underlines (background layer, no layout change) */
+  .nav>a,.nav .nav-dd>a{background:linear-gradient(var(--accent),var(--accent)) 0 100%/0 1px no-repeat;transition:background-size .35s cubic-bezier(.2,.7,.2,1),color .22s}
+  .nav>a:hover,.nav .nav-dd>a:hover{background-size:100% 1px}
+
+  /* hero graphic follows the cursor */
+  .index-art-object{translate:calc(var(--px,0)*14px) calc(var(--py,0)*14px);transition:transform .5s,translate .35s ease-out}
+  .index-art-label.label-top{translate:calc(var(--px,0)*-6px) calc(var(--py,0)*-6px);transition:translate .35s ease-out}
+  .index-art-label.label-bottom{translate:calc(var(--px,0)*-6px) calc(var(--py,0)*-6px);transition:translate .35s ease-out}
+
+  /* hero buttons: arrows move */
+  .index-primary-link span{transition:translate .3s}
+  .index-primary-link:hover span{translate:0 4px}
+  .index-secondary-link{transition:color .22s,border-color .22s,letter-spacing .3s}
+
+  /* project / research cards */
+  .index-card .index-card-number{transition:translate .35s,color .3s}
+  .index-card:not(.is-placeholder):hover .index-card-number{translate:4px -2px}
+  .index-card-link{transition:color .25s,border-color .25s,translate .3s}
+  .index-card:not(.is-placeholder):hover .index-card-link{color:var(--accent-strong);border-color:var(--accent-strong);translate:4px 0}
+  .index-card:not(.is-placeholder):hover h3{translate:0 -2px}
+  .index-card h3{transition:translate .35s}
+
+  /* art × design × engineering diagram: the hovered circle comes forward */
+  .intersection-circle{transition:transform .5s,opacity .4s,background .4s,border-color .4s}
+  .index-intersection:has(.intersection-circle:hover) .intersection-circle:not(:hover){opacity:.72}
+  .intersection-circle:hover{border-color:#fff}
+
+  /* cabinet of curiosities */
+  .curiosity-card{transition:transform .35s,box-shadow .35s}
+  .curiosity-card:hover{box-shadow:inset 0 -3px 0 var(--accent)}
+  .curiosity-card h3{transition:translate .35s}
+  .curiosity-card:hover h3{translate:4px 0}
+
+  /* curator's note lists */
+  .curator-list-item{transition:background .3s}
+  .curator-list-item h3{transition:color .2s,translate .35s}
+  .curator-list-item:hover h3{translate:6px 0}
+  .curator-tags span:hover{border-color:var(--accent-strong)}
+
+  /* previous / next */
+  .proj-nav .name{transition:color .25s,translate .3s}
+  .proj-nav a.name:hover{translate:4px 0}
+}
+
+/* case-study image enlargement */
+body.has-zoomable main section img:not(a img):not(.proj-nav img){cursor:zoom-in}
+.zoom-overlay{position:fixed;inset:0;z-index:100;background:rgba(255,255,255,.96);display:grid;place-items:center;padding:clamp(16px,4vw,56px);cursor:zoom-out;animation:zoomIn .3s ease-out both}
+.zoom-overlay img{max-width:100%;max-height:100%;object-fit:contain;filter:none!important;cursor:zoom-out}
+.zoom-close{position:absolute;top:18px;right:22px;background:none;border:0;border-bottom:1px solid #171717;padding:0 0 4px;font:700 12px Inter,Arial,sans-serif;letter-spacing:.04em;color:#171717;cursor:pointer}
+.zoom-close:hover,.zoom-close:focus-visible{color:var(--accent-strong);border-color:var(--accent-strong)}
+@keyframes zoomIn{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.zoom-overlay{animation:none}}

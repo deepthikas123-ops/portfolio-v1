@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./editorial.css";
+import "./motion.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
+import Interactions from "@/components/Interactions";
 import { Analytics } from "@vercel/analytics/next";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'http://localhost:3000');
@@ -24,5 +26,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500&display=swap" rel="stylesheet" />
   <noscript><style>{`[style*="opacity:0"],[style*="opacity: 0"]{opacity:1!important;transform:none!important}`}</style></noscript>
-  </head><body><Header /><main>{children}</main><Footer /><BackToTop /><Analytics /></body></html>;
+  </head><body><Header /><main>{children}</main><Footer /><BackToTop /><Interactions /><Analytics /></body></html>;
 }
