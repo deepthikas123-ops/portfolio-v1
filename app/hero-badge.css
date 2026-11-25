@@ -23,10 +23,14 @@
 .bh-card-title{left:7.8cqw;top:7.2cqw;font-weight:800;font-size:14.6cqw;line-height:.93;letter-spacing:-.045em;color:#171717}
 .bh-photo{left:19.5cqw;top:36.8cqw;width:61cqw;height:auto;aspect-ratio:800/812;object-fit:cover;display:block}
 main .badge-hero img{filter:none;transition:none}
+/* portrait: greyscale at rest, colour on hover */
+main .badge-hero .bh-photo{filter:grayscale(1);transition:filter .5s ease;cursor:default}
+main .badge-hero .bh-photo:hover{filter:grayscale(0)}
+@media (prefers-reduced-motion:reduce){main .badge-hero .bh-photo{transition:none}}
 .bh-row{left:5.4cqw;right:5cqw;display:flex;align-items:flex-end;gap:2.4cqw;font-size:4.2cqw;line-height:1.2;white-space:nowrap;color:#171717}
 .bh-row b{font-weight:700;padding-bottom:1.2cqw}
 .bh-row span{flex:1;position:relative;border-bottom:.3cqw dotted rgba(0,0,0,.5);height:10cqw}
-.bh-row span img{position:absolute;left:1cqw;bottom:.4cqw;height:11cqw;width:auto;max-width:100%}
+.bh-row span img{position:absolute;left:1cqw;bottom:-2.6cqw;height:11cqw;width:auto;max-width:100%}
 .bh-row-1{top:103.6cqw}.bh-row-2{top:117cqw}
 .bh-row-2 span img{height:7.6cqw;bottom:.6cqw}
 .bh-bar{left:5.4cqw;right:5cqw;top:131.2cqw;height:2.4cqw;background:var(--accent)}
