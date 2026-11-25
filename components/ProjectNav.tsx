@@ -24,11 +24,12 @@ function Side({ label, p, align }: { label: string; p: Project; align: 'left' | 
 /** Previous / next project links, derived from the project registry. */
 export default function ProjectNav({ slug }: { slug: string }) {
   const { prev, next } = getNeighbours(slug);
+  const noun = prev.collection === 'research' ? 'research' : 'project';
   return (
     <nav className="proj-nav" aria-label="Project navigation">
       <div className="wrap row">
-        <Side label="Previous project" p={prev} align="left" />
-        <Side label="Next project" p={next} align="right" />
+        <Side label={`Previous ${noun}`} p={prev} align="left" />
+        <Side label={`Next ${noun}`} p={next} align="right" />
       </div>
     </nav>
   );

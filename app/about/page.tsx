@@ -7,7 +7,9 @@ export const metadata: Metadata = {
   description: 'A note on the ideas, questions and experiences that shape Deepthika S’s approach to product design, engineering and research.',
 };
 
-const LINKEDIN = 'https://www.linkedin.com/in/deepthika365';
+const LINKEDIN = 'https://www.linkedin.com/in/deepthika365/';
+const SCHOLAR = 'https://scholar.google.com/citations?user=susKJWYAAAAJ&hl=en';
+const GITHUB = 'https://github.com/deepthikas123-ops';
 
 /* An engineer by training and a designer by passion — copy follows the latest résumé. */
 const story = [
@@ -82,12 +84,13 @@ const honors = [
   { t: 'Prompt Masters ’25 — Second Runner Up', d: 'Built HelloMahila, an AI-driven women’s wellness companion using structured prompt flows and AI Library integration.' },
 ];
 
-const certs = [
+/* `url` opens the verified certificate (links come from the résumé); add one to any entry to link it. */
+const certs: { t: string; o: string; w: string; url?: string }[] = [
   { t: '3D Printing and Additive Manufacturing', o: 'University of Illinois Urbana-Champaign', w: 'Ongoing' },
-  { t: 'Build Wireframes and Low Fidelity Prototypes', o: 'Google UX Design Professional', w: 'June 2025' },
-  { t: 'Fundamentals of Graphic Design', o: 'California Institute of the Arts', w: 'June 2025' },
-  { t: 'Introduction to the Internet of Things and Embedded Systems', o: 'University of California, Irvine', w: 'May 2025' },
-  { t: 'Innovation Through Design: Think-Make-Break-Repeat', o: 'University of Sydney', w: 'May 2025' },
+  { t: 'Build Wireframes and Low Fidelity Prototypes', o: 'Google UX Design Professional', w: 'June 2025', url: 'https://coursera.org/share/548395a29d26a87ee64d9748e4a9d766' },
+  { t: 'Fundamentals of Graphic Design', o: 'California Institute of the Arts', w: 'June 2025', url: 'https://www.coursera.org/account/accomplishments/verify/84ZFX0CM88AD' },
+  { t: 'Introduction to the Internet of Things and Embedded Systems', o: 'University of California, Irvine', w: 'May 2025', url: 'https://www.coursera.org/account/accomplishments/verify/T6DDWAYX4PYQ' },
+  { t: 'Innovation Through Design: Think-Make-Break-Repeat', o: 'University of Sydney', w: 'May 2025', url: 'https://www.coursera.org/account/accomplishments/verify/BDUX3AMNQWL6' },
   { t: 'MATLAB Onramp Certification', o: 'MathWorks', w: 'Dec 2024' },
 ];
 
@@ -131,7 +134,7 @@ export default function About() {
             <Reveal delay={0.12}><p className="curator-role">Product Design · Design Research · Electronics · Interaction</p>
               <p className="curator-lede">An engineer by training and a designer by passion, driven by the belief that understanding how things work is the first step towards making them work better. I’m Deepthika, and I’m most interested in the space where art, design and engineering meet: where a human observation can become an experience, a product or an idea worth testing.</p>
             </Reveal>
-            <Reveal delay={0.2}><div className="curator-actions"><a className="index-primary-link" href="/Deepthika-S-Resume.pdf" download>Download résumé <span>↓</span></a><a className="text-link" href="mailto:deepthikas123@gmail.com">Write to me ↗</a><a className="text-link" href={LINKEDIN} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div></Reveal>
+            <Reveal delay={0.2}><div className="curator-actions"><a className="index-primary-link" href="/Deepthika-S-Resume.pdf" download>Download résumé <span>↓</span></a><a className="text-link" href="mailto:deepthikas123@gmail.com">Write to me ↗</a><a className="text-link" href={LINKEDIN} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a className="text-link" href={SCHOLAR} target="_blank" rel="noopener noreferrer">Google Scholar ↗</a><a className="text-link" href={GITHUB} target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></Reveal>
           </div>
         </div>
       </div>
@@ -195,7 +198,9 @@ export default function About() {
     <section className="curator-section">
       <div className="wrap">
         <Head num="08 / CONTINUING EDUCATION" title="Things I've been learning." />
-        <div className="curator-list">{certs.map((c, i) => <div className="curator-list-item" key={c.t}><span className="n">{pad(i)}</span><div><h3>{c.t}</h3><p>{c.o}</p></div><span className="meta">{c.w}</span></div>)}</div>
+        <div className="curator-list">{certs.map((c, i) => c.url
+          ? <a className="curator-list-item" key={c.t} href={c.url} target="_blank" rel="noopener noreferrer"><span className="n">{pad(i)}</span><div><h3>{c.t}</h3><p>{c.o}</p></div><span className="meta">{c.w} · VIEW CERTIFICATE ↗</span></a>
+          : <div className="curator-list-item" key={c.t}><span className="n">{pad(i)}</span><div><h3>{c.t}</h3><p>{c.o}</p></div><span className="meta">{c.w}</span></div>)}</div>
       </div>
     </section>
 

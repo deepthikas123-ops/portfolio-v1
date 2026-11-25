@@ -36,9 +36,8 @@ function Cards({ items }: { items: typeof projects }) {
 }
 
 export default function Home() {
-  // live case studies first, then "coming soon" placeholders (sort is stable, so registry order is kept)
-  const inCollection = (c: 'project' | 'research') =>
-    projects.filter((p) => p.collection === c).sort((a, b) => Number(b.live) - Number(a.live));
+  // registry order decides the sequence (and the exhibit numbers) inside each collection
+  const inCollection = (c: 'project' | 'research') => projects.filter((p) => p.collection === c);
   const liveProjects = inCollection('project');
   const research = inCollection('research');
   return <>
@@ -65,12 +64,12 @@ export default function Home() {
     </div></section>
 
     <section className="index-collection-section" id="projects"><div className="wrap">
-      <div className="index-section-heading"><div><p className="index-section-kicker">02 / THINGS I HAVE MADE</p><h2>Projects <span>({String(liveProjects.length).padStart(2,'0')})</span></h2></div><p>Prototypes, products and playful attempts at making an idea tangible.</p></div>
+      <div className="index-section-heading"><div><p className="index-section-kicker">02 / THINGS I HAVE MADE</p><h2>Projects</h2></div><p>Prototypes, products and playful attempts at making an idea tangible.</p></div>
       <Cards items={liveProjects} />
     </div></section>
 
     <section className="index-research-section" id="research"><div className="wrap">
-      <div className="index-section-heading"><div><p className="index-section-kicker">03 / QUESTIONS I KEEP FOLLOWING</p><h2>Research <span>({String(research.length).padStart(2,'0')})</span></h2></div><p>Investigations into perception, interaction, creativity and the ways people relate to AI.</p></div>
+      <div className="index-section-heading"><div><p className="index-section-kicker">03 / QUESTIONS I KEEP FOLLOWING</p><h2>Research</h2></div><p>Investigations into perception, interaction, creativity and the ways people relate to AI.</p></div>
       <Cards items={research} />
     </div></section>
 

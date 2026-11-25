@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import ProjectNav from '@/components/ProjectNav';
 import { Reveal, Stagger, StaggerItem, ParallaxBg } from '@/components/Motion';
-import { projects } from '@/components/projects';
 
 export const metadata: Metadata = {
   title: 'SETU — Rapid Deployment Emergency Logistics System | Deepthika S',
@@ -91,9 +90,6 @@ const logistics = [
 ];
 
 export default function SetuPage() {
-  const idx = projects.findIndex((p) => p.slug === 'setu');
-  const prev = projects[(idx - 1 + projects.length) % projects.length];
-  const next = projects[(idx + 1) % projects.length];
 
   return (
     <article>
@@ -316,32 +312,7 @@ export default function SetuPage() {
           </Reveal>
         </div>
       </section>
-
-      {/* ---------- Prev / next ---------- */}
-      <nav className="proj-nav" aria-label="Project navigation">
-        <div className="wrap row">
-          <div>
-            <p className="hint">Previous project</p>
-            <p className="name">
-              {prev.title}
-              {!prev.live && <span className="soon-mark">coming soon</span>}
-            </p>
-          </div>
-          <div style={{ textAlign: 'right' }}>
-            <p className="hint">Next project</p>
-            {next.live ? (
-              <Link href={`/projects/${next.slug}`} className="name">
-                {next.title}
-              </Link>
-            ) : (
-              <p className="name">
-                {next.title}
-                <span className="soon-mark">coming soon</span>
-              </p>
-            )}
-          </div>
-        </div>
-      </nav>
+      <ProjectNav slug="setu" />
     </article>
   );
 }

@@ -5,8 +5,9 @@
  *  1. Build the page under app/projects/<slug>/page.tsx
  *  2. Add / flip the entry here (`live: true` plus a `cover` image)
  * The header dropdown, mobile menu, home grid, project index and prev/next
- * navigation all update automatically. Project numbers are derived from the
- * order of this array, so never hard-code a count anywhere else.
+ * navigation all update automatically. Exhibit numbers are derived from the
+ * order of this array, separately for Projects and Research, so never hard-code
+ * a number or count anywhere else.
  */
 export type Project = {
   index: string; // display index, e.g. '02'
@@ -26,6 +27,7 @@ type ProjectInput = Omit<Project, 'index'>;
 
 
 const list: ProjectInput[] = [
+  // ---- Projects ----
   {
     slug: 'tactile-trails',
     collection: 'project',
@@ -44,6 +46,15 @@ const list: ProjectInput[] = [
     cover: '/images/setucover.png',
   },
   {
+    slug: 'morse-code-vault',
+    collection: 'project',
+    title: 'Morse Code Logic Game',
+    subtitle: 'A game of signals, switches and logic',
+    discipline: 'Electronics',
+    live: true,
+    cover: '/images/morse-cover.jpg',
+  },
+  {
     slug: 'eco-shield',
     collection: 'project',
     title: 'ECO-SHIELD',
@@ -53,14 +64,15 @@ const list: ProjectInput[] = [
     cover: '/images/ecoshieldcover.png',
   },
   {
-    slug: 'morse-code-vault',
+    slug: 'kaaya-wearable',
     collection: 'project',
-    title: 'Morse Code Logic Game',
-    subtitle: 'A game of signals, switches and logic',
-    discipline: 'Electronics',
-    live: true,
-    cover: '/images/morse-cover.jpg',
+    title: 'KAAYA — The Wearable',
+    subtitle: 'The wearable IMU-to-generative-art system behind the paper: hardware build and prototype documentation',
+    discipline: 'Wearable · Electronics',
+    live: false,
+    cover: '/images/kaaya-cover-placeholder.png',
   },
+  // ---- Research (live case studies first, then placeholders) ----
   {
     slug: 'atomic-user-model',
     collection: 'research',
@@ -127,16 +139,6 @@ const list: ProjectInput[] = [
     live: true,
     cover: '/images/llm-conformity-cover-placeholder.png',
   },
-  // ---- placeholders: shown as "coming soon" cards until `live: true` and a page exists ----
-  {
-    slug: 'kaaya-wearable',
-    collection: 'project',
-    title: 'KAAYA — The Wearable',
-    subtitle: 'The wearable IMU-to-generative-art system behind the paper: hardware build and prototype documentation',
-    discipline: 'Wearable · Electronics',
-    live: false,
-    cover: '/images/kaaya-cover-placeholder.png',
-  },
   {
     slug: 'synthetic-consensus',
     collection: 'research',
@@ -147,10 +149,12 @@ const list: ProjectInput[] = [
   },
 ];
 
-export const projects: Project[] = list.map((p, i) => ({
-  ...p,
-  index: String(i + 1).padStart(2, '0'),
-}));
+// Projects and Research are separate collections, each numbered 01, 02, … in registry order.
+const counters: Record<string, number> = {};
+export const projects: Project[] = list.map((p) => {
+  counters[p.collection] = (counters[p.collection] ?? 0) + 1;
+  return { ...p, index: String(counters[p.collection]).padStart(2, '0') };
+});
 
 export function getProject(slug: string): Project {
   const p = projects.find((x) => x.slug === slug);
@@ -159,12 +163,13 @@ export function getProject(slug: string): Project {
 }
 
 /**
- * Previous / next project, wrapping around the registry. Projects that are not
+ * Previous / next entry within the same collection (Projects or Research), wrapping around. Projects that are not
  * live yet are skipped so readers never land on a "coming soon" dead end; the
  * current slug is always kept so a not-yet-live page can still find its place.
  */
 export function getNeighbours(slug: string) {
-  const navigable = projects.filter((p) => p.live || p.slug === slug);
+  const current = projects.find((p) => p.slug === slug);
+  const navigable = projects.filter((p) => p.collection === current?.collection && (p.live || p.slug === slug));
   const idx = navigable.findIndex((p) => p.slug === slug);
   return {
     prev: navigable[(idx - 1 + navigable.length) % navigable.length],

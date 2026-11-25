@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import ProjectNav from '@/components/ProjectNav';
 import { Reveal, Stagger, StaggerItem } from "@/components/Motion";
-import { projects } from "@/components/projects";
 
 export const metadata: Metadata = {
   title:
@@ -44,9 +43,6 @@ const facts = [
 ];
 
 export default function AestheticFingerprintPage() {
-  const idx = projects.findIndex((p) => p.slug === "aesthetic-fingerprint");
-  const prev = projects[(idx - 1 + projects.length) % projects.length];
-  const next = projects[(idx + 1) % projects.length];
 
   return (
     <article>
@@ -523,38 +519,7 @@ export default function AestheticFingerprintPage() {
           </Reveal>
         </div>
       </section>
-
-      {/* ---------- Prev / next ---------- */}
-      <nav className="proj-nav" aria-label="Project navigation">
-        <div className="wrap row">
-          <div>
-            <p className="hint">Previous project</p>
-            {prev.live ? (
-              <Link href={`/projects/${prev.slug}`} className="name">
-                {prev.title}
-              </Link>
-            ) : (
-              <p className="name">
-                {prev.title}
-                <span className="soon-mark">coming soon</span>
-              </p>
-            )}
-          </div>
-          <div style={{ textAlign: "right" }}>
-            <p className="hint">Next project</p>
-            {next.live ? (
-              <Link href={`/projects/${next.slug}`} className="name">
-                {next.title}
-              </Link>
-            ) : (
-              <p className="name">
-                {next.title}
-                <span className="soon-mark">coming soon</span>
-              </p>
-            )}
-          </div>
-        </div>
-      </nav>
+      <ProjectNav slug="aesthetic-fingerprint" />
     </article>
   );
 }
