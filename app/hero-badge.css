@@ -68,6 +68,7 @@ main .badge-hero .bh-photo:hover{filter:grayscale(0)}
   .bh-meta{font-size:9.5px;top:16px;letter-spacing:.02em}
   .bh-title{margin-top:calc(2.4*var(--k));font-size:calc(10.45*var(--k));line-height:.9;letter-spacing:-.06em;white-space:normal}
   .bh-title span{display:block}
+  .bh-title .t3 .dot{display:inline}
   .bh-title .t1{margin-bottom:0}
   .bh-cols{grid-template-columns:1fr;gap:26px;margin-top:34px;padding:0}
   .bh-rule{height:1px;width:100%}
