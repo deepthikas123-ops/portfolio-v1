@@ -42,9 +42,10 @@ main .badge-hero .bh-photo:hover{filter:grayscale(0)}
 .bh-bar{left:5.4cqw;right:5cqw;top:131.2cqw;height:2.4cqw;background:var(--accent)}
 .bh-acc{right:5cqw;top:136.4cqw;font-weight:700;font-size:3.9cqw;letter-spacing:.01em;color:#171717}
 
-/* headline: THE sits beside the lower edge of the badge, DEEPTHIKA INDEX spans the page */
-.bh-title{position:relative;z-index:1;margin:calc(-11*var(--k)) 0 0;font-weight:800;font-size:calc(var(--hs,12.05)*var(--k));line-height:.9;letter-spacing:-.06em;text-transform:uppercase;white-space:nowrap}
+/* headline: THE sits beside the lower edge of the badge, DEEPTHIKA STUDIO spans the page */
+.bh-title{position:relative;z-index:1;margin:calc(-11*var(--k)) 0 0;font-weight:800;font-size:calc(var(--hs,10.85)*var(--k));line-height:.9;letter-spacing:-.06em;text-transform:uppercase;white-space:nowrap}
 .bh-title span{display:inline}
+.bh-title .dot,.bh-meta .dot{color:var(--accent)}
 .bh-title .t1{display:block;margin-bottom:.06em}
 .bh-cols{display:grid;grid-template-columns:1fr 1px 1fr;gap:calc(5.6*var(--k));margin-top:calc(4.4*var(--k));padding:0 calc(.5*var(--k))}
 .bh-col h2{margin:0 0 .6em;font-weight:700;font-size:max(18px,2.76*var(--k));line-height:1.18;letter-spacing:-.015em;text-transform:uppercase;max-width:13.2em}

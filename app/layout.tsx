@@ -10,14 +10,14 @@ import Interactions from "@/components/Interactions";
 import { Analytics } from "@vercel/analytics/next";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'http://localhost:3000');
-const description = 'The Deepthika Index — a personal collection of product design, engineering, creative experiments and research by Deepthika S.';
+const description = 'The Deepthika Studio — a personal collection of product design, engineering, creative experiments and research by Deepthika S.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: 'The Deepthika Index — A Personal Collection by Deepthika S',
+  title: 'The Deepthika Studio — A Personal Collection by Deepthika S',
   description,
   keywords: ['Deepthika S', 'product design', 'human-centred design', 'electronics', 'interaction design', 'creative AI', 'design research'],
-  openGraph: { title: 'The Deepthika Index — A Personal Collection by Deepthika S', description, type: 'website', siteName: 'The Deepthika Index', images: [{ url: '/images/og-index.png', width: 1200, height: 630, alt: 'The Deepthika Index — a personal collection by Deepthika S' }] },
+  openGraph: { title: 'The Deepthika Studio — A Personal Collection by Deepthika S', description, type: 'website', siteName: 'The Deepthika Studio', images: [{ url: '/images/og-index.png', width: 1200, height: 630, alt: 'The Deepthika Studio — a personal collection by Deepthika S' }] },
   twitter: { card: 'summary_large_image' },
 };
 

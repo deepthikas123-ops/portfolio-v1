@@ -5,7 +5,7 @@ export default function BadgeHero() {
   return (
     <section className="badge-hero" aria-labelledby="bh-title">
       <div className="bh-stage">
-        <p className="bh-meta bh-meta-left" aria-hidden="true">THE DEEPTHIKA INDEX</p>
+        <p className="bh-meta bh-meta-left" aria-hidden="true">THE DEEPTHIKA STUDIO<span className="dot">.</span></p>
         <p className="bh-meta bh-meta-right">A PERSONAL ARCHIVE<br />OF IDEAS, OBJECTS &amp;<br />EXPERIMENTS</p>
 
         {/*
@@ -20,7 +20,7 @@ export default function BadgeHero() {
         </Reveal>
 
         <Reveal delay={0.12} y={24}>
-          <h1 id="bh-title" className="bh-title"><span className="t1">THE</span> <span className="t2">DEEPTHIKA</span> <span className="t3">INDEX</span></h1>
+          <h1 id="bh-title" className="bh-title"><span className="t1">THE</span> <span className="t2">DEEPTHIKA</span> <span className="t3">STUDIO<span className="dot">.</span></span></h1>
         </Reveal>
 
         <Reveal className="bh-cols" delay={0.2} y={20}>

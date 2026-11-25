@@ -126,7 +126,7 @@ export default function About() {
   return <article className="editorial-about">
     <section className="curator-hero">
       <div className="wrap">
-        <div className="curator-topline"><span>THE DEEPTHIKA INDEX / 01</span><span>CURATOR'S NOTE · COIMBATORE, INDIA</span><span>EST. 2026</span></div>
+        <div className="curator-topline"><span>THE DEEPTHIKA STUDIO / 01</span><span>CURATOR'S NOTE · COIMBATORE, INDIA</span><span>EST. 2026</span></div>
         <div className="curator-hero-grid">
           <Reveal className="curator-portrait"><img src="/images/deepthika-portrait.jpg" alt="Portrait of Deepthika S, smiling, seated in a beige blazer and white shirt" width={1100} height={1251} /></Reveal>
           <div className="curator-copy">
