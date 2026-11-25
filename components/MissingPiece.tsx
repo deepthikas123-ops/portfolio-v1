@@ -219,8 +219,8 @@ export default function MissingPiece() {
             </h2>
           </div>
 
-          <div className={`pz-stage-wrap`}>
-            <div ref={stageRef} className={`pz-stage phase-${phase}`} style={style}>
+          <div className="pz-stage-wrap" style={style}>
+            <div ref={stageRef} className={`pz-stage phase-${phase}`}>
               <div className={`pz-puzzle${solved ? ' pulse' : ''}`}>
                 {PIECES.filter((p) => !p.missing).map((p) => (
                   <div
@@ -281,30 +281,27 @@ export default function MissingPiece() {
                 </div>
               )}
             </div>
-          </div>
-        </div>
+            <div ref={contactRef} className={`pz-contact${solved ? ' is-open' : ''}`}>
+              <ul className="pz-contact-inner">
+                {CONTACTS.map((c, i) => (
+                  <li key={c.id} style={{ ['--i' as string]: i } as React.CSSProperties}>
+                    <a
+                      className="pz-card"
+                      href={c.href}
+                      aria-label={c.aria}
+                      {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      tabIndex={solved ? 0 : -1}
+                    >
+                      <span className="pz-sym" aria-hidden="true">{c.symbol}</span>
+                      <span className="pz-lab">{c.label}</span>
+                      <span className="pz-arrow" aria-hidden="true">↗</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-        <div ref={contactRef} className={`pz-contact${solved ? ' is-open' : ''}`}>
-          <ul className="pz-contact-inner">
-            {CONTACTS.map((c, i) => (
-              <li key={c.id} style={{ ['--i' as string]: i } as React.CSSProperties}>
-                <a
-                  className="pz-card"
-                  href={c.href}
-                  aria-label={c.aria}
-                  {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                  tabIndex={solved ? 0 : -1}
-                >
-                  <span className="pz-sym" aria-hidden="true">{c.symbol}</span>
-                  <span className="pz-txt">
-                    <span className="pz-lab">{c.label}</span>
-                    <span className="pz-dest">{c.display}</span>
-                  </span>
-                  <span className="pz-arrow" aria-hidden="true">↗</span>
-                </a>
-              </li>
-            ))}
-          </ul>
+          </div>
         </div>
 
         <p className="pz-sr" role="status" aria-live="polite">

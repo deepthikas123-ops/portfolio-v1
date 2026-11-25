@@ -2,7 +2,7 @@
  * Config for "The Missing Piece" contact puzzle.
  *
  * Geometry is expressed in % of the assembled puzzle's WIDTH (so 100 = puzzle width),
- * measured from the supplied reference image after seating the four pieces edge-to-edge.
+ * measured from the supplied, already-assembled reference image (cut along the seams).
  * `x`/`y`/`w`/`h` describe each piece's PNG/WebP rectangle (including a few px of padding),
  * so every piece drops into the same coordinates it had when the puzzle was fitted.
  */
@@ -10,7 +10,7 @@
 export type PuzzlePiece = {
   id: 'tl' | 'tr' | 'bl' | 'br';
   src: string;
-  tone: 'orange' | 'grey';
+  tone: 'orange' | 'grey' | 'cream';
   label: string;
   x: number;
   y: number;
@@ -21,13 +21,13 @@ export type PuzzlePiece = {
 };
 
 /** Aspect ratio (width / height) of the assembled puzzle. */
-export const PUZZLE_RATIO = 1.1335;
+export const PUZZLE_RATIO = 1.0986;
 
 export const PIECES: PuzzlePiece[] = [
-  { id: 'tl', src: '/images/puzzle/piece-tl.webp', tone: 'orange', label: 'top-left', x: -0.44, y: -0.66, w: 51.073, h: 44.799 },
-  { id: 'tr', src: '/images/puzzle/piece-tr.webp', tone: 'grey', label: 'top-right', x: 48.982, y: -0.66, w: 51.293, h: 54.816 },
-  { id: 'bl', src: '/images/puzzle/piece-bl.webp', tone: 'grey', label: 'bottom-left', x: -0.66, y: 34.232, w: 59.659, h: 54.595 },
-  { id: 'br', src: '/images/puzzle/piece-br.webp', tone: 'orange', label: 'bottom-right', x: 48.597, y: 42.763, w: 52.064, h: 46.12, missing: true },
+  { id: 'tl', src: '/images/puzzle/piece-tl.webp', tone: 'grey', label: 'top-left', x: -0.31, y: -0.413, w: 51.496, h: 46.336 },
+  { id: 'tr', src: '/images/puzzle/piece-tr.webp', tone: 'cream', label: 'top-right', x: 37.564, y: -0.413, w: 62.848, h: 45.924 },
+  { id: 'bl', src: '/images/puzzle/piece-bl.webp', tone: 'cream', label: 'bottom-left', x: -0.413, y: 33.127, w: 62.642, h: 58.308 },
+  { id: 'br', src: '/images/puzzle/piece-br.webp', tone: 'orange', label: 'bottom-right', x: 48.607, y: 33.024, w: 51.806, h: 58.411, missing: true },
 ];
 
 export const MISSING = PIECES.find((p) => p.missing)!;
@@ -42,8 +42,8 @@ export const MISSING = PIECES.find((p) => p.missing)!;
 export type PuzzleLayout = { px: number; py: number; pw: number; sx: number; sy: number; sh: number };
 
 export const LAYOUTS: Record<'desktop' | 'mobile', PuzzleLayout> = {
-  desktop: { px: 0, py: 4, pw: 64, sx: 85, sy: 68, sh: 90 },
-  mobile: { px: 11, py: 2, pw: 78, sx: 64, sy: 96, sh: 118 },
+  desktop: { px: 0, py: 4, pw: 54, sx: 80, sy: 62, sh: 80 },
+  mobile: { px: 13, py: 2, pw: 74, sx: 62, sy: 97, sh: 119 },
 };
 
 /** The missing piece begins turned sideways and rotates upright as it nears the slot. */
@@ -74,14 +74,11 @@ export function geometry(l: PuzzleLayout) {
   };
 }
 
-/** Contact destinations. LinkedIn comes from the site's existing links (app/about/page.tsx, Footer). */
-export const BEHANCE_PLACEHOLDER = 'https://www.behance.net/REPLACE-WITH-YOUR-BEHANCE-USERNAME';
-
+/** Contact destinations (LinkedIn is the site's existing profile link). Only the label is shown; the link is the href. */
 export type ContactLink = {
   id: 'email' | 'linkedin' | 'behance';
   label: string;
   symbol: string;
-  display: string;
   href: string;
   external: boolean;
   aria: string;
@@ -92,16 +89,14 @@ export const CONTACTS: ContactLink[] = [
     id: 'email',
     label: 'EMAIL',
     symbol: '@',
-    display: 'hello@deepthika.studio',
-    href: 'mailto:hello@deepthika.studio',
+    href: 'mailto:deepthikas123@gmail.com',
     external: false,
-    aria: 'Email Deepthika at hello@deepthika.studio',
+    aria: 'Email Deepthika at deepthikas123@gmail.com',
   },
   {
     id: 'linkedin',
     label: 'LINKEDIN',
     symbol: 'in',
-    display: 'linkedin.com/in/deepthika365',
     href: 'https://www.linkedin.com/in/deepthika365/',
     external: true,
     aria: 'Deepthika on LinkedIn (opens in a new tab)',
@@ -110,9 +105,7 @@ export const CONTACTS: ContactLink[] = [
     id: 'behance',
     label: 'BEHANCE',
     symbol: 'Bē',
-    // TODO: no Behance URL exists anywhere in the site or project config — replace this placeholder.
-    display: 'behance.net/REPLACE-ME',
-    href: BEHANCE_PLACEHOLDER,
+    href: 'https://www.behance.net/deepthikas1',
     external: true,
     aria: 'Deepthika on Behance (opens in a new tab)',
   },
