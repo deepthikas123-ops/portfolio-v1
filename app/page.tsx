@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Reveal, Stagger, StaggerItem } from '@/components/Motion';
+import BadgeHero from '@/components/BadgeHero';
 import { projects } from '@/components/projects';
 
 function Cards({ items }: { items: typeof projects }) {
@@ -41,22 +42,7 @@ export default function Home() {
   const liveProjects = inCollection('project');
   const research = inCollection('research');
   return <>
-    <section className="index-hero">
-      <div className="index-hero-top"><span>PERSONAL COLLECTION / EST. 2026</span><span>COIMBATORE, INDIA</span></div>
-      <div className="index-hero-main">
-        <Reveal className="index-hero-copy">
-          <p className="index-eyebrow">THE DEEPTHIKA INDEX <span>— NO. 001</span></p>
-          <h1>An index of<br /><em>things that make me.</em></h1>
-          <p className="index-intro">A growing collection of objects, ideas, experiments and questions. Part design practice, part engineering notebook, part personal archive. Curated by Deepthika S.</p>
-          <div className="index-hero-actions"><a href="#collection" className="index-primary-link">Enter the collection <span>↓</span></a><Link href="/about" className="index-secondary-link">Read the curator’s note ↗</Link></div>
-        </Reveal>
-        <Reveal className="index-hero-art" delay={0.18}>
-          <div className="index-art-frame" aria-hidden="true"><span className="index-art-label label-top">A STUDY IN CURIOSITY</span><div className="index-art-object"><span>DS</span></div><span className="index-art-label label-bottom">ART × DESIGN × ENGINEERING</span></div>
-          <p className="index-art-caption" aria-hidden="true">Fig. 01 — A mind in several directions</p>
-        </Reveal>
-      </div>
-      <div className="index-hero-foot"><span>PLEASE TOUCH THE EXHIBITS. SOME OF THEM ARE INTERACTIVE.</span><span>SCROLL TO EXPLORE ↓</span></div>
-    </section>
+    <BadgeHero />
 
     <section className="index-note" id="collection"><div className="wrap index-note-grid">
       <Reveal><p className="index-section-kicker">01 / THE COLLECTION</p><h2>Not quite a portfolio.<br /><em>Not quite a diary.</em></h2></Reveal>

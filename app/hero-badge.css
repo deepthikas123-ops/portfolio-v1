@@ -1,0 +1,55 @@
+/* Landing-page hero: identification-badge composition. Scoped to .badge-hero only. */
+.badge-hero{--k:1cqw;background:#f6f4f1;color:#171717;padding:81px 0 0;overflow:hidden;font-family:Inter,Arial,sans-serif}
+.badge-hero .bh-stage{container-type:inline-size;position:relative;overflow:hidden;max-width:1060px;margin:0 auto;padding:0 clamp(20px,3vw,32px) clamp(56px,7vw,96px)}
+.bh-stage>*{min-width:0}
+/* stage content width = 100cqw. Mockup is 1122 wide: 1cqw ≈ 11.2px there. */
+.bh-meta{position:absolute;top:calc(4.8*var(--k));margin:0;font-weight:700;font-size:max(11px,1.96*var(--k));line-height:1.45;letter-spacing:.02em;text-transform:uppercase}
+.bh-meta-left{left:clamp(20px,3vw,32px)}
+.bh-meta-right{right:clamp(20px,3vw,32px);text-align:right}
+
+.bh-badge-wrap{position:relative;width:calc(40.55*var(--k));margin:0 auto;padding-top:calc(16.04*var(--k))}
+.bh-strap{position:absolute;left:50%;width:calc(8.9*var(--k));margin-left:calc(-4.45*var(--k));bottom:calc(100% - 7.8*var(--k));height:100vh;transform:none;background:linear-gradient(90deg,#0d0d0d,#2a2a2a 45%,#0d0d0d);}
+.bh-strap:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 6px,rgba(255,255,255,.035) 6px 7px)}
+.bh-clip{position:absolute;left:50%;top:calc(2.67*var(--k));width:calc(11.85*var(--k));margin-left:calc(-5.925*var(--k));height:auto;z-index:3;filter:drop-shadow(0 2px 2px rgba(0,0,0,.18))}
+.bh-holder{position:relative;margin:0;width:100%;aspect-ratio:455/680;border-radius:calc(2.4*var(--k));background:linear-gradient(135deg,rgba(255,255,255,.78),rgba(236,236,236,.55) 55%,rgba(255,255,255,.7));border:1px solid rgba(0,0,0,.09);box-shadow:inset 0 0 0 calc(.35*var(--k)) rgba(255,255,255,.7),0 calc(1.1*var(--k)) calc(2.2*var(--k)) rgba(0,0,0,.1)}
+.bh-card{container-type:inline-size;position:absolute;left:8.35%;width:84.4%;top:9.56%;aspect-ratio:384/575;background:#fff;border-radius:calc(.7*var(--k));box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+.bh-card>*{position:absolute;margin:0}
+.bh-card-title{left:7.8cqw;top:7.2cqw;font-weight:800;font-size:15.2cqw;line-height:.93;letter-spacing:-.045em}
+.bh-photo{left:19.7cqw;top:40.4cqw;width:60.7cqw;height:auto;aspect-ratio:800/842;object-fit:cover;display:block;filter:none!important}
+main .badge-hero img{filter:none!important;transition:none}
+.bh-row{left:4.9cqw;right:4.4cqw;display:flex;align-items:baseline;gap:2.6cqw;font-size:4.2cqw;line-height:1.2;white-space:nowrap}
+.bh-row b{font-weight:700}
+.bh-row span{flex:1;font-weight:400;border-bottom:.3cqw dotted rgba(0,0,0,.55);padding-bottom:1.3cqw;overflow:hidden;text-overflow:clip}
+.bh-row-1{top:110.4cqw}.bh-row-2{top:121.6cqw}
+.bh-bar{left:4.9cqw;right:4.4cqw;top:134.1cqw;height:2.6cqw;background:var(--accent)}
+.bh-acc{right:4.4cqw;top:139.6cqw;font-weight:700;font-size:4.1cqw;letter-spacing:.01em}
+
+/* headline: THE sits beside the lower edge of the badge, DEEPTHIKA INDEX spans the page */
+.bh-title{position:relative;z-index:1;margin:calc(-11*var(--k)) 0 0;font-weight:800;font-size:calc(var(--hs,12.05)*var(--k));line-height:.9;letter-spacing:-.06em;text-transform:uppercase;white-space:nowrap}
+.bh-title span{display:inline}
+.bh-title .t1{display:block;margin-bottom:.06em}
+.bh-cols{display:grid;grid-template-columns:1fr 1px 1fr;gap:calc(5.6*var(--k));margin-top:calc(4.4*var(--k));padding:0 calc(.5*var(--k))}
+.bh-col h2{margin:0 0 .6em;font-weight:700;font-size:max(18px,2.76*var(--k));line-height:1.18;letter-spacing:-.015em;text-transform:uppercase;max-width:13.2em}
+.bh-col:last-child h2{max-width:9.2em}
+.bh-col p{margin:0;font-weight:400;font-size:max(15px,2.05*var(--k));line-height:1.45;color:#171717;max-width:23em}
+.bh-rule{background:rgba(0,0,0,.45)}
+
+/* tablet */
+@media(max-width:900px){.badge-hero{--k:1cqw}.bh-meta{font-size:max(10px,1.9*var(--k))}}
+
+/* mobile: badge enlarged, headline stacked on three lines, columns stacked */
+@media(max-width:700px){
+  .badge-hero{padding-top:72px}
+  .badge-hero .bh-stage{--k:1.78cqw;padding-bottom:56px}
+  .bh-meta{font-size:9.5px;top:16px;letter-spacing:.02em}
+  .bh-badge-wrap{padding-top:calc(23.4*var(--k))}
+  .bh-clip{top:calc(10*var(--k))}
+  .bh-strap{bottom:calc(100% - 15.1*var(--k))}
+  .bh-title{margin-top:calc(2.4*var(--k));font-size:calc(10.45*var(--k));line-height:.9;letter-spacing:-.06em;white-space:normal}
+  .bh-title span{display:block}
+  .bh-title .t1{margin-bottom:0}
+  .bh-cols{grid-template-columns:1fr;gap:26px;margin-top:34px;padding:0}
+  .bh-rule{height:1px;width:100%}
+  .bh-col h2,.bh-col:last-child h2{font-size:19px;max-width:none}
+  .bh-col p{font-size:16px;max-width:none}
+}
