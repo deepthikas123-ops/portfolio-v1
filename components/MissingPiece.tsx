@@ -18,24 +18,35 @@ type Phase = 'idle' | 'drag' | 'key' | 'snap' | 'return' | 'done';
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 const smooth = (t: number) => t * t * (3 - 2 * t);
+const topPct = (y: number) => `${(y / (100 / PUZZLE_RATIO)) * 100}%`;
+
+/** Timings (ms) for the Stage 1 → Stage 2 hand-off. */
+const T = {
+  snap: 380, // the piece settles into its slot
+  hold: 820, // highlight + confirmation, measured from the snap landing
+  fadeOut: 450, // Stage 1 leaves
+  fadeIn: 650, // Stage 2 arrives (CSS owns the actual fade; this is when focus moves)
+};
 
 /**
- * "The Missing Piece" — a four-piece jigsaw. Three pieces are assembled; the visitor drags the
- * fourth (turned sideways) into the empty slot, which reveals the contact links.
+ * Two consecutive full-screen states in one section:
+ *  Stage 1 — "The Missing Piece": a four-piece jigsaw; drag the loose piece into the slot.
+ *  Stage 2 — "Before you leave": the contact links, revealed only after the puzzle is solved.
  * Pointer-driven (mouse/touch/pen) with a keyboard route (arrows to move, Enter/Space to place).
  */
 export default function MissingPiece() {
   const stageRef = useRef<HTMLDivElement>(null);
-  const contactRef = useRef<HTMLDivElement>(null);
+  const titleTwoRef = useRef<HTMLHeadingElement>(null);
   const [layoutKey, setLayoutKey] = useState<'desktop' | 'mobile'>('desktop');
   const [pos, setPos] = useState<Pos | null>(null); // null = resting at its start position (CSS default)
   const [phase, setPhase] = useState<Phase>('idle');
   const [near, setNear] = useState(0); // 0..1 proximity for the slot preview
-  const [solved, setSolved] = useState(false);
+  const [solved, setSolved] = useState(false); // puzzle complete: highlight + confirmation heading
+  const [s1On, setS1On] = useState(true); // Stage 1 visible
+  const [s2On, setS2On] = useState(false); // Stage 2 visible
   const [touched, setTouched] = useState(false);
   const drag = useRef<{ id: number; sx: number; sy: number; ox: number; oy: number; k: number; moved: boolean } | null>(null);
   const solvedOnce = useRef(false);
-  const viaKeyboard = useRef(false);
   const timers = useRef<number[]>([]);
 
   const L: PuzzleLayout = LAYOUTS[layoutKey];
@@ -53,6 +64,10 @@ export default function MissingPiece() {
 
   const later = (fn: () => void, ms: number) => {
     timers.current.push(window.setTimeout(fn, ms));
+  };
+  const clearTimers = () => {
+    timers.current.forEach((t) => window.clearTimeout(t));
+    timers.current = [];
   };
 
   const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -92,22 +107,26 @@ export default function MissingPiece() {
     [confine, rotationAt, G.preview],
   );
 
-  const solve = useCallback(() => {
+  /** Snap in → highlight → Stage 1 fades out → Stage 2 fades in. */
+  const solve = useCallback((viaKeyboard = false) => {
     if (solvedOnce.current) return;
     solvedOnce.current = true;
+    const rm = reduced();
+    const snap = rm ? 0 : T.snap;
+    const hold = rm ? 500 : T.hold;
     setPhase('snap');
     setPos({ x: 0, y: 0, r: 0 });
     setNear(0);
-    later(
-      () => {
-        setPhase('done');
-        setSolved(true);
-        if (viaKeyboard.current) {
-          later(() => contactRef.current?.querySelector<HTMLElement>('a')?.focus({ preventScroll: true }), 700);
-        }
-      },
-      reduced() ? 0 : 480,
-    );
+    later(() => {
+      setPhase('done');
+      setSolved(true);
+    }, snap);
+    later(() => setS1On(false), snap + hold);
+    later(() => {
+      setS2On(true);
+      later(() => titleTwoRef.current?.focus({ preventScroll: true }), viaKeyboard || rm ? 100 : T.fadeIn);
+    }, snap + hold + (rm ? 0 : T.fadeOut));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const sendBack = useCallback(() => {
@@ -115,7 +134,25 @@ export default function MissingPiece() {
     setPos(null);
     setNear(0);
     later(() => setPhase('idle'), reduced() ? 0 : 700);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  /** Replay: Stage 2 leaves, the puzzle resets, Stage 1 returns. */
+  const replay = () => {
+    clearTimers();
+    const rm = reduced();
+    setS2On(false);
+    later(() => {
+      solvedOnce.current = false;
+      drag.current = null;
+      setSolved(false);
+      setPos(null);
+      setPhase('idle');
+      setNear(0);
+      setTouched(false);
+      setS1On(true);
+    }, rm ? 0 : T.fadeOut);
+  };
 
   const current = (): { x: number; y: number } => (pos ? { x: pos.x, y: pos.y } : { x: G.ox, y: G.oy });
 
@@ -151,13 +188,10 @@ export default function MissingPiece() {
       setPhase('idle');
       return;
     }
-    const c = current();
-    // read the freshest position from the event instead of (possibly stale) state
     const x = d.ox + (e.clientX - d.sx) / d.k;
     const y = d.oy + (e.clientY - d.sy) / d.k;
     const p = confine(x, y, rotationAt(x, y));
-    const dist = e.type === 'pointercancel' ? Math.hypot(c.x, c.y) : Math.hypot(p.x, p.y);
-    if (e.type !== 'pointercancel' && dist <= G.snap) solve();
+    if (e.type !== 'pointercancel' && Math.hypot(p.x, p.y) <= G.snap) solve();
     else sendBack();
   };
 
@@ -174,8 +208,7 @@ export default function MissingPiece() {
       case 'ArrowDown': setPhase('key'); moveTo(c.x, c.y + step); break;
       case 'Enter':
       case ' ':
-        viaKeyboard.current = true;
-        solve();
+        solve(true);
         break;
       case 'Escape': sendBack(); break;
       default: handled = false;
@@ -202,110 +235,172 @@ export default function MissingPiece() {
     ? ({ transform: `translate(${pos.x}cqw, ${pos.y}cqw) rotate(${pos.r}deg)` } as React.CSSProperties)
     : undefined;
 
-  const hintAngle = (Math.atan2(-G.oy, -G.ox) * 180) / Math.PI;
+  /* dashed guide from the loose piece towards its slot (stage units: 1 = 1cqw) */
+  const arrow = (() => {
+    const ux = -G.ox / G.d0;
+    const uy = -G.oy / G.d0;
+    const x0 = L.sx + ux * (0.5 * G.pieceH + 3);
+    const y0 = L.sy + uy * (0.5 * G.pieceH + 3);
+    const x1 = L.sx + ux * G.d0 * 0.72;
+    const y1 = L.sy + uy * G.d0 * 0.72;
+    const mx = (x0 + x1) / 2 + -uy * 7;
+    const my = (y0 + y1) / 2 + ux * 7;
+    const ang = Math.atan2(y1 - my, x1 - mx);
+    const head = (a: number) => `${(x1 + Math.cos(ang + a) * 2.4).toFixed(2)},${(y1 + Math.sin(ang + a) * 2.4).toFixed(2)}`;
+    return {
+      path: `M${x0.toFixed(2)},${y0.toFixed(2)} Q${mx.toFixed(2)},${my.toFixed(2)} ${x1.toFixed(2)},${y1.toFixed(2)}`,
+      head: `M${head(Math.PI - 0.55)} L${x1.toFixed(2)},${y1.toFixed(2)} L${head(Math.PI + 0.55)}`,
+    };
+  })();
   const showHint = !touched && !solved;
 
   return (
-    <section className={`index-puzzle${solved ? ' is-solved' : ''}`} id="contact" aria-labelledby="pz-title">
-      <div className="wrap">
-        <div className="pz-grid">
-          <div className="pz-copy">
-            <p className="index-section-kicker">06 / THE MISSING PIECE</p>
-            <h2 id="pz-title" className="pz-title">
-              <span className="pz-line pz-line-a" aria-hidden={solved}>DRAG THE PIECE INTO PLACE<span className="pz-dot">.</span></span>
-              <span className="pz-line pz-line-b" aria-hidden={!solved}>
-                Looks like we&rsquo;ve found the <em>missing connection.</em>
-              </span>
+    <section
+      className={`index-puzzle${solved ? ' is-solved' : ''}${s2On ? ' on-two' : ''}`}
+      id="contact"
+      aria-label="Contact"
+    >
+      <div className="wrap pz-stages">
+        {/* ───────────── STAGE 1 · 06 / THE MISSING PIECE ───────────── */}
+        <div className={`pz-s1${s1On ? '' : ' is-off'}`} aria-hidden={!s1On}>
+          <div className="pz-grid">
+            <div className="pz-copy">
+              <p className="index-section-kicker">06 / THE MISSING PIECE</p>
+              <h2 id="pz-title" className="pz-title">
+                <span className="pz-line pz-line-a" aria-hidden={solved}>
+                  Something&rsquo;s<br />
+                  <em>missing.</em>
+                </span>
+                <span className="pz-line pz-line-b" aria-hidden={!solved}>
+                  Looks like we&rsquo;ve found the <em>missing connection.</em>
+                </span>
+              </h2>
+              <p className="pz-pill" aria-hidden={solved}>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M22 14a8 8 0 0 1-8 8" />
+                  <path d="M18 11v-1a2 2 0 0 0-2-2a2 2 0 0 0-2 2" />
+                  <path d="M14 10V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1" />
+                  <path d="M10 9.5V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v10" />
+                  <path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15" />
+                </svg>
+                <span>DRAG THE PIECE INTO PLACE.</span>
+              </p>
+            </div>
+
+            <div className="pz-stage-wrap" style={style}>
+              <div ref={stageRef} className={`pz-stage phase-${phase}`}>
+                <div className={`pz-puzzle${solved ? ' pulse' : ''}`}>
+                  {PIECES.filter((p) => !p.missing).map((p) => (
+                    <div
+                      key={p.id}
+                      className={`pz-piece pz-${p.tone}`}
+                      style={{ left: `${p.x}%`, top: topPct(p.y), width: `${p.w}%` }}
+                      aria-hidden="true"
+                    >
+                      <img src={p.src} alt="" draggable={false} />
+                    </div>
+                  ))}
+
+                  <div
+                    className="pz-ghost"
+                    aria-hidden="true"
+                    style={{
+                      left: `${MISSING.x}%`,
+                      top: topPct(MISSING.y),
+                      width: `${MISSING.w}%`,
+                      aspectRatio: `${MISSING.w} / ${MISSING.h}`,
+                      opacity: near * 0.6,
+                      WebkitMaskImage: `url(${MISSING.src})`,
+                      maskImage: `url(${MISSING.src})`,
+                    }}
+                  />
+
+                  <div
+                    className={`pz-piece pz-missing pz-${MISSING.tone}${phase === 'drag' ? ' is-drag' : ''}${solved ? ' is-placed' : ''}`}
+                    style={{ left: `${MISSING.x}%`, top: topPct(MISSING.y), width: `${MISSING.w}%`, ...pieceStyle }}
+                    role="button"
+                    tabIndex={s1On && !solved ? 0 : -1}
+                    aria-disabled={solved}
+                    aria-label={
+                      solved
+                        ? 'Puzzle piece, placed'
+                        : 'Missing puzzle piece, bottom right. Drag it into the empty slot, or use the arrow keys to move it and Enter to place it.'
+                    }
+                    onPointerDown={onPointerDown}
+                    onPointerMove={onPointerMove}
+                    onPointerUp={endDrag}
+                    onPointerCancel={endDrag}
+                    onKeyDown={onKeyDown}
+                  >
+                    <img src={MISSING.src} alt="" draggable={false} />
+                  </div>
+                </div>
+
+                {showHint && (
+                  <svg className="pz-guide" viewBox={`0 0 100 ${L.sh}`} preserveAspectRatio="none" aria-hidden="true">
+                    <path className="pz-guide-line" d={arrow.path} />
+                    <path className="pz-guide-head" d={arrow.head} />
+                  </svg>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ───────────── STAGE 2 · 07 / BEFORE YOU LEAVE ───────────── */}
+        <div className={`pz-s2${s2On ? ' is-on' : ''}`} aria-hidden={!s2On}>
+          <div className="pz-two-copy">
+            <p className="index-section-kicker">07 / BEFORE YOU LEAVE</p>
+            <h2 id="pz-title-two" className="pz-title-two" ref={titleTwoRef} tabIndex={-1}>
+              Have something
+              <br />
+              <em>interesting in mind?</em>
             </h2>
+            <p className="pz-desc">
+              I&rsquo;m always happy to talk about design, research, making, and ideas that refuse to sit in one category.
+            </p>
           </div>
 
-          <div className="pz-stage-wrap" style={style}>
-            <div ref={stageRef} className={`pz-stage phase-${phase}`}>
-              <div className={`pz-puzzle${solved ? ' pulse' : ''}`}>
-                {PIECES.filter((p) => !p.missing).map((p) => (
-                  <div
-                    key={p.id}
-                    className={`pz-piece pz-${p.tone}`}
-                    style={{ left: `${p.x}%`, top: `${(p.y / (100 / PUZZLE_RATIO)) * 100}%`, width: `${p.w}%` }}
-                    aria-hidden="true"
+          <div className="pz-two-row">
+            <ul className="pz-contact-inner">
+              {CONTACTS.map((c, i) => (
+                <li key={c.id} style={{ ['--i' as string]: i } as React.CSSProperties}>
+                  <a
+                    className="pz-card"
+                    href={c.href}
+                    aria-label={c.aria}
+                    {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    tabIndex={s2On ? 0 : -1}
                   >
-                    <img src={p.src} alt="" draggable={false} />
-                  </div>
+                    <span className="pz-sym" aria-hidden="true">{c.symbol}</span>
+                    <span className="pz-lab">{c.label}</span>
+                    <span className="pz-arrow" aria-hidden="true">↗</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <div className="pz-motif">
+              <div className="pz-mini" aria-hidden="true" style={{ aspectRatio: String(PUZZLE_RATIO) }}>
+                {PIECES.map((p) => (
+                  <img
+                    key={p.id}
+                    src={p.src}
+                    alt=""
+                    draggable={false}
+                    style={{ left: `${p.x}%`, top: topPct(p.y), width: `${p.w}%` }}
+                  />
                 ))}
-
-                <div
-                  className="pz-ghost"
-                  aria-hidden="true"
-                  style={{
-                    left: `${MISSING.x}%`,
-                    top: `${(MISSING.y / (100 / PUZZLE_RATIO)) * 100}%`,
-                    width: `${MISSING.w}%`,
-                    aspectRatio: `${MISSING.w} / ${MISSING.h}`,
-                    opacity: near * 0.6,
-                    WebkitMaskImage: `url(${MISSING.src})`,
-                    maskImage: `url(${MISSING.src})`,
-                  }}
-                />
-
-                <div
-                  className={`pz-piece pz-missing pz-${MISSING.tone}${phase === 'drag' ? ' is-drag' : ''}${solved ? ' is-placed' : ''}`}
-                  style={{
-                    left: `${MISSING.x}%`,
-                    top: `${(MISSING.y / (100 / PUZZLE_RATIO)) * 100}%`,
-                    width: `${MISSING.w}%`,
-                    ...pieceStyle,
-                  }}
-                  role="button"
-                  tabIndex={solved ? -1 : 0}
-                  aria-disabled={solved}
-                  aria-label={
-                    solved
-                      ? 'Puzzle piece, placed'
-                      : 'Missing puzzle piece, bottom right. Drag it into the empty slot, or use the arrow keys to move it and Enter to place it.'
-                  }
-                  onPointerDown={onPointerDown}
-                  onPointerMove={onPointerMove}
-                  onPointerUp={endDrag}
-                  onPointerCancel={endDrag}
-                  onKeyDown={onKeyDown}
-                >
-                  <img src={MISSING.src} alt="" draggable={false} />
-                </div>
               </div>
-
-              {showHint && (
-                <div className="pz-hint" aria-hidden="true" style={{ ['--ang' as string]: `${hintAngle}deg` } as React.CSSProperties}>
-                  <svg viewBox="0 0 40 24" width="40" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M3 12h32M26 4l9 8-9 8" />
-                  </svg>
-                </div>
-              )}
+              <button type="button" className="pz-replay" onClick={replay} tabIndex={s2On ? 0 : -1}>
+                <span aria-hidden="true">↺</span> Play again
+              </button>
             </div>
-            <div ref={contactRef} className={`pz-contact${solved ? ' is-open' : ''}`}>
-              <ul className="pz-contact-inner">
-                {CONTACTS.map((c, i) => (
-                  <li key={c.id} style={{ ['--i' as string]: i } as React.CSSProperties}>
-                    <a
-                      className="pz-card"
-                      href={c.href}
-                      aria-label={c.aria}
-                      {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                      tabIndex={solved ? 0 : -1}
-                    >
-                      <span className="pz-sym" aria-hidden="true">{c.symbol}</span>
-                      <span className="pz-lab">{c.label}</span>
-                      <span className="pz-arrow" aria-hidden="true">↗</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
           </div>
         </div>
 
         <p className="pz-sr" role="status" aria-live="polite">
-          {solved ? 'Looks like we’ve found the missing connection. Email, LinkedIn and Behance links are now available.' : ''}
+          {s2On ? 'Puzzle complete. Contact options are now available.' : solved ? 'Looks like we’ve found the missing connection.' : ''}
         </p>
       </div>
     </section>

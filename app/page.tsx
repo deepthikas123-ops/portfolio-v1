@@ -72,7 +72,5 @@ export default function Home() {
     </div></section>
 
     <MissingPiece />
-
-    <section className="index-endnote"><div className="wrap index-endnote-inner"><p className="index-section-kicker">07 / BEFORE YOU LEAVE</p><h2>Have something<br /><em>interesting in mind?</em></h2><p>I’m always happy to talk about design, research, making, and ideas that refuse to sit in one category.</p><a href="mailto:deepthikas123@gmail.com" className="index-primary-link">Get in touch ↗</a></div></section>
   </>;
 }
