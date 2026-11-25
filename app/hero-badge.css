@@ -10,9 +10,15 @@
 /* ---- badge: photographic layers, positioned in stage units (--k) ---- */
 .bh-badge-wrap{position:relative;width:calc(48*var(--k));margin:0 auto;padding-top:calc(18*var(--k))}
 .bh-layer{display:block;max-width:none;user-select:none;-webkit-user-drag:none;pointer-events:none}
-.bh-strap{position:absolute;left:50%;width:calc(10*var(--k));height:auto;margin-left:calc(-5*var(--k));bottom:calc(100% - 8.6*var(--k));z-index:1}
-/* hanger = clip + pouch. Swing hook: set --bh-swing (deg) on .bh-hanger; pivot is the clip ring. */
-.bh-hanger{position:relative;z-index:2;transform:rotate(var(--bh-swing,0deg));transform-origin:50% calc(-12*var(--k));
+.bh-strap{position:absolute;left:50%;width:calc(10*var(--k));margin-left:calc(-5*var(--k));bottom:calc(100% - 8.6*var(--k));z-index:1}
+.bh-strap>img{width:100%;height:auto}
+/* drag handles: strap and clip. touch-action is off only here, so the rest of the page scrolls normally */
+.bh-grab{pointer-events:auto;cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+.bh-strap:before{content:"";position:absolute;top:0;bottom:0;left:calc(-3*var(--k));right:calc(-3*var(--k))}
+.bh-strap:focus-visible{outline:2px solid var(--accent-strong);outline-offset:4px}
+body.bh-dragging,body.bh-dragging *{cursor:grabbing!important;-webkit-user-select:none;user-select:none}
+/* hanger = clip + pouch; BadgeRig sets its translate/rotate. Pivot is the clip ring. */
+.bh-hanger{position:relative;z-index:2;transform-origin:50% calc(-12*var(--k));
   filter:drop-shadow(0 calc(1.4*var(--k)) calc(1.6*var(--k)) rgba(30,25,20,.22)) drop-shadow(0 calc(.2*var(--k)) calc(.3*var(--k)) rgba(30,25,20,.25))}
 .bh-pouch{position:relative;width:100%;aspect-ratio:335/420}
 .bh-shell{position:absolute;inset:0;width:100%;height:100%;z-index:1}

@@ -1,4 +1,5 @@
 import { Reveal } from '@/components/Motion';
+import BadgeRig from '@/components/BadgeRig';
 
 export default function BadgeHero() {
   return (
@@ -10,35 +11,12 @@ export default function BadgeHero() {
         {/*
           Badge layers (bottom → top), each an independent element:
             strap   – hangs from the navigation bar
-            hanger  – group that will swing as one rigid body (pivot = clip ring, see --bh-swing in hero-badge.css)
+            hanger  – group that swings as one rigid body (pivot = clip ring); see components/BadgeRig.tsx
               pouch  – acrylic shell (shell image + card + gloss)
               clip   – metal swivel clip, attached through the shell's slot
         */}
         <Reveal className="bh-badge-wrap" y={20}>
-          <img className="bh-layer bh-strap" data-layer="strap" src="/images/badge/strap.png" alt="" aria-hidden="true" width={130} height={415} decoding="async" />
-          <div className="bh-hanger" data-layer="hanger">
-            <div className="bh-pouch" data-layer="pouch">
-              <img className="bh-layer bh-shell" data-layer="shell" src="/images/badge/shell.png" alt="" aria-hidden="true" width={670} height={840} decoding="async" />
-              <div className="bh-card" data-layer="card">
-                <p className="bh-card-title">CURATOR<br />&amp; MAKER</p>
-                <img
-                  className="bh-photo"
-                  src="/images/deepthika-badge.jpg"
-                  width={800}
-                  height={812}
-                  alt="Portrait of Deepthika S, smiling, in a tweed blazer and white shirt"
-                  fetchPriority="high"
-                  decoding="async"
-                />
-                <p className="bh-row bh-row-1"><b>NAME</b><span><img src="/images/badge/handwritten-name.png" alt="DEEPTHIKA S." /></span></p>
-                <p className="bh-row bh-row-2"><b>INTERESTS</b><span><img src="/images/badge/handwritten-interests.png" alt="Art × Design × Engineering" /></span></p>
-                <i className="bh-bar" aria-hidden="true" />
-                <p className="bh-acc">ACCESSION NO. 001</p>
-              </div>
-              <img className="bh-layer bh-gloss" data-layer="gloss" src="/images/badge/shell-gloss.png" alt="" aria-hidden="true" width={670} height={840} decoding="async" />
-            </div>
-            <img className="bh-layer bh-clip" data-layer="clip" src="/images/badge/clip.png" alt="" aria-hidden="true" width={470} height={630} decoding="async" />
-          </div>
+          <BadgeRig />
         </Reveal>
 
         <Reveal delay={0.12} y={24}>
