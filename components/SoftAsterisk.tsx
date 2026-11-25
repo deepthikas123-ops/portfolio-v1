@@ -5,9 +5,8 @@ import { useEffect, useRef } from 'react';
 /**
  * Soft Asterisk — the studio's signature mark.
  *
- * Six rounded, slightly irregular arms (each one differs a little in length,
- * width, lean and angle so it feels hand-cut rather than machined) that rotate
- * slowly and smoothly. The speed eases up on hover and eases back down when the
+ * Six identical, softly rounded arms in perfect six-fold symmetry, rotating
+ * smoothly and continuously. The speed eases up on hover and eases back down when the
  * pointer leaves. Under `prefers-reduced-motion` it stays still.
  *
  * Rotation is driven by requestAnimationFrame rather than a CSS animation so
@@ -36,27 +35,22 @@ type Props = {
   className?: string;
 };
 
-// [angle jitter°, length, tip half-width, base half-width, lean]
-const ARMS: ReadonlyArray<readonly [number, number, number, number, number]> = [
-  [0, 43, 8.2, 5.0, 0.8],
-  [3, 39, 7.4, 4.6, -0.6],
-  [-2, 44, 8.6, 5.2, 0.4],
-  [2, 38, 7.8, 4.8, -0.9],
-  [-3, 42, 8.0, 5.0, 0.7],
-  [1, 40, 7.2, 4.4, -0.4],
-];
-
+// One soft arm, mirror-symmetric about its own axis, pointing straight up from
+// the centre (50,50). Six identical copies at 60° steps make the whole mark
+// perfectly six-fold symmetric.
+const L = 43; // arm length (centre to tip)
+const WT = 8.4; // half-width at the rounded tip
+const WB = 5; // half-width at the base
 const r = (n: number) => Math.round(n * 10) / 10;
 
-// Each arm points straight up from (50,50) and is rotated into place.
-const ARM_PATHS = ARMS.map(([, L, wt, wb, lean]) =>
-  [
-    `M${r(50 - wb)} 50`,
-    `C${r(50 - wb - 1 + lean)} ${r(50 - L * 0.35)} ${r(50 - wt - 0.6)} ${r(50 - L * 0.7)} ${r(50 - wt)} ${r(50 - L + wt)}`,
-    `A${wt} ${r(wt * 1.05)} 0 0 1 ${r(50 + wt)} ${r(50 - L + wt)}`,
-    `C${r(50 + wt + 0.6 - lean * 0.5)} ${r(50 - L * 0.7)} ${r(50 + wb + 1)} ${r(50 - L * 0.35)} ${r(50 + wb)} 50Z`,
-  ].join(''),
-);
+const ARM = [
+  `M${r(50 - WB)} 50`,
+  `C${r(50 - WB - 1)} ${r(50 - L * 0.35)} ${r(50 - WT - 0.6)} ${r(50 - L * 0.7)} ${r(50 - WT)} ${r(50 - L + WT)}`,
+  `A${WT} ${WT} 0 0 1 ${r(50 + WT)} ${r(50 - L + WT)}`,
+  `C${r(50 + WT + 0.6)} ${r(50 - L * 0.7)} ${r(50 + WB + 1)} ${r(50 - L * 0.35)} ${r(50 + WB)} 50Z`,
+].join('');
+
+const ANGLES = [0, 60, 120, 180, 240, 300];
 
 export default function SoftAsterisk({
   size = 24,
@@ -149,8 +143,8 @@ export default function SoftAsterisk({
       style={{ display: 'inline-block', flex: 'none', willChange: 'transform' }}
     >
       {title ? <title>{title}</title> : null}
-      {ARM_PATHS.map((d, i) => (
-        <path key={i} d={d} transform={`rotate(${60 * i + ARMS[i][0]} 50 50)`} />
+      {ANGLES.map((deg) => (
+        <path key={deg} d={ARM} transform={`rotate(${deg} 50 50)`} />
       ))}
       <circle cx="50" cy="50" r="9" />
     </svg>

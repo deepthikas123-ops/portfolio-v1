@@ -1,5 +1,6 @@
 import { Reveal } from '@/components/Motion';
 import BadgeRig from '@/components/BadgeRig';
+import SoftAsterisk from '@/components/SoftAsterisk';
 
 export default function BadgeHero() {
   return (
@@ -15,6 +16,11 @@ export default function BadgeHero() {
               pouch  – acrylic shell (shell image + card + gloss)
               clip   – metal swivel clip, attached through the shell's slot
         */}
+        {/* signature mark: floats in the open space beside the badge, behind it */}
+        <div className="bh-asterisk">
+          <SoftAsterisk size="100%" duration={7} hoverSpeedUp={3.5} />
+        </div>
+
         <Reveal className="bh-badge-wrap" y={20}>
           <BadgeRig />
         </Reveal>
