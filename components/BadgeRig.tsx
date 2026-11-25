@@ -1,7 +1,8 @@
 'use client';
 
 import { animate, motion, useMotionValue, useReducedMotion, useTransform } from 'framer-motion';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 /**
  * Interactive retractable badge. Same layers as before (strap, shell, card, gloss, clip);
@@ -21,6 +22,18 @@ export default function BadgeRig() {
   const rootRef = useRef<HTMLDivElement>(null);
   const drag = useRef<null | { id: number; x0: number; y0: number; rawStart: number; samples: { t: number; x: number; y: number }[]; limit: number }>(null);
   const touched = useRef(false);
+
+  // "GRAB ME" cursor: follows the pointer over the handles; purely visual (pointer-events: none)
+  const [mode, setMode] = useState<'off' | 'grab' | 'hold'>('off');
+  const [hintGone, setHintGone] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const pillRef = useRef<HTMLDivElement>(null);
+  useEffect(() => setMounted(true), []);
+  const place = (e: React.PointerEvent) => {
+    const el = pillRef.current; if (!el) return;
+    el.style.transform = `translate3d(${e.clientX}px,${e.clientY}px,0) translate(-50%,-50%)`;
+  };
+  const finePointer = (e: React.PointerEvent) => e.pointerType !== 'touch';
 
   const limitPx = () => {
     const w = rootRef.current?.parentElement?.getBoundingClientRect().width ?? 480; // badge wrap = 48 stage units
@@ -59,9 +72,12 @@ export default function BadgeRig() {
     };
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
     document.body.classList.add('bh-dragging');
+    setHintGone(true);
+    if (finePointer(e)) { place(e); setMode('hold'); }
   };
 
   const onMove = (e: React.PointerEvent) => {
+    if (finePointer(e)) place(e);
     const d = drag.current; if (!d || e.pointerId !== d.id) return;
     const now = performance.now();
     d.samples.push({ t: now, x: e.clientX, y: e.clientY });
@@ -83,6 +99,10 @@ export default function BadgeRig() {
     drag.current = null;
     document.body.classList.remove('bh-dragging');
     try { (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId); } catch {}
+    if (finePointer(e)) {
+      const t = e.currentTarget as HTMLElement;
+      setMode(t.matches(':hover') ? 'grab' : 'off');
+    }
     const a = d.samples[0], b = d.samples[d.samples.length - 1];
     const dt = Math.max(b.t - a.t, 16);
     const stale = performance.now() - b.t > 120;          // held still before letting go => no throw
@@ -113,10 +133,19 @@ export default function BadgeRig() {
 
   const grab = {
     onPointerDown: onDown, onPointerMove: onMove, onPointerUp: end, onPointerCancel: end,
+    onPointerEnter: (e: React.PointerEvent) => { if (finePointer(e) && !drag.current) { place(e); setMode('grab'); } },
+    onPointerLeave: (e: React.PointerEvent) => { if (finePointer(e) && !drag.current) setMode('off'); },
   };
 
   return (
     <div ref={rootRef} className="bh-rig" style={{ display: 'contents' }}>
+      <span className={`bh-hint${hintGone ? ' is-gone' : ''}`} aria-hidden="true">GRAB ME</span>
+      {mounted && createPortal(
+        <div ref={pillRef} className={`bh-cursor${mode !== 'off' ? ' is-on' : ''}${mode === 'hold' ? ' is-hold' : ''}`} aria-hidden="true">
+          {mode === 'hold' ? 'HOLDING' : 'GRAB ME'}
+        </div>,
+        document.body,
+      )}
       <motion.div
         className="bh-strap bh-grab"
         data-layer="strap"

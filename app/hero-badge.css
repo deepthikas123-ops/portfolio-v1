@@ -52,13 +52,18 @@ main .badge-hero .bh-photo:hover{filter:grayscale(0)}
 .bh-col p{margin:0;font-weight:400;font-size:max(15px,2.05*var(--k));line-height:1.45;color:#171717;max-width:23em}
 .bh-rule{background:rgba(0,0,0,.45)}
 
+/* fit the first screen: scale the whole composition down when the viewport is short */
+@media(min-width:701px){
+  .badge-hero .bh-stage{max-width:min(1060px,calc((100vh - 101px)/.92 + 64px));max-width:min(1060px,calc((100svh - 101px)/.92 + 64px))}
+}
+
 /* tablet */
 @media(max-width:900px){.badge-hero{--k:1cqw}.bh-meta{font-size:max(10px,1.9*var(--k))}}
 
 /* mobile: badge enlarged, headline stacked on three lines, columns stacked */
 @media(max-width:700px){
   .badge-hero{padding-top:72px}
-  .badge-hero .bh-stage{--k:1.5cqw;padding-bottom:56px}
+  .badge-hero .bh-stage{--k:min(1.5cqw,calc((100vh - 88px)/100));--k:min(1.5cqw,calc((100svh - 88px)/100));padding-bottom:56px}
   .bh-meta{font-size:9.5px;top:16px;letter-spacing:.02em}
   .bh-title{margin-top:calc(2.4*var(--k));font-size:calc(10.45*var(--k));line-height:.9;letter-spacing:-.06em;white-space:normal}
   .bh-title span{display:block}
@@ -67,4 +72,20 @@ main .badge-hero .bh-photo:hover{filter:grayscale(0)}
   .bh-rule{height:1px;width:100%}
   .bh-col h2,.bh-col:last-child h2{font-size:19px;max-width:none}
   .bh-col p{font-size:16px;max-width:none}
+}
+
+/* ---- "GRAB ME" cursor (fine pointers, over the strap/clip handles only) ---- */
+.bh-cursor{position:fixed;left:0;top:0;z-index:120;pointer-events:none;display:flex;align-items:center;justify-content:center;height:30px;padding:0 14px;border-radius:999px;background:var(--accent);color:#171717;font:600 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;opacity:0;scale:.7;transition:opacity .16s ease,scale .2s cubic-bezier(.2,.7,.2,1);will-change:transform}
+.bh-cursor.is-on{opacity:1;scale:1}
+.bh-cursor.is-hold{scale:.92}
+@media (hover:hover) and (pointer:fine){
+  .bh-grab{cursor:none}
+  body.bh-dragging,body.bh-dragging *{cursor:none!important}
+}
+@media (prefers-reduced-motion:reduce){.bh-cursor{transition:none}}
+/* touch: small static hint beside the strap, dismissed after the first pull */
+.bh-hint{display:none}
+@media (hover:none) and (pointer:coarse){
+  .bh-hint{display:flex;align-items:center;position:absolute;z-index:5;pointer-events:none;right:calc(50% + 8.5*var(--k));top:calc(9.8*var(--k));height:24px;padding:0 11px;border-radius:999px;background:var(--accent);color:#171717;font:600 10px/1 Inter,Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;transition:opacity .4s ease}
+  .bh-hint.is-gone{opacity:0}
 }
