@@ -20,8 +20,6 @@ export type Project = {
   cover?: string;
   /** CSS class for a generated cover when no image exists (e.g. 'fog-cover'). */
   coverClass?: string;
-  /** Feature this project as a full-width card on the home page. */
-  featured?: boolean;
 };
 
 type ProjectInput = Omit<Project, 'index'>;
@@ -44,7 +42,6 @@ const list: ProjectInput[] = [
     discipline: 'Product Design · Electronics',
     live: true,
     cover: '/images/setucover.png',
-    featured: true,
   },
   {
     slug: 'eco-shield',
@@ -54,7 +51,6 @@ const list: ProjectInput[] = [
     discipline: 'Biomimetic Design',
     live: true,
     cover: '/images/ecoshieldcover.png',
-    featured: true,
   },
   {
     slug: 'morse-code-vault',
@@ -64,7 +60,6 @@ const list: ProjectInput[] = [
     discipline: 'Electronics',
     live: true,
     cover: '/images/morse-cover.jpg',
-    featured: true,
   },
   {
     slug: 'atomic-user-model',
@@ -94,11 +89,10 @@ const list: ProjectInput[] = [
     live: true,
     cover: '/images/flavovr-system-architecture.png',
     coverClass: 'fit-contain',
-    featured: true,
   },
   {
     slug: 'kaaya',
-    collection: 'project',
+    collection: 'research',
     title: 'KAAYA',
     subtitle: 'Blind drawing through the body, interpreted by a machine',
     discipline: 'Creative AI',
@@ -122,6 +116,7 @@ const list: ProjectInput[] = [
     discipline: 'Human–AI Trust',
     live: true,
     cover: '/images/calculator-fallacy-cover-placeholder.png',
+    coverClass: 'fit-contain fit-light',
   },
   {
     slug: 'llm-conformity',
@@ -145,11 +140,16 @@ export function getProject(slug: string): Project {
   return p;
 }
 
-/** Previous / next project, wrapping around the registry. */
+/**
+ * Previous / next project, wrapping around the registry. Projects that are not
+ * live yet are skipped so readers never land on a "coming soon" dead end; the
+ * current slug is always kept so a not-yet-live page can still find its place.
+ */
 export function getNeighbours(slug: string) {
-  const idx = projects.findIndex((p) => p.slug === slug);
+  const navigable = projects.filter((p) => p.live || p.slug === slug);
+  const idx = navigable.findIndex((p) => p.slug === slug);
   return {
-    prev: projects[(idx - 1 + projects.length) % projects.length],
-    next: projects[(idx + 1) % projects.length],
+    prev: navigable[(idx - 1 + navigable.length) % navigable.length],
+    next: navigable[(idx + 1) % navigable.length],
   };
 }

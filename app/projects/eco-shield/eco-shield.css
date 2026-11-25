@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: #3a3226;
+  background: var(--dark);
 }
 .eco-hero .bg {
   position: absolute;
@@ -59,14 +59,14 @@
   line-height: 1.5;
 }
 .eco-hero .copy {
-  color: #fdfef9;
+  color: #fff;
   max-width: 520px;
 }
 .eco-hero .kicker {
   font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--lime);
+  color: var(--accent);
   margin-bottom: 16px;
 }
 .eco-hero h1 {
@@ -116,8 +116,8 @@
   display: flex;
   align-items: flex-start;
   overflow: hidden;
-  color: #fdfef9;
-  background: #2f2a22;
+  color: #fff;
+  background: var(--dark-2);
 }
 .eco-sun .bg {
   position: absolute;
@@ -139,7 +139,7 @@
   font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--lime);
+  color: var(--accent);
   margin-bottom: 18px;
 }
 .eco-sun h2 {
@@ -158,7 +158,7 @@
   color: rgba(253, 254, 249, 0.88);
 }
 .eco-sun p strong {
-  color: #fdfef9;
+  color: #fff;
   font-weight: 600;
 }
 
@@ -174,13 +174,13 @@
 }
 
 /* ---- 03 nature ---- */
-.nature-grid {
+.eco-nature-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: clamp(28px, 5vw, 72px);
   margin-top: 46px;
 }
-.organism .hero-img {
+.eco-organism .hero-img {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: contain;
@@ -188,28 +188,28 @@
   background: #fff;
   border-radius: 4px;
 }
-.organism h3 {
+.eco-organism h3 {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(24px, 2.6vw, 32px);
   margin-top: 26px;
 }
-.organism .lede {
+.eco-organism .lede {
   margin-top: 10px;
   font-size: 15px;
   line-height: 1.75;
   color: var(--ink-soft);
 }
-.organism .circles {
+.eco-organism .circles {
   display: flex;
   gap: clamp(18px, 3vw, 34px);
   margin-top: 28px;
 }
-.organism .circles figure {
+.eco-organism .circles figure {
   margin: 0;
   text-align: center;
 }
-.organism .circles img {
+.eco-organism .circles img {
   width: clamp(110px, 12vw, 150px);
   height: clamp(110px, 12vw, 150px);
   border-radius: 50%;
@@ -217,22 +217,22 @@
   display: block;
   border: 1px solid rgba(45, 45, 38, 0.35);
 }
-.organism .circles figcaption {
+.eco-organism .circles figcaption {
   margin-top: 10px;
   font-size: 12.5px;
   color: var(--ink-soft);
 }
-.organism .mechanism {
+.eco-organism .mechanism {
   margin-top: 26px;
   padding: 16px 20px;
   background: var(--panel);
-  border-left: 3px solid var(--lime);
+  border-left: 3px solid var(--accent);
   font-size: 14px;
   line-height: 1.7;
   border-radius: 2px;
 }
 @media (max-width: 760px) {
-  .nature-grid {
+  .eco-nature-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -267,41 +267,41 @@
 }
 
 /* ---- 06 applications ---- */
-.apps {
+.eco-apps {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(16px, 2.6vw, 34px);
   margin-top: 44px;
 }
-.app img {
+.eco-app img {
   width: 100%;
   aspect-ratio: 3 / 2;
   object-fit: cover;
   display: block;
   border-radius: 4px;
 }
-.app .app-n {
+.eco-app .eco-app-n {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(30px, 3.4vw, 42px);
   line-height: 1;
   margin-top: 22px;
-  color: var(--lime);
+  color: var(--accent);
 }
-.app h4 {
+.eco-app h4 {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 19px;
   margin-top: 10px;
 }
-.app p {
+.eco-app p {
   margin-top: 8px;
   font-size: 13.5px;
   line-height: 1.6;
   color: var(--ink-soft);
 }
 @media (max-width: 760px) {
-  .apps {
+  .eco-apps {
     grid-template-columns: 1fr;
   }
 }

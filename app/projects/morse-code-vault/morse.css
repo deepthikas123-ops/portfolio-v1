@@ -13,7 +13,7 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: #3a2422;
+  background: var(--dark);
 }
 .morse-hero .bg {
   position: absolute;
@@ -64,14 +64,14 @@
   line-height: 1.5;
 }
 .morse-hero .copy {
-  color: #fdfef9;
+  color: #fff;
   max-width: 540px;
 }
 .morse-hero .kicker {
   font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--lime);
+  color: var(--accent);
   margin-bottom: 16px;
 }
 .morse-hero h1 {
@@ -129,30 +129,30 @@
   margin-top: 24px;
   max-width: 460px;
 }
-.opportunity {
+.morse-opportunity {
   background: var(--paper);
   border-left: 4px solid #b3261e;
   padding: clamp(22px, 3vw, 34px);
   border-radius: 2px;
 }
-.opportunity h3 {
+.morse-opportunity h3 {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(21px, 2.3vw, 27px);
   line-height: 1.25;
   margin-top: 6px;
 }
-.opportunity p {
+.morse-opportunity p {
   margin-top: 14px;
   font-size: 15px;
   line-height: 1.75;
   color: var(--ink-soft);
 }
-.opportunity p strong {
+.morse-opportunity p strong {
   color: var(--ink);
   font-weight: 600;
 }
-.opportunity .arrow-line {
+.morse-opportunity .arrow-line {
   margin-top: 22px;
   padding-top: 16px;
   border-top: 1px solid var(--line);
@@ -161,7 +161,7 @@
   text-transform: uppercase;
   color: var(--ink);
 }
-.opportunity .tag {
+.morse-opportunity .tag {
   font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;

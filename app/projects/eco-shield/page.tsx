@@ -188,8 +188,8 @@ export default function EcoShieldPage() {
             <p className="tag">03 / Nature as inspiration</p>
             <h2 className="section-title">Two Organisms That Already Solved It</h2>
           </Reveal>
-          <div className="nature-grid">
-            <Reveal className="organism">
+          <div className="eco-nature-grid">
+            <Reveal className="eco-organism">
               <img
                 className="hero-img"
                 src="/images/eco-shield-edelweiss.jpg"
@@ -222,7 +222,7 @@ export default function EcoShieldPage() {
                 cell.
               </p>
             </Reveal>
-            <Reveal className="organism" delay={0.1}>
+            <Reveal className="eco-organism" delay={0.1}>
               <img
                 className="hero-img"
                 src="/images/eco-shield-moth.png"
@@ -382,11 +382,11 @@ export default function EcoShieldPage() {
               need to be managed.
             </p>
           </Reveal>
-          <Stagger className="apps">
+          <Stagger className="eco-apps">
             {applications.map((a) => (
-              <StaggerItem key={a.n} className="app">
+              <StaggerItem key={a.n} className="eco-app">
                 <img src={a.img} alt={a.alt} loading="lazy" />
-                <div className="app-n">{a.n}</div>
+                <div className="eco-app-n">{a.n}</div>
                 <h4>{a.t}</h4>
                 <p>{a.items}</p>
               </StaggerItem>

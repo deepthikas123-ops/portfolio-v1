@@ -3,11 +3,11 @@ import { Reveal, Stagger, StaggerItem } from '@/components/Motion';
 import { projects } from '@/components/projects';
 
 function Cards({ items }: { items: typeof projects }) {
-  return <Stagger className="index-card-grid">{items.map((p) => (
-    <StaggerItem key={p.slug}>
+  return <Stagger as="ul" className="index-card-grid">{items.map((p) => (
+    <StaggerItem as="li" key={p.slug}>
       <Link href={`/projects/${p.slug}`} className="index-card">
         <div className={`index-card-image ${p.coverClass ?? ''}`}>
-          {p.cover ? <img src={p.cover} alt={p.title} loading="lazy" /> : <span>{p.title}</span>}
+          {p.cover ? <img src={p.cover} alt="" loading="lazy" /> : <span aria-hidden="true">{p.title}</span>}
           <span className="index-card-number">EXHIBIT {p.index}</span>
         </div>
         <div className="index-card-copy">
@@ -35,8 +35,8 @@ export default function Home() {
           <div className="index-hero-actions"><a href="#collection" className="index-primary-link">Enter the collection <span>↓</span></a><Link href="/about" className="index-secondary-link">Read the curator’s note ↗</Link></div>
         </Reveal>
         <Reveal className="index-hero-art" delay={0.18}>
-          <div className="index-art-frame"><span className="index-art-label label-top">A STUDY IN CURIOSITY</span><div className="index-art-orbit orbit-one" /><div className="index-art-orbit orbit-two" /><div className="index-art-object"><span>DS</span></div><span className="index-art-label label-bottom">ART × DESIGN × ENGINEERING</span></div>
-          <p className="index-art-caption">Fig. 01 — A mind in several directions</p>
+          <div className="index-art-frame" aria-hidden="true"><span className="index-art-label label-top">A STUDY IN CURIOSITY</span><div className="index-art-object"><span>DS</span></div><span className="index-art-label label-bottom">ART × DESIGN × ENGINEERING</span></div>
+          <p className="index-art-caption" aria-hidden="true">Fig. 01 — A mind in several directions</p>
         </Reveal>
       </div>
       <div className="index-hero-foot"><span>PLEASE TOUCH THE EXHIBITS. SOME OF THEM ARE INTERACTIVE.</span><span>SCROLL TO EXPLORE ↓</span></div>

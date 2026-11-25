@@ -172,7 +172,7 @@ export default function MorseCodeLogicGamePage() {
                 />
               </div>
             </Reveal>
-            <Reveal className="opportunity" delay={0.1}>
+            <Reveal className="morse-opportunity" delay={0.1}>
               <p className="tag">The opportunity</p>
               <h3>What if children could learn digital logic by playing with it?</h3>
               <p>

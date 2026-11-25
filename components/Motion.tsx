@@ -50,13 +50,16 @@ export function Reveal({
 export function Stagger({
   children,
   className,
+  as = "div",
 }: {
   children: React.ReactNode;
   className?: string;
+  as?: "div" | "ul" | "ol" | "section";
 }) {
   const reduce = useReducedMotion();
+  const Tag = motion[as];
   return (
-    <motion.div
+    <Tag
       className={className}
       initial="hidden"
       animate={reduce ? "show" : undefined}
@@ -68,7 +71,7 @@ export function Stagger({
       }}
     >
       {children}
-    </motion.div>
+    </Tag>
   );
 }
 
@@ -76,14 +79,17 @@ export function StaggerItem({
   children,
   className,
   style,
+  as = "div",
 }: {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  as?: "div" | "li";
 }) {
   const reduce = useReducedMotion();
+  const Tag = motion[as];
   return (
-    <motion.div
+    <Tag
       className={className}
       style={style}
       variants={{
@@ -98,7 +104,7 @@ export function StaggerItem({
       }}
     >
       {children}
-    </motion.div>
+    </Tag>
   );
 }
 
