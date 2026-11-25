@@ -5,25 +5,42 @@ import { projects } from '@/components/projects';
 function Cards({ items }: { items: typeof projects }) {
   return <Stagger as="ul" className="index-card-grid">{items.map((p) => (
     <StaggerItem as="li" key={p.slug}>
-      <Link href={`/projects/${p.slug}`} className="index-card">
-        <div className={`index-card-image ${p.coverClass ?? ''}`}>
-          {p.cover ? <img src={p.cover} alt="" loading="lazy" /> : <span aria-hidden="true">{p.title}</span>}
-          <span className="index-card-number">EXHIBIT {p.index}</span>
+      {p.live ? (
+        <Link href={`/projects/${p.slug}`} className="index-card">
+          <div className={`index-card-image ${p.coverClass ?? ''}`}>
+            {p.cover ? <img src={p.cover} alt="" loading="lazy" /> : <span aria-hidden="true">{p.title}</span>}
+            <span className="index-card-number">EXHIBIT {p.index}</span>
+          </div>
+          <div className="index-card-copy">
+            <span className="index-card-discipline">{p.discipline}</span>
+            <h3>{p.title}</h3><p>{p.subtitle}</p>
+            <span className="index-card-link">Explore case study ↗</span>
+          </div>
+        </Link>
+      ) : (
+        <div className="index-card is-placeholder">
+          <div className={`index-card-image ${p.coverClass ?? ''}`}>
+            {p.cover ? <img src={p.cover} alt="" loading="lazy" /> : <span aria-hidden="true">{p.title}</span>}
+            <span className="index-card-number">EXHIBIT {p.index}</span>
+            <span className="index-card-soon">COMING SOON</span>
+          </div>
+          <div className="index-card-copy">
+            <span className="index-card-discipline">{p.discipline}</span>
+            <h3>{p.title}</h3><p>{p.subtitle}</p>
+            <span className="index-card-link is-soon">Documentation in progress</span>
+          </div>
         </div>
-        <div className="index-card-copy">
-          <span className="index-card-discipline">{p.discipline}</span>
-          <h3>{p.title}</h3><p>{p.subtitle}</p>
-          <span className="index-card-link">Explore case study ↗</span>
-        </div>
-      </Link>
+      )}
     </StaggerItem>
   ))}</Stagger>;
 }
 
 export default function Home() {
-  const liveProjects = projects.filter((p) => p.live && p.collection === 'project');
-  const research = projects.filter((p) => p.live && p.collection === 'research');
-  const archived = projects.filter((p) => !p.live);
+  // live case studies first, then "coming soon" placeholders (sort is stable, so registry order is kept)
+  const inCollection = (c: 'project' | 'research') =>
+    projects.filter((p) => p.collection === c).sort((a, b) => Number(b.live) - Number(a.live));
+  const liveProjects = inCollection('project');
+  const research = inCollection('research');
   return <>
     <section className="index-hero">
       <div className="index-hero-top"><span>PERSONAL COLLECTION / EST. 2026</span><span>COIMBATORE, INDIA</span></div>
@@ -50,7 +67,6 @@ export default function Home() {
     <section className="index-collection-section" id="projects"><div className="wrap">
       <div className="index-section-heading"><div><p className="index-section-kicker">02 / THINGS I HAVE MADE</p><h2>Projects <span>({String(liveProjects.length).padStart(2,'0')})</span></h2></div><p>Prototypes, products and playful attempts at making an idea tangible.</p></div>
       <Cards items={liveProjects} />
-      {archived.length > 0 && <div className="index-archive"><p className="index-section-kicker">IN THE WORKSHOP / STILL TAKING SHAPE</p>{archived.map((p) => <div className="index-archive-row" key={p.slug}><span>EXHIBIT {p.index}</span><strong>{p.title}</strong><span>{p.subtitle}</span><span>Documentation in progress</span></div>)}</div>}
     </div></section>
 
     <section className="index-research-section" id="research"><div className="wrap">

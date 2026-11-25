@@ -92,7 +92,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
 .index-card-image img{width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:transform .7s,filter .5s}
 .index-card-image.fit-contain img{object-fit:contain;padding:22px}
 .index-card-image.fit-light{background:#fff}
-.index-card-image>span:not(.index-card-number){font:700 30px Inter,Arial,sans-serif;letter-spacing:-.04em;color:#fff}
+.index-card-image>span:not(.index-card-number):not(.index-card-soon){font:700 30px Inter,Arial,sans-serif;letter-spacing:-.04em;color:#fff}
 .index-card:hover .index-card-image img{transform:scale(1.045);filter:grayscale(.35)}
 .index-card-image:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 45%,rgba(240,82,35,.18));pointer-events:none}
 .index-card-number{position:absolute;left:18px;top:18px;z-index:1;background:var(--accent-strong);color:#fff;padding:9px 12px;font:700 11px Inter,Arial,sans-serif;letter-spacing:.1em}
@@ -100,11 +100,14 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
 .index-card-discipline{font:700 11px Inter,Arial,sans-serif;letter-spacing:.12em;color:var(--accent-strong);text-transform:uppercase}
 .index-card-copy h3{font:700 clamp(23px,3vw,36px)/1 Inter,Arial,sans-serif;letter-spacing:-.06em;margin:12px 0}
 .index-card-copy p{font-size:13px;line-height:1.6;color:#626262;max-width:500px}
+.index-card.is-placeholder{background:#f7f7f5;outline:1px dashed rgba(23,23,23,.28);outline-offset:-1px;cursor:default}
+.index-research-section .index-card.is-placeholder{background:#fbfbfa}
+.index-card.is-placeholder:hover{transform:none;box-shadow:none}
+.index-card.is-placeholder .index-card-image img{filter:grayscale(1) opacity(.55)}
+.index-card.is-placeholder:hover .index-card-image img{transform:none;filter:grayscale(1) opacity(.55)}
+.index-card-soon{position:absolute;right:18px;top:18px;z-index:1;background:#fff;color:#171717;padding:9px 12px;font:700 11px Inter,Arial,sans-serif;letter-spacing:.1em}
+.index-card-link.is-soon{border-bottom:0;padding-bottom:0;color:#626262;font-weight:600}
 .index-card-link{display:inline-flex;margin-top:22px;font-size:12px;font-weight:700;border-bottom:1px solid #171717;padding-bottom:5px}
-.index-archive{margin-top:70px;border-top:1px solid var(--line)}
-.index-archive .index-section-kicker{margin-top:22px}
-.index-archive-row{display:grid;grid-template-columns:100px 1fr 1.4fr 1fr;gap:18px;padding:18px 0;border-bottom:1px solid var(--line);font-size:12px;color:#626262}
-.index-archive-row strong{color:#171717}
 
 /* maker (dark) */
 .index-maker-section{background:#171717;color:#fff;border-bottom:0}
@@ -192,6 +195,11 @@ a.curator-list-item:hover h3{color:var(--accent-strong)}
 .curator-list-item h3{font:700 clamp(17px,1.7vw,22px)/1.25 Inter,Arial,sans-serif;letter-spacing:-.04em;transition:color .2s}
 .curator-list-item p{margin-top:8px;font-size:13px;line-height:1.7;color:#555;max-width:720px}
 .curator-list-item .meta{font:600 11px Inter,Arial,sans-serif;letter-spacing:.1em;color:#6b6b6b;text-align:right;white-space:nowrap;padding-top:5px}
+.curator-bullets{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:10px;max-width:760px}
+.curator-bullets li{position:relative;padding-left:18px;font-size:13px;line-height:1.7;color:#555}
+.curator-bullets li:before{content:"";position:absolute;left:0;top:.7em;width:8px;height:2px;background:var(--accent)}
+.curator-list-item.is-soon{background:repeating-linear-gradient(135deg,transparent 0 10px,rgba(23,23,23,.025) 10px 20px)}
+.curator-list-item.is-soon .meta{color:#6b6b6b}
 .curator-awards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .curator-award{padding:24px 26px;background:#f2f2f0;border-left:4px solid var(--accent)}
 .curator-award h3{font:700 17px/1.3 Inter,Arial,sans-serif;letter-spacing:-.03em;margin-bottom:8px}
@@ -264,10 +272,7 @@ main section img[src*="/fv-"],main section img[src*="heatmap"],main section img[
  .index-art-frame{height:330px}
  .index-section-heading{align-items:start;flex-direction:column}
  .index-card-grid{grid-template-columns:1fr}
- .index-archive-row{grid-template-columns:78px 1fr;gap:6px 14px}
- .index-archive-row span:nth-child(3),.index-archive-row span:nth-child(4){grid-column:2;font-size:12px}
- .index-archive-row span:nth-child(4){color:#6b6b6b;font-weight:600}
- .index-intersection{max-width:380px}
+    .index-intersection{max-width:380px}
  .curator-portrait{max-width:330px}
  .curator-hero{padding-top:108px}
  .curator-section-head{grid-template-columns:1fr;gap:10px}

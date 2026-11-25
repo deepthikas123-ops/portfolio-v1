@@ -127,6 +127,24 @@ const list: ProjectInput[] = [
     live: true,
     cover: '/images/llm-conformity-cover-placeholder.png',
   },
+  // ---- placeholders: shown as "coming soon" cards until `live: true` and a page exists ----
+  {
+    slug: 'kaaya-wearable',
+    collection: 'project',
+    title: 'KAAYA — The Wearable',
+    subtitle: 'The wearable IMU-to-generative-art system behind the paper: hardware build and prototype documentation',
+    discipline: 'Wearable · Electronics',
+    live: false,
+    cover: '/images/kaaya-cover-placeholder.png',
+  },
+  {
+    slug: 'synthetic-consensus',
+    collection: 'research',
+    title: 'When a Hundred Machines Agree to Disagree',
+    subtitle: 'Visualising synthetic consensus, conflict and compromise among agents in AI-assisted design ideation',
+    discipline: 'Design Research · Information+ 2027',
+    live: false,
+  },
 ];
 
 export const projects: Project[] = list.map((p, i) => ({
