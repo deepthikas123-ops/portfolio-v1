@@ -137,6 +137,9 @@ export default function BadgeRig() {
     onPointerLeave: (e: React.PointerEvent) => { if (finePointer(e) && !drag.current) setMode('off'); },
   };
 
+  // The pouch (shell + card) is a handle too, for mouse and pen. Touch keeps scrolling the page normally there.
+  const grabPouch = { ...grab, onPointerDown: (e: React.PointerEvent) => { if (finePointer(e)) onDown(e); } };
+
   return (
     <div ref={rootRef} className="bh-rig" style={{ display: 'contents' }}>
       <span className={`bh-hint${hintGone ? ' is-gone' : ''}`} aria-hidden="true">GRAB ME</span>
@@ -159,7 +162,7 @@ export default function BadgeRig() {
         <img className="bh-layer" draggable={false} src="/images/badge/strap.png" alt="" aria-hidden="true" width={130} height={415} decoding="async" />
       </motion.div>
       <motion.div className="bh-hanger" data-layer="hanger" style={{ y: shownY, rotate: angle }}>
-        <div className="bh-pouch" data-layer="pouch">
+        <div className="bh-pouch bh-grab-pouch" data-layer="pouch" {...grabPouch}>
           <img className="bh-layer bh-shell" data-layer="shell" src="/images/badge/shell.png" alt="" aria-hidden="true" width={670} height={840} decoding="async" />
           <div className="bh-card" data-layer="card">
             <p className="bh-card-title">CURATOR<br />&amp; MAKER</p>

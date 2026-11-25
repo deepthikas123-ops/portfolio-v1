@@ -76,12 +76,13 @@ main .badge-hero .bh-photo:hover{filter:grayscale(0)}
   .bh-col p{font-size:16px;max-width:none}
 }
 
-/* ---- "GRAB ME" cursor (fine pointers, over the strap/clip handles only) ---- */
+/* ---- "GRAB ME" cursor (fine pointers, over the strap, clip, shell and card) ---- */
 .bh-cursor{position:fixed;left:0;top:0;z-index:120;pointer-events:none;display:flex;align-items:center;justify-content:center;height:30px;padding:0 14px;border-radius:999px;background:var(--accent);color:#171717;font:600 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;opacity:0;scale:.7;transition:opacity .16s ease,scale .2s cubic-bezier(.2,.7,.2,1);will-change:transform}
 .bh-cursor.is-on{opacity:1;scale:1}
 .bh-cursor.is-hold{scale:.92}
 @media (hover:hover) and (pointer:fine){
-  .bh-grab{cursor:none}
+  .bh-grab,.bh-grab-pouch{cursor:none}
+  .bh-grab-pouch{touch-action:none;-webkit-user-select:none;user-select:none}
   body.bh-dragging,body.bh-dragging *{cursor:none!important}
 }
 @media (prefers-reduced-motion:reduce){.bh-cursor{transition:none}}
