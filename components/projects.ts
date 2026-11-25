@@ -107,7 +107,7 @@ const list: ProjectInput[] = [
   },
   {
     slug: 'vapours',
-    collection: 'project',
+    collection: 'research',
     title: 'VAPOURS',
     subtitle: 'Sculpting fog in VR to find the form before the form',
     discipline: 'Creative AI · Immersive',
