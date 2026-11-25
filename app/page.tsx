@@ -2,116 +2,80 @@ import Link from 'next/link';
 import { Reveal, Stagger, StaggerItem } from '@/components/Motion';
 import { projects } from '@/components/projects';
 
+const researchSlugs = ['atomic-user-model', 'aesthetic-fingerprint', 'flavovr', 'calculator-fallacy', 'llm-conformity'];
+const projectSlugs = ['setu', 'eco-shield', 'morse-code-vault', 'kaaya', 'vapours'];
+
+function Cards({ items }: { items: typeof projects }) {
+  return <Stagger className="index-card-grid">{items.map((p) => (
+    <StaggerItem key={p.slug}>
+      <Link href={`/projects/${p.slug}`} className="index-card">
+        <div className={`index-card-image ${p.coverClass ?? ''}`}>
+          {p.cover ? <img src={p.cover} alt={p.title} loading="lazy" /> : <span>{p.title}</span>}
+          <span className="index-card-number">EXHIBIT {p.index}</span>
+        </div>
+        <div className="index-card-copy">
+          <span className="index-card-discipline">{p.discipline}</span>
+          <h3>{p.title}</h3><p>{p.subtitle}</p>
+          <span className="index-card-link">Explore case study ↗</span>
+        </div>
+      </Link>
+    </StaggerItem>
+  ))}</Stagger>;
+}
+
 export default function Home() {
-  const live = projects.filter((p) => p.live);
-  const recent = live.slice(-4);
+  const liveProjects = projects.filter((p) => p.live && projectSlugs.includes(p.slug));
+  const research = projects.filter((p) => p.live && researchSlugs.includes(p.slug));
+  const archived = projects.filter((p) => !p.live);
+  return <>
+    <section className="index-hero">
+      <div className="index-hero-top"><span>PERSONAL COLLECTION / EST. 2026</span><span>COIMBATORE, INDIA</span></div>
+      <div className="index-hero-main">
+        <Reveal className="index-hero-copy">
+          <p className="index-eyebrow">THE DEEPTHIKA INDEX <span>— NO. 001</span></p>
+          <h1>An index of<br /><em>things that make me.</em></h1>
+          <p className="index-intro">A growing collection of objects, ideas, experiments and questions. Part design practice, part engineering notebook, part personal archive. Curated by Deepthika S.</p>
+          <div className="index-hero-actions"><a href="#collection" className="index-primary-link">Enter the collection <span>↓</span></a><Link href="/about" className="index-secondary-link">Read the curator’s note ↗</Link></div>
+        </Reveal>
+        <Reveal className="index-hero-art" delay={0.18}>
+          <div className="index-art-frame"><span className="index-art-label label-top">A STUDY IN CURIOSITY</span><div className="index-art-orbit orbit-one" /><div className="index-art-orbit orbit-two" /><div className="index-art-object"><span>DS</span></div><span className="index-art-label label-bottom">ART × DESIGN × ENGINEERING</span></div>
+          <p className="index-art-caption">Fig. 01 — A mind in several directions</p>
+        </Reveal>
+      </div>
+      <div className="index-hero-foot"><span>PLEASE TOUCH THE EXHIBITS. SOME OF THEM ARE INTERACTIVE.</span><span>SCROLL TO EXPLORE ↓</span></div>
+    </section>
 
-  return (
-    <>
-      <section className="home-hero">
-        <span className="ghost-bg" aria-hidden="true">
-          DS
-        </span>
-        <div className="wrap">
-          <Reveal as="p" className="kicker">
-            Product Design · Human-Centred Design · Electronics · Immersive Interaction · AI
-            Research
-          </Reveal>
-          <Reveal as="h1" delay={0.1}>
-            Deepthika S<span className="dot">.</span>
-          </Reveal>
-          <Reveal as="p" className="tagline" delay={0.25}>
-            I believe that great products are built when <strong>design leads</strong> and{' '}
-            <strong>engineering shapes them into reality</strong>. With a strong foundation in
-            electronics and an appreciation for good design, I aim to bridge the gap between
-            technology and usability in everything I create — from physical products to research
-            on how people see, make and trust with AI.
-          </Reveal>
-          <Reveal className="recent" delay={0.4}>
-            <p className="recent-label">Recent research</p>
-            <ul>
-              {recent.map((p) => (
-                <li key={p.slug}>
-                  <Link href={`/projects/${p.slug}`}>
-                    <span className="r-idx">{p.index}</span>
-                    {p.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-      </section>
+    <section className="index-note" id="collection"><div className="wrap index-note-grid">
+      <Reveal><p className="index-section-kicker">01 / THE COLLECTION</p><h2>Not quite a portfolio.<br /><em>Not quite a diary.</em></h2></Reveal>
+      <Reveal className="index-note-copy" delay={0.12}><p>I’m an electronics engineering student drawn to the space where useful things meet thoughtful experiences. I move between making, observing and asking questions: building physical prototypes, exploring digital interactions, and studying how people respond to technology.</p><p>This index brings those different threads together. There is no particular order to the exhibition. Neither is there to my brain.</p><Link href="/about" className="text-link">A little more about the curator ↗</Link></Reveal>
+    </div></section>
 
-      <section className="work" id="work">
-        <div className="wrap">
-          <Reveal className="head">
-            <h2 className="section-title">Selected Work</h2>
-            <span className="count">
-              {String(live.length).padStart(2, '0')} case studies ·{' '}
-              {String(projects.length).padStart(2, '0')} projects
-            </span>
-          </Reveal>
-          <Stagger className="work-grid">
-            {live.map((p) => (
-              <StaggerItem key={p.slug} className={p.featured ? 'featured-wrap' : ''}>
-                <Link
-                  href={`/projects/${p.slug}`}
-                  className={`work-card ${p.featured ? 'featured' : ''}`}
-                >
-                  <div className={`media ${p.coverClass ?? ''}`}>
-                    {p.cover ? (
-                      <img src={p.cover} alt={`${p.title} — ${p.subtitle}`} loading="lazy" />
-                    ) : (
-                      <span className="fog-word" aria-hidden="true">
-                        {p.title}
-                      </span>
-                    )}
-                  </div>
-                  <div className="meta">
-                    <div>
-                      <span className="idx">
-                        {p.index}
-                        <span className="disc">{p.discipline}</span>
-                      </span>
-                      <h3>{p.title}</h3>
-                      <p className="sub">{p.subtitle}</p>
-                    </div>
-                    <span className="cta">View case study →</span>
-                  </div>
-                </Link>
-              </StaggerItem>
-            ))}
-          </Stagger>
-        </div>
-      </section>
+    <section className="index-collection-section" id="projects"><div className="wrap">
+      <div className="index-section-heading"><div><p className="index-section-kicker">02 / THINGS I HAVE MADE</p><h2>Projects <span>({String(liveProjects.length).padStart(2,'0')})</span></h2></div><p>Prototypes, products and playful attempts at making an idea tangible.</p></div>
+      <Cards items={liveProjects} />
+      {archived.length > 0 && <div className="index-archive"><p className="index-section-kicker">IN THE WORKSHOP / STILL TAKING SHAPE</p>{archived.map((p) => <div className="index-archive-row" key={p.slug}><span>EXHIBIT {p.index}</span><strong>{p.title}</strong><span>{p.subtitle}</span><span>Documentation in progress</span></div>)}</div>}
+    </div></section>
 
-      <section className="index-section" id="index">
-        <div className="wrap">
-          <Reveal className="head">
-            <h2 className="section-title">Project Index</h2>
-          </Reveal>
-          <Reveal as="div" className="proj-index" delay={0.1}>
-            {projects.map((p) =>
-              p.live ? (
-                <Link key={p.slug} href={`/projects/${p.slug}`} className="pi-row">
-                  <span className="pi-n">{p.index}</span>
-                  <span className="pi-t">{p.title}</span>
-                  <span className="pi-d">{p.discipline}</span>
-                  <span className="pi-s">Case study</span>
-                </Link>
-              ) : (
-                <div key={p.slug} className="pi-row soon" aria-disabled="true">
-                  <span className="pi-n">{p.index}</span>
-                  <span className="pi-t">{p.title}</span>
-                  <span className="pi-d">{p.discipline}</span>
-                  <span className="pi-s">In documentation</span>
-                </div>
-              ),
-            )}
-          </Reveal>
-        </div>
-      </section>
-    </>
-  );
+    <section className="index-research-section" id="research"><div className="wrap">
+      <div className="index-section-heading"><div><p className="index-section-kicker">03 / QUESTIONS I KEEP FOLLOWING</p><h2>Research <span>({String(research.length).padStart(2,'0')})</span></h2></div><p>Investigations into perception, interaction, creativity and the ways people relate to AI.</p></div>
+      <Cards items={research} />
+    </div></section>
+
+    <section className="index-maker-section" id="maker"><div className="wrap">
+      <p className="index-section-kicker">04 / THE MAKER</p><div className="index-maker-grid"><div><h2>Somewhere between<br /><em>art, design & engineering.</em></h2><p className="index-maker-intro">I like ideas that can be felt, tested, questioned and made real. My work often begins with a human observation, takes shape through design, and finds its way into the world through technology.</p><Link href="/about" className="text-link">Meet the maker ↗</Link></div>
+      <div className="index-intersection" aria-label="Art, design and engineering overlap in my practice"><div className="intersection-circle circle-art"><span>ART</span></div><div className="intersection-circle circle-design"><span>DESIGN</span></div><div className="intersection-circle circle-engineering"><span>ENGINEERING</span></div><span className="intersection-centre">ME</span></div></div>
+    </div></section>
+
+    <section className="index-curiosities" id="curiosities"><div className="wrap">
+      <div className="index-section-heading"><div><p className="index-section-kicker">05 / CABINET OF CURIOSITIES</p><h2>Things I keep close.</h2></div><p>A few interests that find their way into the way I think and make.</p></div>
+      <div className="curiosity-grid">
+        <article className="curiosity-card curiosity-large"><span>COLLECTING / 001</span><h3>Visual stories</h3><p>Graphic design, composition, colour, and the small details that make an image stay with you.</p></article>
+        <article className="curiosity-card curiosity-green"><span>COLLECTING / 002</span><h3>Making by hand</h3><p>Art, calligraphy, journaling and the pleasure of working things out on paper.</p></article>
+        <article className="curiosity-card curiosity-photo"><span>COLLECTING / 003</span><h3>Growing things</h3><p>Gardening, slow observations and learning to be patient with a process.</p></article>
+        <article className="curiosity-card curiosity-small"><span>COLLECTING / 004</span><h3>How things work</h3><p>Everyday objects, mechanisms, interfaces and the decisions hiding inside them.</p></article>
+      </div><p className="index-curiosity-foot">Some exhibits are unfinished. The curator insists they’re works in progress.</p>
+    </div></section>
+
+    <section className="index-endnote"><div className="wrap index-endnote-inner"><p className="index-section-kicker">06 / BEFORE YOU LEAVE</p><h2>Have something<br /><em>interesting in mind?</em></h2><p>I’m always happy to talk about design, research, making, and ideas that refuse to sit in one category.</p><a href="mailto:deepthikas123@gmail.com" className="index-primary-link">Get in touch ↗</a></div></section>
+  </>;
 }
