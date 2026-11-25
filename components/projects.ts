@@ -1,79 +1,143 @@
 /**
- * Single source of truth for the portfolio index and case-study navigation.
+ * Single source of truth for every project in the portfolio.
+ *
+ * When a new case-study page is ready:
+ *  1. Build the page under app/projects/<slug>/page.tsx
+ *  2. Add / flip the entry here (`live: true` plus a `cover` image)
+ * The header dropdown, mobile menu, home grid, project index and prev/next
+ * navigation all update automatically. Project numbers are derived from the
+ * order of this array, so never hard-code a count anywhere else.
  */
 export type Project = {
-  index: string;
+  index: string; // display index, e.g. '02'
   collection: 'project' | 'research';
   slug: string;
   title: string;
   subtitle: string;
+  /** Short discipline label shown on cards and in the project index. */
   discipline: string;
   live: boolean;
   cover?: string;
+  /** CSS class for a generated cover when no image exists (e.g. 'fog-cover'). */
   coverClass?: string;
+  /** Feature this project as a full-width card on the home page. */
   featured?: boolean;
 };
+
 type ProjectInput = Omit<Project, 'index'>;
+
 
 const list: ProjectInput[] = [
   {
-    slug: 'tactile-trails', collection: 'project', title: 'Tactile Trails',
-    subtitle: 'A mat that grows with your child',
-    discipline: 'Product Design', live: true,
+    slug: 'tactile-trails',
+    collection: 'project',
+    title: 'Tactile Trails',
+    subtitle: 'Cognitive-sensory playmat for neurodivergent children — IIT Madras',
+    discipline: 'Human-Centred Design',
+    live: false,
   },
   {
-    slug: 'setu', collection: 'project', title: 'SETU',
-    subtitle: 'Emergency Logistics System',
-    discipline: 'Mechanical Design', live: true, cover: '/images/setucover.png', featured: true,
+    slug: 'setu',
+    collection: 'project',
+    title: 'SETU',
+    subtitle: 'Rapid Deployment Emergency Logistics System',
+    discipline: 'Product Design · Electronics',
+    live: true,
+    cover: '/images/setucover.png',
+    featured: true,
   },
   {
-    slug: 'morse-code-vault', collection: 'project', title: 'Morse Logic Game',
-    subtitle: 'A game of signals, switches & logic',
-    discipline: 'Circuit Design', live: true, cover: '/images/morse-cover.jpg', featured: true,
+    slug: 'eco-shield',
+    collection: 'project',
+    title: 'ECO-SHIELD',
+    subtitle: 'Biomimetic UV protective coating for solar panels',
+    discipline: 'Biomimetic Design',
+    live: true,
+    cover: '/images/ecoshieldcover.png',
+    featured: true,
   },
   {
-    slug: 'eco-shield', collection: 'project', title: 'ECO-SHIELD',
-    subtitle: 'Biomimetic UV Coating',
-    discipline: 'Material Design', live: true, cover: '/images/ecoshieldcover.png', featured: true,
+    slug: 'morse-code-vault',
+    collection: 'project',
+    title: 'Morse Code Logic Game',
+    subtitle: 'A game of signals, switches and logic',
+    discipline: 'Electronics',
+    live: true,
+    cover: '/images/morse-cover.jpg',
+    featured: true,
   },
   {
-    slug: 'kaaya', collection: 'project', title: 'KAAYA',
-    subtitle: 'Body movement to abstract art',
-    discipline: 'Interaction Design', live: true, cover: '/images/kaaya-cover-placeholder.png',
-  },
-  {
-    slug: 'vapours', collection: 'project', title: 'VAPOURS',
-    subtitle: 'Sculpting fog in VR to find the form before the form',
-    discipline: 'Creative AI · Immersive', live: true, cover: '/images/vapour-cover-placeholder.png',
-  },
-  {
-    slug: 'atomic-user-model', collection: 'research', title: 'Atomic User Model',
+    slug: 'atomic-user-model',
+    collection: 'research',
+    title: 'Atomic User Model',
     subtitle: 'A structured representation for personality-aware LLM interaction',
-    discipline: 'AI Research', live: true, cover: '/images/aum-atom.png',
+    discipline: 'AI Research',
+    live: true,
+    cover: '/images/aum-atom.png',
   },
   {
-    slug: 'aesthetic-fingerprint', collection: 'research', title: 'Aesthetic Fingerprint',
+    slug: 'aesthetic-fingerprint',
+    collection: 'research',
+    title: 'Aesthetic Fingerprint',
     subtitle: 'Immersive VR eye-tracking that reads taste from where the gaze lingers',
-    discipline: 'Immersive Interaction', live: true, cover: '/images/gaze-instrument.png',
+    discipline: 'Immersive Interaction',
+    live: true,
+    cover: '/images/gaze-instrument.png',
   },
   {
-    slug: 'flavovr', collection: 'research', title: 'FLAVOVR',
-    subtitle: 'Gaze-driven product generation and generational preference study',
-    discipline: 'Design Research', live: true, cover: '/images/flavovr-system-architecture.png', coverClass: 'fit-contain', featured: true,
+    slug: 'flavovr',
+    collection: 'research',
+    title: 'FLAVOVR',
+    subtitle:
+      'Gaze-driven product generation, an objective iconicity classifier and a four-generation preference study',
+    discipline: 'Design Research',
+    live: true,
+    cover: '/images/flavovr-system-architecture.png',
+    coverClass: 'fit-contain',
+    featured: true,
   },
   {
-    slug: 'calculator-fallacy', collection: 'research', title: 'The Calculator Fallacy',
+    slug: 'kaaya',
+    collection: 'project',
+    title: 'KAAYA',
+    subtitle: 'Blind drawing through the body, interpreted by a machine',
+    discipline: 'Creative AI',
+    live: true,
+    cover: '/images/kaaya-cover-placeholder.png',
+  },
+  {
+    slug: 'vapours',
+    collection: 'project',
+    title: 'VAPOURS',
+    subtitle: 'Sculpting fog in VR to find the form before the form',
+    discipline: 'Creative AI · Immersive',
+    live: true,
+    cover: '/images/vapour-cover-placeholder.png',
+  },
+  {
+    slug: 'calculator-fallacy',
+    collection: 'research',
+    title: 'The Calculator Fallacy',
     subtitle: 'Learners blindly trust confident AI, even when it is wrong',
-    discipline: 'Human–AI Trust', live: true, cover: '/images/calculator-fallacy-cover-placeholder.png',
+    discipline: 'Human–AI Trust',
+    live: true,
+    cover: '/images/calculator-fallacy-cover-placeholder.png',
   },
   {
-    slug: 'llm-conformity', collection: 'research', title: 'When the Majority Is Wrong',
+    slug: 'llm-conformity',
+    collection: 'research',
+    title: 'When the Majority Is Wrong',
     subtitle: 'Would AI still follow the crowd? Conformity in multi-agent LLMs',
-    discipline: 'AI Research', live: true, cover: '/images/llm-conformity-cover-placeholder.png',
+    discipline: 'AI Research',
+    live: true,
+    cover: '/images/llm-conformity-cover-placeholder.png',
   },
 ];
 
-export const projects: Project[] = list.map((p, i) => ({ ...p, index: String(i + 1).padStart(2, '0') }));
+export const projects: Project[] = list.map((p, i) => ({
+  ...p,
+  index: String(i + 1).padStart(2, '0'),
+}));
 
 export function getProject(slug: string): Project {
   const p = projects.find((x) => x.slug === slug);
