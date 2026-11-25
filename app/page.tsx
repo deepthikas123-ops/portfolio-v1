@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Reveal, Stagger, StaggerItem } from '@/components/Motion';
 import BadgeHero from '@/components/BadgeHero';
+import Corkboard from '@/components/Corkboard';
 import { projects } from '@/components/projects';
 
 function Cards({ items }: { items: typeof projects }) {
@@ -65,7 +66,8 @@ export default function Home() {
     </div></section>
 
     <section className="index-curiosities" id="curiosities"><div className="wrap">
-      <div className="index-section-heading"><div><p className="index-section-kicker">05 / CABINET OF CURIOSITIES</p><h2>Things I keep close.</h2></div><p>A few interests that find their way into the way I think and make.</p></div>
+      <div className="index-section-heading"><div><p className="index-section-kicker">05 / CABINET OF CURIOSITIES</p></div><p>A few interests that find their way into the way I think and make.</p></div>
+      <Corkboard />
       <div className="curiosity-grid">
         <article className="curiosity-card curiosity-large"><span>COLLECTING / 001</span><h3>Visual stories</h3><p>Graphic design, composition, colour, and the small details that make an image stay with you.</p></article>
         <article className="curiosity-card curiosity-green"><span>COLLECTING / 002</span><h3>Making by hand</h3><p>Art, calligraphy, journaling and the pleasure of working things out on paper.</p></article>
