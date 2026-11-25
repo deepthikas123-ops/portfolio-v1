@@ -83,16 +83,16 @@ const compare = [
 ];
 
 const swatches = [
-  { f: 'swatch-grass.jpg', t: 'Grass' },
-  { f: 'swatch-fur.jpg', t: 'Fur' },
-  { f: 'swatch-jute.jpg', t: 'Soft jute' },
-  { f: 'swatch-grip.jpg', t: 'Grip' },
-  { f: 'swatch-noodle.jpg', t: 'Noodle' },
+  { f: 'swatch-grass.png', t: 'Grass' },
+  { f: 'swatch-fur.png', t: 'Fur' },
+  { f: 'swatch-jute.png', t: 'Soft jute' },
+  { f: 'swatch-grip.png', t: 'Grip' },
+  { f: 'swatch-noodle.png', t: 'Noodle' },
 ];
 
 const process = [
   { f: 'process-01-sourcing.jpg', t: 'Material sourcing', d: 'Exploring and selecting textures with distinct sensory qualities.' },
-  { f: 'process-02-selection.jpg', t: 'Material selection', d: 'Finalising suitable materials based on texture, safety and durability needs.' },
+  { f: 'process-02-selection.jpg', pos: '50% 0%', t: 'Material selection', d: 'Finalising suitable materials based on texture, safety and durability needs.' },
   { f: 'process-03-layout.jpg', t: 'Layout planning', d: 'Mapping the playmat layout and placement of tactile zones.' },
   { f: 'process-04-sewing.jpg', t: 'Hand-sewing', d: 'Stitching and preparing the individual tactile elements.' },
   { f: 'process-05-assembling.jpg', t: 'Assembling', d: 'Integrating all textures into the final playmat structure.' },
@@ -361,7 +361,7 @@ export default function Page() {
           <Stagger className="tt-process" as="ol">
             {process.map((s, i) => (
               <StaggerItem as="li" key={s.f} className="step">
-                <img src={img(s.f)} alt={s.t} />
+                <img src={img(s.f)} alt={s.t} style={s.pos ? { objectPosition: s.pos } : undefined} />
                 <span className="n">{String(i + 1).padStart(2, '0')}</span>
                 <h4>{s.t}</h4>
                 <p>{s.d}</p>
@@ -427,7 +427,7 @@ export default function Page() {
                 <dt>Challenge</dt>
                 <dd>Shows discomfort and avoids bristly textures</dd>
               </dl>
-              <div className="pair">
+              <div className="tt-pair">
                 <figure>
                   <img src={img('adapt-original.jpg')} alt="Original grassy module" />
                   <figcaption>Original module (grassy texture)</figcaption>
@@ -455,7 +455,7 @@ export default function Page() {
                 <dt>Challenge</dt>
                 <dd>Familiar activities have become less engaging</dd>
               </dl>
-              <div className="pair">
+              <div className="tt-pair">
                 <figure>
                   <img src={img('evolve-earlier.jpg')} alt="Earlier activity: sliding ducklings" />
                   <figcaption>Earlier activity (sliding ducklings)</figcaption>

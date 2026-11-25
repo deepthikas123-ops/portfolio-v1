@@ -242,7 +242,8 @@
 /* ---- materials + process ---- */
 .tt-swatches { margin-top: 40px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
 .tt-swatches .swatch { display: flex; flex-direction: column; gap: 10px; }
-.tt-swatches img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+.tt-swatches .swatch { align-items: center; text-align: center; }
+.tt-swatches img { width: 100%; max-width: 190px; aspect-ratio: 1 / 1; object-fit: contain; }
 .tt-swatches span { font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
 .tt-process, .tt-journey { list-style: none; display: grid; gap: 20px; }
 .tt-process { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -267,10 +268,10 @@
 .tt-personas dl { margin-top: 16px; display: grid; grid-template-columns: 130px 1fr; gap: 8px 14px; font-size: 14px; line-height: 1.5; }
 .tt-personas dt { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-strong); padding-top: 2px; }
 .tt-personas dd { color: #333; }
-.tt-personas .pair { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.tt-personas .pair figure { margin: 0; }
-.tt-personas .pair img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
-.tt-personas .pair figcaption { margin-top: 8px; font-size: 12px; line-height: 1.5; color: var(--ink-soft); }
+.tt-personas .tt-pair { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.tt-personas .tt-pair figure { margin: 0; }
+.tt-personas .tt-pair img { width: 100%; height: auto; aspect-ratio: auto; object-fit: fill; border-radius: 0; }
+.tt-personas .tt-pair figcaption { margin-top: 8px; font-size: 12px; line-height: 1.5; color: var(--ink-soft); }
 .tt-personas .verdict { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 14.5px; line-height: 1.65; color: var(--ink-soft); }
 .tt-personas .verdict strong { display: block; color: var(--ink); font-size: 17px; letter-spacing: -0.03em; margin-bottom: 4px; }
 @media (max-width: 900px) { .tt-personas { grid-template-columns: 1fr; } }
