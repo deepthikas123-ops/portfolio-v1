@@ -1,0 +1,121 @@
+/* "The Missing Piece" — interactive contact puzzle (components/MissingPiece.tsx).
+   Everything inside the stage is sized in cqw so the scene scales with its width.
+   Layout numbers mirror LAYOUTS in components/puzzle-config.ts (injected as --d-* / --m-* variables). */
+
+.index-puzzle{background:#f7f4ee;color:#171717;padding:clamp(76px,10vw,140px) 0;overflow-x:clip}
+.pz-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,5vw,80px);align-items:center}
+.pz-copy{min-width:0}
+
+/* headline: two lines stacked in one grid cell so swapping them never shifts the layout */
+.pz-title{display:grid;margin-top:22px;font:800 clamp(34px,4.3vw,62px)/1 Inter,Arial,sans-serif;letter-spacing:-.06em}
+.pz-line{grid-area:1/1;transition:opacity .5s ease,transform .6s cubic-bezier(.22,1,.36,1),visibility .5s}
+.pz-line-a .pz-dot{color:var(--accent)}
+.pz-line-b{opacity:0;visibility:hidden;transform:translateY(16px);font-weight:700;letter-spacing:-.07em}
+.pz-line em{font-style:normal;color:var(--accent)}
+.is-solved .pz-line-a{opacity:0;visibility:hidden;transform:translateY(-16px)}
+.is-solved .pz-line-b{opacity:1;visibility:visible;transform:none;transition-delay:.12s}
+
+/* stage */
+.pz-stage{
+  --px:var(--d-px);--py:var(--d-py);--pw:var(--d-pw);--sx:var(--d-sx);--sy:var(--d-sy);--sh:var(--d-sh);--hf:.5;
+  --ox:calc(var(--sx) - var(--px) - var(--pw) * var(--bx));
+  --oy:calc(var(--sy) - var(--py) - var(--pw) * var(--by));
+  position:relative;width:100%;aspect-ratio:100 / var(--sh);container-type:inline-size;
+  -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
+  transition:margin-bottom .9s cubic-bezier(.22,1,.36,1);
+}
+/* once solved, the empty tray area collapses so the contact links sit close to the finished puzzle */
+.is-solved .pz-stage{pointer-events:none;margin-bottom:calc((var(--py) + var(--pw) / var(--ratio) - var(--sh) + 2) * 1%)}
+.pz-stage *{-webkit-user-select:none;user-select:none}
+.pz-puzzle{position:absolute;left:calc(var(--px) * 1cqw);top:calc(var(--py) * 1cqw);width:calc(var(--pw) * 1cqw);aspect-ratio:var(--ratio)}
+.pz-puzzle.pulse{animation:pzPulse .9s cubic-bezier(.3,1.4,.5,1) 1 both}
+@keyframes pzPulse{0%{transform:scale(1)}38%{transform:scale(1.035)}100%{transform:scale(1)}}
+
+/* pieces: real extracted textures; a soft shadow follows each silhouette */
+.pz-piece{position:absolute;z-index:1;filter:drop-shadow(0 1px 1px rgba(70,44,22,.3)) drop-shadow(0 7px 12px rgba(70,44,22,.13))}
+.pz-piece img,.pz-piece img:hover{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-drag:none;filter:none;transition:none;cursor:inherit}
+.pz-puzzle.pulse .pz-piece:not(.pz-missing){animation:pzGlow .9s ease-out 1 both}
+.pz-puzzle.pulse .pz-missing img{animation:pzGlowImg .9s ease-out 1 both}
+@keyframes pzGlow{
+  0%{filter:drop-shadow(0 1px 1px rgba(70,44,22,.3)) drop-shadow(0 7px 12px rgba(70,44,22,.13))}
+  38%{filter:drop-shadow(0 1px 1px rgba(70,44,22,.3)) drop-shadow(0 0 22px rgba(240,82,35,.5))}
+  100%{filter:drop-shadow(0 1px 1px rgba(70,44,22,.3)) drop-shadow(0 7px 12px rgba(70,44,22,.13))}
+}
+
+@keyframes pzGlowImg{
+  0%{filter:drop-shadow(0 1px 1px rgba(70,44,22,.3)) drop-shadow(0 9px 14px rgba(70,44,22,.16))}
+  38%{filter:drop-shadow(0 1px 1px rgba(70,44,22,.3)) drop-shadow(0 0 22px rgba(240,82,35,.5))}
+  100%{filter:drop-shadow(0 1px 1px rgba(70,44,22,.3)) drop-shadow(0 9px 14px rgba(70,44,22,.16))}
+}
+
+/* the missing piece: starts sideways, apart from the puzzle.
+   Shadows sit on the <img> (not the wrapper) so the keyboard focus ring stays crisp. */
+.pz-missing{
+  z-index:10;cursor:grab;touch-action:none;transition:none;border-radius:10px;filter:none;
+  transform:translate(calc(var(--ox) * 1cqw),calc(var(--oy) * 1cqw)) rotate(var(--rot0));
+}
+.pz-missing img{filter:drop-shadow(0 1px 1px rgba(70,44,22,.3)) drop-shadow(0 9px 14px rgba(70,44,22,.16));transition:filter .25s ease}
+.pz-missing:hover img{filter:drop-shadow(0 1px 1px rgba(70,44,22,.3)) drop-shadow(0 12px 18px rgba(70,44,22,.2))}
+.pz-missing.is-drag{cursor:grabbing}
+.pz-missing.is-drag img{filter:drop-shadow(0 1px 1px rgba(70,44,22,.32)) drop-shadow(0 18px 24px rgba(70,44,22,.26))}
+.pz-missing:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
+.pz-missing.is-placed{cursor:default;pointer-events:none;outline:none}
+.phase-snap .pz-missing{transition:transform .48s cubic-bezier(.22,1,.36,1)}
+.phase-return .pz-missing{transition:transform .7s cubic-bezier(.3,1.2,.5,1)}
+.phase-key .pz-missing{transition:transform .16s linear}
+
+/* slot preview: an orange silhouette of the piece that appears as it gets close */
+.pz-ghost{position:absolute;z-index:5;pointer-events:none;background:var(--accent);
+  -webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  filter:blur(.4px);transition:opacity .12s linear}
+
+/* directional hint */
+.pz-hint{position:absolute;z-index:6;pointer-events:none;color:var(--accent-strong);
+  left:calc((var(--sx) - var(--ox) * var(--hf)) * 1cqw);top:calc((var(--sy) - var(--oy) * var(--hf)) * 1cqw);
+  width:0;height:0}
+.pz-hint svg{position:absolute;left:-20px;top:-12px;animation:pzNudge 1.9s ease-in-out infinite;transform:rotate(var(--ang))}
+@keyframes pzNudge{
+  0%,100%{transform:rotate(var(--ang)) translateX(-6px);opacity:.3}
+  50%{transform:rotate(var(--ang)) translateX(7px);opacity:1}
+}
+
+/* contact reveal */
+.pz-contact{position:relative;z-index:2;display:grid;grid-template-rows:0fr;opacity:0;visibility:hidden;
+  transition:grid-template-rows .8s cubic-bezier(.22,1,.36,1),opacity .5s ease,visibility 0s linear .8s}
+.pz-contact.is-open{grid-template-rows:1fr;opacity:1;visibility:visible;transition-delay:.05s,.05s,0s}
+.pz-contact-inner{min-height:0;overflow:hidden;list-style:none;margin:0;padding:clamp(28px,4vw,52px) 0 8px;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.pz-contact-inner li{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .7s cubic-bezier(.22,1,.36,1)}
+.pz-contact.is-open li{opacity:1;transform:none;transition-delay:calc(.3s + var(--i) * .1s)}
+
+.pz-card{display:flex;align-items:center;gap:16px;height:100%;padding:20px 22px;border:1px solid var(--line);
+  background:rgba(255,255,255,.55);color:#171717;text-decoration:none;
+  transition:border-color .25s ease,background-color .25s ease,transform .25s ease}
+.pz-card:hover,.pz-card:focus-visible{border-color:var(--accent);background:#fff;transform:translateY(-2px)}
+.pz-card:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+.pz-sym{flex:none;display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--line);
+  font:700 15px/1 Inter,Arial,sans-serif;letter-spacing:-.03em;transition:background-color .25s ease,border-color .25s ease,color .25s ease}
+.pz-card:hover .pz-sym,.pz-card:focus-visible .pz-sym{background:var(--accent);border-color:var(--accent);color:#fff}
+.pz-txt{display:grid;gap:3px;min-width:0}
+.pz-lab{font:700 11px/1.4 Inter,Arial,sans-serif;letter-spacing:.12em;color:var(--accent-strong)}
+.pz-dest{font:600 clamp(15px,1.35vw,18px)/1.3 Inter,Arial,sans-serif;letter-spacing:-.02em;overflow-wrap:anywhere}
+.pz-arrow{margin-left:auto;color:var(--accent-strong);font-size:18px;transition:transform .25s ease}
+.pz-card:hover .pz-arrow,.pz-card:focus-visible .pz-arrow{transform:translate(3px,-3px)}
+
+.pz-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+@media(max-width:900px){
+  .pz-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .pz-title{font-size:clamp(30px,5vw,44px)}
+}
+@media(max-width:720px){
+  .index-puzzle{padding:72px 0 64px}
+  .pz-grid{grid-template-columns:minmax(0,1fr);gap:20px}
+  .pz-title{font-size:clamp(34px,10vw,46px)}
+  .pz-stage{--px:var(--m-px);--py:var(--m-py);--pw:var(--m-pw);--sx:var(--m-sx);--sy:var(--m-sy);--sh:var(--m-sh);--hf:.6}
+  .pz-contact-inner{grid-template-columns:minmax(0,1fr);gap:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  .pz-puzzle.pulse,.pz-puzzle.pulse .pz-piece,.pz-puzzle.pulse .pz-missing img,.pz-hint svg{animation:none!important}
+  .pz-line,.pz-contact,.pz-contact-inner li,.pz-card,.pz-missing{transition:none!important}
+}
