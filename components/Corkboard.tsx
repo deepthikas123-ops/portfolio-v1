@@ -9,7 +9,7 @@ type Layout = 'desktop' | 'mobile';
 type State = { x: number; y: number; r: number; z: number };
 type Positions = Record<string, State>;
 
-const STORAGE = 'deepthika-corkboard-v1';
+const STORAGE = 'deepthika-corkboard-v2';
 const MOBILE_QUERY = '(max-width: 720px)';
 const DRAG_THRESHOLD = 5;
 
@@ -45,7 +45,7 @@ function renderItem(it: BoardItem, bookOpen: boolean) {
   switch (it.kind) {
     case 'photo':
       return (
-        <div className="cb-photo" style={{ aspectRatio: String(it.frame!.ratio) }}>
+        <div className="cb-polaroid" style={{ aspectRatio: String(it.frame!.ratio) }}>
           <img
             className="cb-photo-img" src={it.photo!.src} alt="" draggable={false}
             style={{
@@ -59,6 +59,13 @@ function renderItem(it: BoardItem, bookOpen: boolean) {
       );
     case 'book':
       return <BookBox src={it.src!} open={bookOpen} />;
+    case 'note':
+      return (
+        <div className="cb-note-in">
+          <img className="cb-note-img" src={it.src} alt="" draggable={false} />
+          <span className="cb-note-text" style={{ fontSize: `${it.fs ?? 14}cqw`, color: it.ink, transform: `rotate(${it.tilt ?? 0}deg)` }}>{it.text}</span>
+        </div>
+      );
     default:
       return <img className="cb-decor" src={it.src} alt="" draggable={false} />;
   }
@@ -73,6 +80,8 @@ export default function Corkboard({ items = boardItems }: { items?: BoardItem[] 
   const [layout, setLayout] = useState<Layout>('desktop');
   const [pos, setPos] = useState<Positions | null>(null);
   const [active, setActive] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
+  const rot = useRef<{ id: string; a0: number; r0: number } | null>(null);
   const [easing, setEasing] = useState(false);
   const [note, setNote] = useState<{ rect: DOMRect; rotation: number } | null>(null);
   const loaded = useRef(false);
@@ -109,7 +118,40 @@ export default function Corkboard({ items = boardItems }: { items?: BoardItem[] 
     drag.current = { id, sx: e.clientX, sy: e.clientY, cx: p.x, cy: p.y, moved: false };
     e.currentTarget.setPointerCapture(e.pointerId);
     setEasing(false);
+    setSelected(id);
     bringToFront(id);
+  };
+
+  // Sticky notes can also be turned: drag the small handle at their lower-left corner.
+  const centreOf = (id: string) => {
+    const r = els.current[id]?.getBoundingClientRect();
+    return r ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : { x: 0, y: 0 };
+  };
+  const onRotDown = (e: React.PointerEvent<HTMLElement>, id: string) => {
+    if (!pos) return;
+    e.stopPropagation();
+    const c = centreOf(id);
+    rot.current = { id, a0: Math.atan2(e.clientY - c.y, e.clientX - c.x), r0: pos[id].r };
+    e.currentTarget.setPointerCapture(e.pointerId);
+    setEasing(false); setActive(id); setSelected(id); bringToFront(id);
+  };
+  const onRotMove = (e: React.PointerEvent<HTMLElement>, id: string) => {
+    const g = rot.current; if (!g || g.id !== id || !stageRef.current) return;
+    e.stopPropagation();
+    const c = centreOf(id);
+    const a = Math.atan2(e.clientY - c.y, e.clientX - c.x);
+    const r = g.r0 + ((a - g.a0) * 180) / Math.PI;
+    const stage = stageRef.current.getBoundingClientRect(); const el = els.current[id]; if (!el) return;
+    setPos((p) => {
+      if (!p) return p;
+      const q = clampCentre(p[id].x, p[id].y, r, el, stage);
+      return { ...p, [id]: { ...p[id], r, ...q } };
+    });
+  };
+  const onRotUp = (e: React.PointerEvent<HTMLElement>, id: string) => {
+    if (rot.current?.id !== id) return;
+    e.stopPropagation(); rot.current = null; setActive(null);
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId);
   };
 
   const onMove = (e: React.PointerEvent<HTMLDivElement>, id: string) => {
@@ -161,8 +203,8 @@ export default function Corkboard({ items = boardItems }: { items?: BoardItem[] 
     const order = [...items].sort((a, b) => b[layout].w - a[layout].w);
     for (const it of order) {
       const el = els.current[it.id]; if (!el) { next[it.id] = pos[it.id]; continue; }
-      const r = (Math.random() * 2 - 1) * (it.kind === 'photo' || it.kind === 'book' ? 9 : 24);
-      const major = it.kind === 'photo' || it.kind === 'book';
+      const major = it.kind === 'photo' || it.kind === 'book' || it.kind === 'note';
+      const r = (Math.random() * 2 - 1) * (major ? 8 : 24);
       let best = { x: 50, y: 50 }, bestD = -1;
       for (let i = 0; i < (major ? 40 : 1); i++) {
         const c = clampCentre(8 + Math.random() * 84, 8 + Math.random() * 84, r, el, stage);
@@ -182,7 +224,7 @@ export default function Corkboard({ items = boardItems }: { items?: BoardItem[] 
     <div className="cb" data-layout={layout}>
       <div className="cb-wrap">
         <div className="cb-board">
-          <div className="cb-stage" ref={stageRef}>
+          <div className="cb-stage" ref={stageRef} onPointerDown={(e) => { if (e.target === e.currentTarget) setSelected(null); }}>
             {pos && items.map((it) => {
               const p = pos[it.id]; if (!p) return null;
               const isBook = it.kind === 'book';
@@ -190,7 +232,7 @@ export default function Corkboard({ items = boardItems }: { items?: BoardItem[] 
                 <div
                   key={it.id}
                   ref={(el) => { els.current[it.id] = el; }}
-                  className={`cb-item cb-${it.kind}${active === it.id ? ' is-dragging' : ''}${easing ? ' is-easing' : ''}${isBook && note ? ' is-away' : ''}`}
+                  className={`cb-item cb-${it.kind}${active === it.id ? ' is-dragging' : ''}${selected === it.id ? ' is-selected' : ''}${easing ? ' is-easing' : ''}${isBook && note ? ' is-away' : ''}`}
                   style={{ left: `${p.x}%`, top: `${p.y}%`, width: `${it[layout].w}cqw`, zIndex: p.z, ['--r' as string]: `${p.r}deg` }}
                   onPointerDown={(e) => onDown(e, it.id)}
                   onPointerMove={(e) => onMove(e, it.id)}
@@ -203,6 +245,17 @@ export default function Corkboard({ items = boardItems }: { items?: BoardItem[] 
                   } : it.label ? { role: 'img', 'aria-label': it.label } : { 'aria-hidden': true })}
                 >
                   {renderItem(it, false)}
+                  {it.kind === 'note' && (
+                    <span
+                      className="cb-rot" aria-hidden="true" title="Turn"
+                      onPointerDown={(e) => onRotDown(e, it.id)}
+                      onPointerMove={(e) => onRotMove(e, it.id)}
+                      onPointerUp={(e) => onRotUp(e, it.id)}
+                      onPointerCancel={(e) => onRotUp(e, it.id)}
+                    >
+                      <svg viewBox="0 0 16 16" width="12" height="12"><path d="M13 8a5 5 0 1 1-1.6-3.7M13 2v3h-3" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    </span>
+                  )}
                 </div>
               );
             })}

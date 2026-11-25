@@ -36,10 +36,10 @@ section.index-curiosities .index-section-heading{margin-bottom:24px}
 /* The site greys every <img> inside a section; the board keeps its objects in full colour. */
 .cb .cb-item img,.cb .cb-item img:hover{filter:none;transition:none}
 
-.cb-photo{position:relative;width:100%;filter:drop-shadow(0 6px 9px rgba(35,18,4,.34));transition:filter .2s}
-.cb-item.is-dragging .cb-photo{filter:drop-shadow(0 16px 20px rgba(35,18,4,.38))}
-.cb .cb-photo .cb-photo-img{position:absolute;object-fit:cover}
-.cb .cb-photo .cb-photo-frame{position:relative;z-index:1}
+.cb-polaroid{position:relative;width:100%;filter:drop-shadow(0 6px 9px rgba(35,18,4,.34));transition:filter .2s}
+.cb-item.is-dragging .cb-polaroid{filter:drop-shadow(0 16px 20px rgba(35,18,4,.38))}
+.cb .cb-polaroid .cb-photo-img{position:absolute;object-fit:cover}
+.cb .cb-polaroid .cb-photo-frame{position:relative;z-index:1}
 
 .cb .cb-decor,.cb .cb-decor:hover{filter:drop-shadow(1px 3px 2.5px rgba(35,18,4,.34))}
 .cb .cb-tape .cb-decor,.cb .cb-tape .cb-decor:hover{filter:drop-shadow(0 1px 1.5px rgba(35,18,4,.28))}
@@ -50,6 +50,23 @@ section.index-curiosities .index-section-heading{margin-bottom:24px}
 .cb-item.is-dragging .cb-book .cbk-root,.cb-book.is-dragging .cbk-root{filter:drop-shadow(8px 18px 14px rgba(25,12,0,.4))}
 .cb-book.is-away{opacity:0;pointer-events:none}
 .cb-book:not(.is-dragging):hover .cbk-box:not(.is-open){transform:rotateX(-6deg) rotateY(16deg)}
+
+/* Sticky notes: real paper texture, handwritten ink, soft physical shadow */
+.cb-note-in{position:relative;container-type:inline-size;width:100%;filter:drop-shadow(1px 3px 3px rgba(35,18,4,.32));transition:filter .2s}
+.cb-item.is-dragging .cb-note-in{filter:drop-shadow(3px 10px 8px rgba(35,18,4,.34))}
+.cb-note-text{
+  position:absolute;left:10%;right:10%;top:9%;bottom:19%;display:flex;align-items:center;justify-content:center;text-align:center;
+  font-family:"Caveat","Bradley Hand","Segoe Print","Comic Sans MS",cursive;font-weight:600;line-height:1.02;letter-spacing:.005em;
+  overflow-wrap:break-word;pointer-events:none;mix-blend-mode:multiply;opacity:.92;
+}
+.cb-rot{
+  position:absolute;left:-9px;bottom:-9px;z-index:3;width:26px;height:26px;display:grid;place-items:center;border-radius:50%;
+  color:#4a3a28;background:rgba(255,255,255,.92);box-shadow:0 1px 4px rgba(35,18,4,.4);cursor:grab;touch-action:none;
+  opacity:0;transform:scale(.8);transition:opacity .18s,transform .18s;
+}
+.cb-item:hover .cb-rot,.cb-item.is-selected .cb-rot,.cb-item.is-dragging .cb-rot{opacity:1;transform:scale(1)}
+@media (hover:hover){.cb-item.is-selected:not(:hover):not(.is-dragging) .cb-rot{opacity:0;transform:scale(.8)}}
+.cb-rot:active{cursor:grabbing}
 
 /* Controls */
 .cb-controls{display:flex;justify-content:space-between;align-items:center;gap:14px 24px;flex-wrap:wrap;margin-top:22px}
@@ -131,8 +148,8 @@ section.index-curiosities .index-section-heading{margin-bottom:24px}
 /* ── Phones: a composed, taller board rather than a shrunken desktop one ─────────────────── */
 @media (max-width:720px){
   section.index-curiosities{padding:88px 0 32px}
-  .cb{max-width:max(300px,calc((100dvh - 340px) / 1.275))}
-  .cb-board{aspect-ratio:4/5.1;--bw:max(12px,4.4cqw)}
+  .cb{max-width:max(300px,calc((100dvh - 340px) / 1.575))}
+  .cb-board{aspect-ratio:4/6.3;--bw:max(12px,4.4cqw)}
   .cb-controls{flex-direction:column;align-items:stretch;margin-top:18px}
   .cb-buttons .cb-btn{flex:1}
   .cbn-paper-in{font-size:5.2cqw;padding:8cqw 6cqw 6cqw 9cqw}
