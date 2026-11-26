@@ -1,5 +1,5 @@
 /* Photographs for "01 / My Story". Keys are milestone numbers and match the folders of the supplied `images` set
-   (05, 07, 10, 11, 12, 14, 15, 16). Order inside a milestone is the display order. `w`/`h` are the pixel size of the
+   (05, 07, 08, 09, 10, 11, 12, 14, 15, 16). Order inside a milestone is the display order. `w`/`h` are the pixel size of the
    shipped file and are used to reserve the space before the image loads. `label` is only set where the file name
    was a human-written caption; every other image gets a neutral "image N of M" description. */
 
@@ -13,6 +13,14 @@ export const storyPhotos: Record<string, Photo[]> = {
   '07': [
     { src: '/images/story/07/07-1.webp', w: 560, h: 757, file: "Screenshot 2026-11-27 003240.png" },
     { src: '/images/story/07/07-2.webp', w: 582, h: 500, file: "Screenshot 2026-11-27 003435.png" },
+  ],
+  '08': [
+    { src: '/images/story/08/08-1.jpg', w: 1280, h: 960, file: "IMG-20260111-WA0136.jpg" },
+    { src: '/images/story/08/08-2.jpg', w: 1280, h: 960, file: "IMG-20260111-WA0149.jpg" },
+  ],
+  '09': [
+    { src: '/images/story/09/09-1.jpg', w: 1280, h: 960, file: "IMG_20250107_182731.jpg" },
+    { src: '/images/story/09/09-2.jpg', w: 1600, h: 1202, file: "InShot_20241229_230806358.jpg" },
   ],
   '10': [
     { src: '/images/story/10/10-1.png', w: 131, h: 175, file: "PORTFOLIO ).png" },
