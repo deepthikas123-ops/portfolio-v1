@@ -1,5 +1,6 @@
 import { Reveal } from '@/components/Motion';
 import BadgeRig from '@/components/BadgeRig';
+import Bloom from '@/components/Bloom';
 
 export default function BadgeHero() {
   return (
@@ -34,6 +35,12 @@ export default function BadgeHero() {
             <p>Projects, research, experiments and little things that spark my imagination. A growing archive of how I think, make and learn.</p>
           </div>
         </Reveal>
+      </div>
+
+      {/* two decorative blooms in the open space either side of the badge; they sit outside the stage, which clips its content */}
+      <div className="bh-blooms" aria-hidden="true">
+        <Bloom x={-77.6} y={28.9} angle={0} />
+        <Bloom x={81.3} y={66.8} yNarrow={28.9} angle={26} />
       </div>
     </section>
   );
