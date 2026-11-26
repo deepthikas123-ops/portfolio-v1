@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Fragment } from 'react';
 import Link from 'next/link';
 import { Reveal } from '@/components/Motion';
 import StoryTimeline from '@/components/StoryTimeline';
@@ -11,6 +12,8 @@ export const metadata: Metadata = {
 
 const LINKEDIN = 'https://www.linkedin.com/in/deepthika365/';
 const SCHOLAR = 'https://scholar.google.com/citations?user=susKJWYAAAAJ&hl=en';
+/* Hero sub-description. Each item is kept whole so the line can wrap between items, never inside one. */
+const HERO_ROLE = ['PRODUCT DESIGN', 'RESEARCH', 'ENGINEERING', 'ART', 'EVERYTHING IN BETWEEN'];
 const GITHUB = 'https://github.com/deepthikas123-ops';
 
 type Skill = { k: string; v: string };
@@ -123,8 +126,8 @@ export default function About() {
         <div className="curator-hero-grid">
           <Reveal className="curator-portrait"><img src="/images/deepthika-portrait.jpg" alt="Portrait of Deepthika S, smiling, seated in a beige blazer and white shirt" width={1100} height={1251} /></Reveal>
           <div className="curator-copy">
-            <Reveal><p className="index-section-kicker">A NOTE FROM THE CURATOR</p><h1>Curious by nature.<br /><em>Made to connect.</em></h1></Reveal>
-            <Reveal delay={0.12}><p className="curator-role">Product Design · Design Research · Electronics · Interaction</p>
+            <Reveal><p className="index-section-kicker">A NOTE FROM THE CURATOR</p><h1><span>I’ve never felt the need to choose just one box.</span> <em>There’s too much to explore outside it.</em></h1></Reveal>
+            <Reveal delay={0.12}><p className="curator-role">{HERO_ROLE.map((r, i) => <Fragment key={r}><span>{r}{i < HERO_ROLE.length - 1 && <span aria-hidden="true"> ·</span>}</span>{' '}</Fragment>)}</p>
               <p className="curator-lede">An engineer by training and a designer by passion, driven by the belief that understanding how things work is the first step towards making them work better. I’m Deepthika, and I’m most interested in the space where art, design and engineering meet: where a human observation can become an experience, a product or an idea worth testing.</p>
             </Reveal>
             <Reveal delay={0.2}><div className="curator-actions"><a className="index-primary-link" href="/Deepthika-S-Resume.pdf" download>Download résumé <span>↓</span></a><a className="text-link" href="mailto:deepthikas123@gmail.com">Write to me ↗</a><a className="text-link" href={LINKEDIN} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a className="text-link" href={SCHOLAR} target="_blank" rel="noopener noreferrer">Google Scholar ↗</a><a className="text-link" href={GITHUB} target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></Reveal>

@@ -2,6 +2,10 @@
 
 .curator-section.is-story { background: #f7f4ee; }
 
+/* "The making of me." starts on the same left edge as the opening line and the story beneath it
+   (the shared section-head grid would otherwise push the title ~12px further in). */
+.curator-section.is-story .curator-section-head { grid-template-columns: calc(25% + 6px) minmax(0, 1fr); gap: 0; }
+
 .story-open {
   font: 800 clamp(28px, 3.9vw, 50px)/1.06 Inter, Arial, sans-serif;
   letter-spacing: -0.065em;
@@ -15,7 +19,7 @@
 .story-intro p + p { margin-top: 16px; }
 
 /* ---- timeline ---- */
-.story-tl { list-style: none; margin-top: clamp(56px, 7vw, 92px); padding: 0; max-width: 720px; }
+.story-tl { position: relative; list-style: none; margin-top: clamp(56px, 7vw, 92px); padding: 0; max-width: 720px; }
 
 .st-item {
   position: relative;
@@ -50,6 +54,21 @@
 }
 .st-item.is-linked .st-seg { transform: scaleY(1); }
 
+/* Reading tracker: a thinner, lighter-orange rail beside each milestone's text. --read (0 → 1) is written by
+   StoryTimeline from the live scroll position, so it fills as the visitor reads and un-fills on the way back up. */
+.st-body { position: relative; }
+.st-read {
+  position: absolute; left: -22px; top: 6px; bottom: 6px; width: 1px;
+  background: rgba(240, 82, 35, 0.16);
+  pointer-events: none;
+}
+.st-read i {
+  position: absolute; inset: 0;
+  background: #f6a98d;
+  transform: scaleY(var(--read, 0)); transform-origin: top;
+  transition: transform 0.22s linear;
+}
+
 /* the story is still going: the line trails off after the last entry */
 .st-item.is-last { padding-bottom: 110px; }
 .st-item.is-last::after {
@@ -70,16 +89,21 @@
 @media (max-width: 900px) {
   .story-tl { max-width: none; }
 }
+@media (max-width: 860px) {
+  /* section head stacks (num above title) at this width, matching the rest of the page */
+  .curator-section.is-story .curator-section-head { grid-template-columns: 1fr; gap: 10px; }
+}
 @media (max-width: 560px) {
   .st-item { padding-left: 52px; }
   .st-mark { width: 26px; height: 26px; font-size: 9.5px; }
   .st-seg { left: 12.25px; top: 26px; }
   .st-item.is-last::after { left: 12.25px; top: 26px; }
+  .st-read { left: -14px; }
   .st-date { margin-top: 3px; }
   .st-p, .story-intro p { font-size: 15px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .st-item, .st-seg, .st-mark, .st-item.is-last::after { transition: none !important; }
+  .st-item, .st-seg, .st-mark, .st-read i, .st-item.is-last::after { transition: none !important; }
   .st-item { transform: none; }
 }
