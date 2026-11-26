@@ -3,6 +3,8 @@ import { Fragment } from 'react';
 import Link from 'next/link';
 import { Reveal } from '@/components/Motion';
 import StoryTimeline from '@/components/StoryTimeline';
+import StoryArrival from '@/components/StoryArrival';
+import { STORY_TARGET_ID } from '@/components/story-handoff';
 import { milestones, storyIntro } from '@/components/story-data';
 
 export const metadata: Metadata = {
@@ -50,12 +52,13 @@ const certs: { t: string; o: string; w: string; url?: string }[] = [
 
 const pad = (i: number) => String(i + 1).padStart(2, '0');
 
-function Head({ num, title, sub }: { num: string; title: string; sub?: string }) {
-  return <div className="curator-section-head"><span className="num">{num}</span><div><h2>{title}</h2>{sub && <p>{sub}</p>}</div></div>;
+function Head({ num, title, sub, id }: { num: string; title: string; sub?: string; id?: string }) {
+  return <div className="curator-section-head" id={id}><span className="num">{num}</span><div><h2>{title}</h2>{sub && <p>{sub}</p>}</div></div>;
 }
 
 export default function About() {
   return <article className="editorial-about">
+    <StoryArrival />
     <section className="curator-hero">
       <div className="wrap">
         <div className="curator-topline"><span>THE DEEPTHIKA STUDIO / 01</span><span>CURATOR'S NOTE · COIMBATORE, INDIA</span><span>EST. 2026</span></div>
@@ -74,7 +77,7 @@ export default function About() {
 
     <section className="curator-section is-story">
       <div className="wrap">
-        <Head num="01 / MY STORY" title="The making of me." />
+        <Head num="01 / MY STORY" title="The making of me." id={STORY_TARGET_ID} />
         <Reveal as="p" className="story-open">I wish I could say I always knew where I was headed. <em>I really didn’t.</em></Reveal>
         <Reveal className="story-intro" delay={0.1}>{storyIntro.map((p) => <p key={p.slice(0, 24)}>{p}</p>)}</Reveal>
         <StoryTimeline items={milestones} />

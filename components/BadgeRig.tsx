@@ -3,6 +3,8 @@
 import { animate, motion, useMotionValue, useReducedMotion, useTransform } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { usePathname, useRouter } from 'next/navigation';
+import { markStoryIntent, raiseVeil, startStoryScroll } from './story-handoff';
 
 /**
  * Interactive retractable badge. Same layers as before (strap, shell, card, gloss, clip);
@@ -13,9 +15,13 @@ import { createPortal } from 'react-dom';
 const MAX_TILT = 16;        // deg, hard limit while dragging
 const MAX_SWING_VEL = 80;   // deg/s, limit for the release kick
 const PULL_LIMIT_K = 18;    // max pull = 20 stage units (1k = 1% of stage width)
+const PULL_ENTER = 0.5;     // letting go after pulling at least this fraction of the way opens the story
+const VEIL_MS = 380;        // dissolve before the Curator's Note page opens
 
 export default function BadgeRig() {
   const reduce = useReducedMotion();
+  const router = useRouter();
+  const pathname = usePathname();
   const y = useMotionValue(0);                       // raw pull in px (>= 0 except tiny overshoot)
   const angle = useMotionValue(0);                   // deg
   const shownY = useTransform(y, (v) => Math.max(v, -3));
@@ -23,9 +29,12 @@ export default function BadgeRig() {
   const drag = useRef<null | { id: number; x0: number; y0: number; rawStart: number; samples: { t: number; x: number; y: number }[]; limit: number }>(null);
   const touched = useRef(false);
 
-  // "GRAB ME" cursor: follows the pointer over the handles; purely visual (pointer-events: none)
+  // "PULL TO KNOW MY STORY" cursor: follows the pointer over the handles; purely visual (pointer-events: none)
   const [mode, setMode] = useState<'off' | 'grab' | 'hold'>('off');
   const [hintGone, setHintGone] = useState(false);
+  const [ready, setReady] = useState(false);            // pulled far enough that letting go enters the story
+  const readyRef = useRef(false);
+  const entering = useRef(false);
   const [mounted, setMounted] = useState(false);
   const pillRef = useRef<HTMLDivElement>(null);
   useEffect(() => setMounted(true), []);
@@ -41,6 +50,26 @@ export default function BadgeRig() {
   };
 
   const stopAll = () => { y.stop(); angle.stop(); };
+
+  const setReadyState = (v: boolean) => {
+    if (readyRef.current === v) return;
+    readyRef.current = v;
+    setReady(v);
+    if (v) { try { navigator.vibrate?.(8); } catch { /* not supported */ } }
+  };
+
+  // Pull completed: open the Curator's Note page at its top, which then glides down to 01 / MY STORY (see story-handoff.ts).
+  // Already on that page: just glide.
+  const enterStory = () => {
+    if (entering.current) return;
+    entering.current = true;
+    window.setTimeout(() => { entering.current = false; }, 6000);
+    const onAbout = (pathname ?? '').replace(/\/+$/, '') === '/about';
+    if (onAbout) { startStoryScroll({ reduce: !!reduce, beat: 0 }); return; }
+    markStoryIntent();
+    const go = () => router.push('/about/');
+    if (reduce) go(); else raiseVeil(VEIL_MS).then(go);
+  };
 
   const release = useCallback((vy: number, vx: number, dir: number) => {
     const pulled = Math.max(y.get(), 0);
@@ -73,6 +102,7 @@ export default function BadgeRig() {
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
     document.body.classList.add('bh-dragging');
     setHintGone(true);
+    setReadyState(false);
     if (finePointer(e)) { place(e); setMode('hold'); }
   };
 
@@ -89,6 +119,7 @@ export default function BadgeRig() {
     const raw = d.rawStart + (e.clientY - d.y0);
     // resistance: slope 1 at the start, tapering to the limit; slight give upwards
     y.set(raw >= 0 ? d.limit * Math.tanh(raw / d.limit) : -3 * Math.tanh(-raw / 40));
+    setReadyState(y.get() >= d.limit * PULL_ENTER);
     if (!reduce) {
       const a = d.samples[0], b = d.samples[d.samples.length - 1];
       const dt = Math.max(b.t - a.t, 16);
@@ -101,6 +132,9 @@ export default function BadgeRig() {
   const end = (e: React.PointerEvent) => {
     const d = drag.current; if (!d || e.pointerId !== d.id) return;
     drag.current = null;
+    const pulledPx = Math.max(y.get(), 0);
+    const pulledFar = e.type === 'pointerup' && pulledPx >= d.limit * PULL_ENTER; // a cancelled pointer is never a pull
+    setReadyState(false);
     document.body.classList.remove('bh-dragging');
     try { (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId); } catch {}
     if (finePointer(e)) {
@@ -114,6 +148,7 @@ export default function BadgeRig() {
     const vy = stale ? 0 : ((b.y - a.y) / dt) * 1000;
     const dir = Math.sign(angle.get() || b.x - d.x0 || 1);
     release(-vy * 0.6, vx, dir);                           // moving down => spring velocity is negative toward 0
+    if (pulledFar) enterStory();
   };
 
   // keyboard / assistive alternative: Enter or Space gives the badge a tug and lets it swing back
@@ -121,7 +156,7 @@ export default function BadgeRig() {
     if (e.key !== 'Enter' && e.key !== ' ') return;
     e.preventDefault(); touched.current = true; stopAll();
     const L = limitPx();
-    animate(y, L * 0.6, { duration: reduce ? 0.2 : 0.28, ease: 'easeOut' }).then(() => release(0, 0, 1));
+    animate(y, L * 0.6, { duration: reduce ? 0.2 : 0.28, ease: 'easeOut' }).then(() => { release(0, 0, 1); enterStory(); });
   };
 
   // one gentle hint tug after load (skipped for reduced motion or once the visitor has tried it)
@@ -146,10 +181,10 @@ export default function BadgeRig() {
 
   return (
     <div ref={rootRef} className="bh-rig" style={{ display: 'contents' }}>
-      <span className={`bh-hint${hintGone ? ' is-gone' : ''}`} aria-hidden="true">GRAB ME</span>
+      <span className={`bh-hint${hintGone ? ' is-gone' : ''}`} aria-hidden="true">PULL TO KNOW<br />MY STORY</span>
       {mounted && createPortal(
-        <div ref={pillRef} className={`bh-cursor${mode !== 'off' ? ' is-on' : ''}${mode === 'hold' ? ' is-hold' : ''}`} aria-hidden="true">
-          {mode === 'hold' ? 'HOLDING' : 'GRAB ME'}
+        <div ref={pillRef} className={`bh-cursor${mode !== 'off' ? ' is-on' : ''}${mode === 'hold' ? ' is-hold' : ''}${ready ? ' is-ready' : ''}`} aria-hidden="true">
+          {mode === 'hold' ? (ready ? 'LET GO TO ENTER' : 'HOLDING') : 'PULL TO KNOW MY STORY'}
         </div>,
         document.body,
       )}
@@ -159,7 +194,7 @@ export default function BadgeRig() {
         style={{ y: shownY }}
         role="button"
         tabIndex={0}
-        aria-label="ID badge. Press Enter to give it a tug, or drag the strap down and let go."
+        aria-label="ID badge: pull to know my story. Press Enter to pull it, or drag the strap down and let go."
         onKeyDown={onKey}
         {...grab}
       >

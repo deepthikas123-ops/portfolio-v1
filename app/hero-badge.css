@@ -76,19 +76,24 @@ main .badge-hero .bh-photo:hover{filter:grayscale(0)}
   .bh-col p{font-size:16px;max-width:none}
 }
 
-/* ---- "GRAB ME" cursor (fine pointers, over the strap, clip, shell and card) ---- */
-.bh-cursor{position:fixed;left:0;top:0;z-index:120;pointer-events:none;display:flex;align-items:center;justify-content:center;height:30px;padding:0 14px;border-radius:999px;background:var(--accent);color:#171717;font:600 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;opacity:0;scale:.7;transition:opacity .16s ease,scale .2s cubic-bezier(.2,.7,.2,1);will-change:transform}
+/* ---- "PULL TO KNOW MY STORY" cursor (fine pointers, over the strap, clip, shell and card) ---- */
+.bh-cursor{position:fixed;left:0;top:0;z-index:120;pointer-events:none;display:flex;align-items:center;justify-content:center;height:30px;padding:0 14px;border-radius:999px;background:var(--accent);color:#171717;font:600 11px/1 Inter,Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;opacity:0;scale:.7;transition:opacity .16s ease,scale .2s cubic-bezier(.2,.7,.2,1),background-color .2s ease,color .2s ease;will-change:transform}
 .bh-cursor.is-on{opacity:1;scale:1}
 .bh-cursor.is-hold{scale:.92}
+/* pulled far enough: letting go now opens the story */
+.bh-cursor.is-ready{scale:1.06;background:#171717;color:var(--accent)}
+/* while the card is held it lifts a little: a softer, deeper shadow (mouse and touch) */
+.bh-hanger{transition:filter .28s ease}
+body.bh-dragging .bh-hanger{filter:drop-shadow(0 calc(2.6*var(--k)) calc(2.9*var(--k)) rgba(30,25,20,.26)) drop-shadow(0 calc(.2*var(--k)) calc(.3*var(--k)) rgba(30,25,20,.25))}
 @media (hover:hover) and (pointer:fine){
   .bh-grab,.bh-grab-pouch,.bh-grab-pouch *,main .badge-hero .bh-grab-pouch .bh-photo{cursor:none}
   .bh-grab-pouch{touch-action:none;-webkit-user-select:none;user-select:none}
   body.bh-dragging,body.bh-dragging *{cursor:none!important}
 }
-@media (prefers-reduced-motion:reduce){.bh-cursor{transition:none}}
+@media (prefers-reduced-motion:reduce){.bh-cursor,.bh-hanger{transition:none}}
 /* touch: small static hint beside the strap, dismissed after the first pull */
 .bh-hint{display:none}
 @media (hover:none) and (pointer:coarse){
-  .bh-hint{display:flex;align-items:center;position:absolute;z-index:5;pointer-events:none;right:calc(50% + 8.5*var(--k));top:calc(9.8*var(--k));height:24px;padding:0 11px;border-radius:999px;background:var(--accent);color:#171717;font:600 10px/1 Inter,Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;transition:opacity .4s ease}
+  .bh-hint{display:flex;align-items:center;position:absolute;z-index:5;pointer-events:none;right:calc(50% + 8.5*var(--k));top:calc(9.8*var(--k));padding:7px 12px;border-radius:15px;background:var(--accent);color:#171717;font:600 10px/1.3 Inter,Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;text-align:center;white-space:nowrap;transition:opacity .4s ease}
   .bh-hint.is-gone{opacity:0}
 }
