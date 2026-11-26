@@ -16,48 +16,6 @@ const SCHOLAR = 'https://scholar.google.com/citations?user=susKJWYAAAAJ&hl=en';
 const HERO_ROLE = ['PRODUCT DESIGN', 'RESEARCH', 'ENGINEERING', 'ART', 'EVERYTHING IN BETWEEN'];
 const GITHUB = 'https://github.com/deepthikas123-ops';
 
-type Skill = { k: string; v: string };
-const skills: Skill[] = [
-  { k: 'Design skills', v: 'Concept development, Design Thinking, Aesthetic and form analysis, User studies, Storyboarding, Sensory design, Spatial planning, Biomimetic design' },
-  { k: 'Digital skills', v: 'Fusion 360, Photoshop, Illustrator, InDesign, Vizcom AI, Figma, Canva, Notion, Proteus and KiCAD (circuit simulation & PCB layout)' },
-  { k: 'Analogue skills', v: 'Ideation sketching, Rapid prototyping, Circuit design, Testing and troubleshooting' },
-  { k: 'Engineering tools', v: 'LT Spice, ModelSim, CEDAR, Ansys HFSS, Wokwi, Arduino IDE' },
-  { k: 'Programming', v: 'MATLAB, Embedded C, Verilog, Python' },
-  { k: 'Soft skills', v: 'Visual storytelling, Communication, Interdisciplinary collaboration, Receptive to feedback, Technical communication, Team collaboration, Time management' },
-];
-
-type Education = { k: string; t: string; d: string };
-const education: Education[] = [
-  { k: 'AUG 2023 — JUN 2027 (EXPECTED)', t: 'B.Tech, Electronics and Communication Engineering', d: 'Amrita Vishwa Vidyapeetham, Coimbatore · CGPA 7.99/10 (through Semester 6)' },
-  { k: 'JAN 2022 — MAR 2023', t: 'CBSE Class XII · 93.4%', d: 'Vidhya Niketan Public School, Coimbatore · Physics, Chemistry, Biology, Mathematics' },
-  { k: 'MAR 2020 — APR 2021', t: 'CBSE Class X · 97.4%', d: 'SSVM World School, Coimbatore' },
-  { k: 'CURRENT FOCUS', t: 'Product and interaction design', d: 'Human-centred systems, prototyping and design research' },
-  { k: 'BASED IN', t: 'Coimbatore, India', d: 'Open to thoughtful collaborations' },
-];
-
-type Entry = { t: string; meta?: string; d?: string; bullets?: string[] };
-const experience: Entry[] = [
-  {
-    t: 'Product Design Intern · SCALE Lab, CPDM, Indian Institute of Science (IISc)',
-    meta: 'JAN 2026 — JUN 2026',
-    bullets: [
-      'Developed the Iconicity Classification Algorithm (IKA), a framework that places product designs on a spectrum from conventional to unconventional using image embeddings and vision-language models, giving designers’ judgement of “unconventional” a measurable scale.',
-      'Designed and conducted a cross-generational study of how people respond to conventional and unconventional product aesthetics, comparing neophilic and neophobic preferences across Generations X, Y, Z and Alpha.',
-      'Contributed to FLAVOVR, an immersive VR eye-tracking system that captures implicit aesthetic preferences, and to a separate study of aesthetic gaze behaviour, exploring how individual gaze patterns can inform personalised product design.',
-    ],
-  },
-  {
-    t: 'Head of Design · Quizkrieg, Quiz Wing of Srishti, Amrita Vishwa Vidyapeetham',
-    meta: 'AUG 2024 — JUN 2026',
-    bullets: ['Managed the end-to-end design workflow, coordinating a team of designers, assigning tasks, maintaining design quality and ensuring timely delivery of projects.'],
-  },
-  {
-    t: 'Toy Design Innovator · Cognify (ReWire), IIT Madras',
-    meta: 'SHAASTRA 2025',
-    d: 'Designed Tactile Trails, a cognitive-sensory playmat for neurodivergent children. Worked with domain experts and conducted playtesting with children and parents. The prototype was showcased at Shaastra 2025 Open House and selected as a Top 25 finalist out of 1200+ teams.',
-  },
-];
-
 type Research = { slug?: string; t: string; v: string };
 const research: Research[] = [
   { slug: 'kaaya', t: 'KAAYA: The Body Draws What the Eye Never Sees', v: 'Accepted · NeurIPS 2026 · Creative AI Track (Agency), Sydney' },
@@ -90,32 +48,10 @@ const certs: { t: string; o: string; w: string; url?: string }[] = [
   { t: 'MATLAB Onramp Certification', o: 'MathWorks', w: 'Dec 2024' },
 ];
 
-const volunteering: Entry[] = [
-  { t: 'Community Art Volunteer · “Wall as a Canvas”, Bengaluru', d: 'Contributed to a community art initiative, collaborating with artists to transform a public space through collective mural painting.' },
-  { t: 'Marketing Intern · Shaastra 2026, IIT Madras', meta: 'SHAASTRA 2026', d: 'Led campus outreach and marketing for the event; recognised among the Top 50 Campus Ambassador Interns nationwide.' },
-];
-
-const languages = [
-  { l: 'English', p: 'Professional' },
-  { l: 'Tamil', p: 'Native' },
-  { l: 'Hindi', p: 'Limited' },
-  { l: 'Italian', p: 'Elementary' },
-  { l: 'Japanese', p: 'Elementary' },
-];
-
-const interests = ['Reading', 'Exploring new hobbies', 'Junk journaling', 'Sketching', 'Art & Calligraphy', 'Gardening', 'Visual storytelling', 'Everyday objects', 'Graphic design', 'How things work'];
-
 const pad = (i: number) => String(i + 1).padStart(2, '0');
 
 function Head({ num, title, sub }: { num: string; title: string; sub?: string }) {
   return <div className="curator-section-head"><span className="num">{num}</span><div><h2>{title}</h2>{sub && <p>{sub}</p>}</div></div>;
-}
-
-function Details({ e }: { e: Entry }) {
-  return <>
-    {e.d && <p>{e.d}</p>}
-    {e.bullets && <ul className="curator-bullets">{e.bullets.map((b) => <li key={b}>{b}</li>)}</ul>}
-  </>;
 }
 
 export default function About() {
@@ -158,28 +94,7 @@ export default function About() {
 
     <section className="curator-section">
       <div className="wrap">
-        <Head num="03 / EDUCATION" title="Learning the systems." sub="The technical foundation behind my design practice." />
-        <div className="curator-facts">{education.map((e) => <div className="curator-fact" key={e.t}><span className="k">{e.k}</span><strong>{e.t}</strong><p>{e.d}</p></div>)}</div>
-      </div>
-    </section>
-
-    <section className="curator-section">
-      <div className="wrap">
-        <Head num="04 / PRACTICE" title="Tools of the trade." sub="A working set of methods and tools I keep building on." />
-        <div className="curator-skill-grid">{skills.map((s) => <div className="curator-skill" key={s.k}><strong>{s.k}</strong><span>{s.v}</span></div>)}</div>
-      </div>
-    </section>
-
-    <section className="curator-section">
-      <div className="wrap">
-        <Head num="05 / FIELDWORK" title="Places I've learned by doing." sub="Experiences that have shaped how I approach people, products and problems." />
-        <div className="curator-list">{experience.map((e, i) => <div className="curator-list-item" key={e.t}><span className="n">{pad(i)}</span><div><h3>{e.t}</h3><Details e={e} /></div><span className="meta">{e.meta ?? `EXPERIENCE / ${pad(i)}`}</span></div>)}</div>
-      </div>
-    </section>
-
-    <section className="curator-section">
-      <div className="wrap">
-        <Head num="06 / RESEARCH" title="Questions I keep following." sub="Research projects exploring perception, interaction, creativity and human–AI relationships." />
+        <Head num="03 / RESEARCH" title="Questions I keep following." sub="Research projects exploring perception, interaction, creativity and human–AI relationships." />
         <div className="curator-list">{research.map((r, i) => r.slug
           ? <Link href={`/projects/${r.slug}`} className="curator-list-item" key={r.t}><span className="n">{pad(i)}</span><div><h3>{r.t}</h3><p>{r.v}</p></div><span className="meta">OPEN CASE STUDY ↗</span></Link>
           : <div className="curator-list-item is-soon" key={r.t}><span className="n">{pad(i)}</span><div><h3>{r.t}</h3><p>{r.v}</p></div><span className="meta">CASE STUDY SOON</span></div>)}</div>
@@ -188,38 +103,17 @@ export default function About() {
 
     <section className="curator-section">
       <div className="wrap">
-        <Head num="07 / MILESTONES" title="A few markers along the way." sub="Small reminders of ideas that made it out of the notebook." />
+        <Head num="04 / MILESTONES" title="A few markers along the way." sub="Small reminders of ideas that made it out of the notebook." />
         <div className="curator-awards">{honors.map((h) => <article className="curator-award" key={h.t}><h3>{h.t}</h3><p>{h.d}</p></article>)}</div>
       </div>
     </section>
 
     <section className="curator-section">
       <div className="wrap">
-        <Head num="08 / CONTINUING EDUCATION" title="Things I've been learning." />
+        <Head num="05 / CONTINUING EDUCATION" title="Things I've been learning." />
         <div className="curator-list">{certs.map((c, i) => c.url
           ? <a className="curator-list-item" key={c.t} href={c.url} target="_blank" rel="noopener noreferrer"><span className="n">{pad(i)}</span><div><h3>{c.t}</h3><p>{c.o}</p></div><span className="meta">{c.w} · VIEW CERTIFICATE ↗</span></a>
           : <div className="curator-list-item" key={c.t}><span className="n">{pad(i)}</span><div><h3>{c.t}</h3><p>{c.o}</p></div><span className="meta">{c.w}</span></div>)}</div>
-      </div>
-    </section>
-
-    <section className="curator-section">
-      <div className="wrap">
-        <Head num="09 / VOLUNTEERING" title="Giving back, making together." sub="Community work and outreach beyond the studio." />
-        <div className="curator-list">{volunteering.map((e, i) => <div className="curator-list-item" key={e.t}><span className="n">{pad(i)}</span><div><h3>{e.t}</h3><Details e={e} /></div><span className="meta">{e.meta ?? `VOLUNTEERING / ${pad(i)}`}</span></div>)}</div>
-      </div>
-    </section>
-
-    <section className="curator-section">
-      <div className="wrap">
-        <Head num="10 / LANGUAGES" title="Ways of speaking." />
-        <div className="curator-tags">{languages.map((l) => <span key={l.l}>{l.l} · {l.p}</span>)}</div>
-      </div>
-    </section>
-
-    <section className="curator-section">
-      <div className="wrap">
-        <Head num="11 / OUTSIDE THE STUDIO" title="Other things I collect." sub="Interests that keep my curiosity fed, even when I’m away from a screen." />
-        <div className="curator-tags">{interests.map((t) => <span key={t}>{t}</span>)}</div>
       </div>
     </section>
   </article>;
