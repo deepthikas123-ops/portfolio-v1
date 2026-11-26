@@ -148,7 +148,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
 .site-footer,.site-footer.index-footer{background:#171717;color:#fff}
 .footer-inner{padding-top:70px}
 .index-footer-kicker{font:700 11px Inter,Arial,sans-serif;letter-spacing:.14em;color:var(--accent);margin-bottom:22px}
-.footer-cta{font:700 clamp(34px,6vw,78px)/.95 Inter,Arial,sans-serif;letter-spacing:-.075em}
+.footer-cta{font:700 clamp(28px,4.95vw,64px)/.98 Inter,Arial,sans-serif;letter-spacing:-.075em;max-width:min(100%,1100px)}
+.footer-cta span{display:block;text-wrap:balance}
 .footer-cta .accent{color:var(--accent)}
 .footer-links{font-size:12px;gap:16px 28px}
 .footer-links a{border-color:rgba(255,255,255,.35)}
@@ -163,10 +164,10 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
 .curator-portrait{position:relative;background:#eee;max-width:420px;width:100%;overflow:hidden}
 .curator-portrait img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center top;filter:grayscale(1)}
 .curator-portrait:after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;background:var(--accent)}
-.curator-copy h1{font:800 clamp(34px,4.6vw,66px)/.98 Inter,Arial,sans-serif;letter-spacing:-.075em;margin-top:18px}
+.curator-copy h1{font:800 clamp(28px,3.59vw,51.5px)/1.04 Inter,Arial,sans-serif;letter-spacing:-.075em;margin-top:26px}
 .curator-copy h1 span,.curator-copy h1 em{display:block;text-wrap:balance}
-.curator-copy h1 em{font-style:normal;color:var(--accent);margin-top:.3em}
-.curator-role{font-size:11px;font-weight:700;line-height:1.75;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-strong);margin:26px 0 18px}
+.curator-copy h1 em{font-style:normal;color:var(--accent);margin-top:.42em}
+.curator-role{font-size:11px;font-weight:700;line-height:1.75;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-strong);margin:38px 0 22px}
 .curator-role>span{white-space:nowrap}
 .curator-lede{font-size:clamp(14px,1.3vw,17px);line-height:1.8;color:#555;max-width:720px}
 .curator-actions{display:flex;gap:24px;align-items:center;flex-wrap:wrap;margin-top:30px}
