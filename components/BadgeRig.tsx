@@ -16,7 +16,7 @@ const MAX_TILT = 16;        // deg, hard limit while dragging
 const MAX_SWING_VEL = 80;   // deg/s, limit for the release kick
 const PULL_LIMIT_K = 18;    // max pull = 20 stage units (1k = 1% of stage width)
 const PULL_ENTER = 0.5;     // letting go after pulling at least this fraction of the way opens the story
-const VEIL_MS = 380;        // dissolve before the Curator's Note page opens
+const VEIL_MS = 190;        // dissolve before the Curator's Note page opens
 
 export default function BadgeRig() {
   const reduce = useReducedMotion();

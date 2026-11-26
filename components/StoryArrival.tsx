@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { clearStoryIntent, hasStoryIntent, lowerVeil, startStoryScroll } from './story-handoff';
 
 /** How long the opening portrait and introduction are held on screen before the page glides down to My Story. */
-const INTRO_BEAT = 900;
+const INTRO_BEAT = 450;
 
 let epoch = 0;
 
@@ -29,7 +29,7 @@ export default function StoryArrival() {
     // the veil that covered the home page lifts, revealing the top of this page
     let r1 = 0;
     let r2 = 0;
-    r1 = requestAnimationFrame(() => { r2 = requestAnimationFrame(() => lowerVeil(reduce ? 0 : 650)); });
+    r1 = requestAnimationFrame(() => { r2 = requestAnimationFrame(() => lowerVeil(reduce ? 0 : 325)); });
 
     const run = startStoryScroll({ reduce, beat: INTRO_BEAT });
     // finished or interrupted: the intent is spent. (A cancel comes from leaving the page, handled in the cleanup below.)

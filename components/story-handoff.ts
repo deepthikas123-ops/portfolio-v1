@@ -182,7 +182,7 @@ export function startStoryScroll({ reduce, beat }: { reduce: boolean; beat: numb
     const y0 = window.scrollY;
     const dist = Math.abs(ty - y0);
     if (dist < 2) { finish('done'); return; }
-    const dur = Math.min(1800, Math.max(1000, 650 + dist * 0.7));
+    const dur = Math.min(900, Math.max(500, 325 + dist * 0.35));
     const t0 = performance.now();
     let lastSet = y0;
     const step = (now: number) => {
