@@ -27,6 +27,7 @@ export default function StoryTimeline({ items }: { items: Milestone[] }) {
   const bodies = useRef<(HTMLDivElement | null)[]>([]);
   const list = useRef<HTMLOListElement | null>(null);
   const read = useRef<number[]>([]);
+  const activeIdx = useRef(-1);
   const last = useRef({ t: 0, y: 0 });
   const timer = useRef<number | undefined>(undefined);
   const total = items.length;
@@ -64,6 +65,14 @@ export default function StoryTimeline({ items }: { items: Milestone[] }) {
       if (read.current[i] === next[i]) continue;
       read.current[i] = next[i];
       els.current[i]?.style.setProperty('--read', String(next[i]));
+    }
+    // the milestone being read = the furthest revealed one the reading line has entered (the first one before that)
+    let active = 0;
+    for (let i = 0; i < total; i++) if (next[i] > 0) active = i;
+    if (active !== activeIdx.current) {
+      els.current[activeIdx.current]?.removeAttribute('data-active');
+      els.current[active]?.setAttribute('data-active', '');
+      activeIdx.current = active;
     }
   }, [total]);
 
@@ -133,7 +142,7 @@ export default function StoryTimeline({ items }: { items: Milestone[] }) {
   return (
     <>
       <noscript>
-        <style>{'.st-item{opacity:1!important;visibility:visible!important;transform:none!important}.st-seg{transform:none!important}.st-read{display:none}'}</style>
+        <style>{'.st-item{opacity:1!important;visibility:visible!important;transform:none!important}.st-seg{transform:none!important}.st-track{display:none}'}</style>
       </noscript>
       <ol className="story-tl" aria-label="My story, in 17 chapters" ref={list}>
         {items.map((m, i) => {
@@ -159,9 +168,6 @@ export default function StoryTimeline({ items }: { items: Milestone[] }) {
                   bodies.current[i] = el;
                 }}
               >
-                <span className="st-read" aria-hidden="true">
-                  <i />
-                </span>
                 {m.date && <p className="st-date">{m.date}</p>}
                 <h3>
                   <span className="st-sr">{m.n} — </span>
@@ -174,6 +180,11 @@ export default function StoryTimeline({ items }: { items: Milestone[] }) {
                 ))}
               </div>
               {i < total - 1 && <span className="st-seg" aria-hidden="true" />}
+              <span className="st-track" aria-hidden="true">
+                <i className="st-light" />
+                <b className="st-dot is-start" />
+                <b className="st-dot is-end" />
+              </span>
             </li>
           );
         })}

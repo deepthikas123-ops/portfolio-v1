@@ -54,25 +54,38 @@
 }
 .st-item.is-linked .st-seg { transform: scaleY(1); }
 
-/* Reading tracker: a thinner, lighter-orange rail beside each milestone's text. --read (0 → 1) is written by
-   StoryTimeline from the live scroll position, so it fills as the visitor reads and un-fills on the way back up. */
-.st-body { position: relative; }
-.st-read {
-  position: absolute; left: -22px; top: 6px; bottom: 6px; width: 1px;
-  background: rgba(240, 82, 35, 0.16);
+/* Reading progress rides on the SAME line as the main track: a lighter orange layer of identical x-position and width,
+   with a small dot at its start and a moving dot at its end. --read (0 → 1) is written by StoryTimeline from the live
+   scroll position, so the end dot travels down while reading and back up when scrolling back. Only the milestone being
+   read shows it; the dark line (overall progress) underneath is never moved or duplicated. */
+.st-track {
+  position: absolute; left: 14.25px; top: 30px; bottom: 9px; width: 1.5px;
   pointer-events: none;
+  opacity: 0; transition: opacity 0.35s ease 0.75s; /* lingers while the dark line draws over it, then lets go */
 }
-.st-read i {
-  position: absolute; inset: 0;
-  background: #f6a98d;
+.st-item[data-active] .st-track { opacity: 1; transition: opacity 0.2s ease 0s; }
+.st-light {
+  position: absolute; inset: 0; background: #f6a283;
   transform: scaleY(var(--read, 0)); transform-origin: top;
   transition: transform 0.22s linear;
+}
+.st-dot {
+  position: absolute; left: 50%; width: 6.5px; height: 6.5px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 0 2px #f7f4ee;
+  transform: translate(-50%, -50%);
+}
+.st-dot.is-start { top: 12px; }
+.st-dot.is-end {
+  top: calc(var(--read, 0) * 100%);
+  opacity: clamp(0, calc(var(--read, 0) * 30), 1); /* eases in as it leaves the start dot */
+  transition: top 0.22s linear, opacity 0.2s linear;
 }
 
 /* the story is still going: the line trails off after the last entry */
 .st-item.is-last { padding-bottom: 110px; }
+.st-item.is-last .st-track { bottom: 110px; }
 .st-item.is-last::after {
-  content: ""; position: absolute; left: 14.25px; top: 30px; width: 1.5px; height: 84px;
+  content: ""; position: absolute; left: 14.25px; bottom: 26px; width: 1.5px; height: 84px;
   background: linear-gradient(var(--accent), rgba(240, 82, 35, 0));
   transform: scaleY(0); transform-origin: top;
   transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1) 1s;
@@ -97,13 +110,13 @@
   .st-item { padding-left: 52px; }
   .st-mark { width: 26px; height: 26px; font-size: 9.5px; }
   .st-seg { left: 12.25px; top: 26px; }
-  .st-item.is-last::after { left: 12.25px; top: 26px; }
-  .st-read { left: -14px; }
+  .st-item.is-last::after { left: 12.25px; }
+  .st-track { left: 12.25px; top: 26px; }
   .st-date { margin-top: 3px; }
   .st-p, .story-intro p { font-size: 15px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .st-item, .st-seg, .st-mark, .st-read i, .st-item.is-last::after { transition: none !important; }
+  .st-item, .st-seg, .st-mark, .st-track, .st-light, .st-dot, .st-item.is-last::after { transition: none !important; }
   .st-item { transform: none; }
 }
