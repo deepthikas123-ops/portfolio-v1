@@ -32,6 +32,8 @@ main .badge-hero img{filter:none;transition:none}
 /* portrait: greyscale at rest, colour on hover */
 main .badge-hero .bh-photo{filter:grayscale(1);transition:filter .5s ease;cursor:default}
 main .badge-hero .bh-photo:hover{filter:grayscale(0)}
+/* while the badge is being pulled the portrait turns to colour (it eases back to black and white on release) */
+body.bh-dragging main .badge-hero .bh-photo{filter:grayscale(0)}
 @media (prefers-reduced-motion:reduce){main .badge-hero .bh-photo{transition:none}}
 .bh-row{left:5.4cqw;right:5cqw;display:flex;align-items:flex-end;gap:2.4cqw;font-size:4.2cqw;line-height:1.2;white-space:nowrap;color:#171717}
 .bh-row b{font-weight:700;padding-bottom:1.2cqw}
