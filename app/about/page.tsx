@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Reveal } from '@/components/Motion';
+import StoryTimeline from '@/components/StoryTimeline';
+import { milestones, storyIntro } from '@/components/story-data';
 
 export const metadata: Metadata = {
   title: "Curator's Note — Deepthika S",
@@ -10,15 +12,6 @@ export const metadata: Metadata = {
 const LINKEDIN = 'https://www.linkedin.com/in/deepthika365/';
 const SCHOLAR = 'https://scholar.google.com/citations?user=susKJWYAAAAJ&hl=en';
 const GITHUB = 'https://github.com/deepthikas123-ops';
-
-/* An engineer by training and a designer by passion — copy follows the latest résumé. */
-const story = [
-  'I believe great products are built when design leads and engineering shapes it into reality. Following this approach, I developed a strong interest in human-centered design and product innovation, focusing on building technology that truly serves people. With a passion for blending engineering and design, I aim to bridge the gap between technology and usability in everything I create.',
-  'I’m an Electronics and Communication Engineering student who has always found herself moving between different ways of making. I enjoy the visual language of art, the questions that guide design, and the logic that makes engineering work. Over time, I’ve realised that I’m most interested in the space where these three meet: where a human observation can become an experience, a product or an idea worth testing.',
-  'My starting point was often visual. I liked arranging things, making graphics, drawing and noticing why one object or interface felt more considered than another. Studying electronics gave me another way to look at the world: to understand what sits beneath the surface, how systems behave, and how an idea can be made to function.',
-  'Design became the bridge between those interests. It gave me a way to begin with people, understand the situation around a problem, explore possible forms and then work with technology to bring one of those forms to life. I’m drawn to projects that let me move through that whole process, from observation and sketching to prototyping, testing and refinement.',
-  'That curiosity now takes different forms: a sensory play experience for children, a disaster-response rover, a wearable that turns movement into art, or research into how people respond to visual and AI-generated systems. The subjects change, but the question stays similar: how might we make technology feel more thoughtful, understandable and human?',
-];
 
 type Skill = { k: string; v: string };
 const skills: Skill[] = [
@@ -140,10 +133,12 @@ export default function About() {
       </div>
     </section>
 
-    <section className="curator-section">
+    <section className="curator-section is-story">
       <div className="wrap">
-        <Head num="01 / THE THREAD" title="How I got here." sub="A little context behind the work, and the questions I keep returning to." />
-        <div className="curator-story">{story.map((p) => <p key={p.slice(0, 24)}>{p}</p>)}</div>
+        <Head num="01 / MY STORY" title="The making of me." />
+        <Reveal as="p" className="story-open">I wish I could say I always knew where I was headed. <em>I really didn’t.</em></Reveal>
+        <Reveal className="story-intro" delay={0.1}>{storyIntro.map((p) => <p key={p.slice(0, 24)}>{p}</p>)}</Reveal>
+        <StoryTimeline items={milestones} />
       </div>
     </section>
 
