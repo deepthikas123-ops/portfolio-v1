@@ -1,0 +1,212 @@
+/* KAAYA (project 05) — page-specific styles.
+   Uses the deck's purple as this project's accent; layout classes are prefixed .kw- so nothing leaks into other pages. */
+
+.kw {
+  --kw: #5b2d6e;
+  --kw-deep: #35193f;
+  --kw-soft: #f3eff6;
+  color: var(--ink);
+}
+.kw .accent, .kw .kw-title .accent { color: var(--kw) !important; }
+.kw img { display: block; max-width: 100%; filter: none !important; }
+.kw figcaption { font-family: inherit; }
+
+/* ---- hero ---- */
+.kw-hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; background: #6f6879; }
+.kw-hero .bg {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(90deg, rgba(36, 22, 46, 0.1) 0%, rgba(36, 22, 46, 0.45) 55%, rgba(24, 14, 32, 0.72) 100%), url('/images/kaaya-wearable/hero-bg.jpg');
+  background-size: cover; background-position: center;
+}
+.kw-hero .ghost {
+  position: absolute; top: 2vw; left: 3vw; font-weight: 300; font-size: clamp(90px, 13vw, 190px); line-height: 1;
+  color: rgba(255, 255, 255, 0.28); letter-spacing: -0.02em; user-select: none; z-index: 1;
+}
+.kw-hero .hero-grid {
+  position: relative; z-index: 2; width: 100%; max-width: var(--max); margin: 0 auto;
+  padding: 120px var(--pad) 80px; display: grid; grid-template-columns: minmax(0, 460px) minmax(0, 1fr);
+  gap: clamp(32px, 7vw, 120px); align-items: center;
+}
+.kw-hero .card { margin: 0; }
+.kw-hero .card img { width: 100%; height: auto; box-shadow: 0 30px 80px rgba(20, 10, 30, 0.5); }
+.kw-hero .card figcaption { margin-top: 12px; font-size: 12px; color: rgba(255, 255, 255, 0.9) !important; line-height: 1.6; }
+.kw-hero .copy { color: #fff; max-width: 560px; }
+.kw-hero .kicker { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #e3c9f0; font-weight: 700; margin-bottom: 16px; }
+.kw-hero h1 { font-weight: 800; font-size: clamp(46px, 6vw, 82px); letter-spacing: -0.06em; line-height: 0.98; color: #fff; }
+.kw-hero .sub { font-weight: 300; font-size: clamp(18px, 1.9vw, 24px); margin-top: 14px; color: #fff; }
+.kw-hero .desc { font-weight: 300; font-size: 15px; line-height: 1.75; margin-top: 22px; color: rgba(255, 255, 255, 0.94); }
+.kw-hero .desc strong { font-weight: 700; color: #fff; }
+.kw-hero .partners { margin-top: 34px; width: min(100%, 230px); background: #fff; padding: 12px 16px; }
+@media (max-width: 860px) {
+  .kw-hero .hero-grid { grid-template-columns: 1fr; padding-top: 150px; }
+  .kw-hero .card { max-width: 400px; }
+}
+
+/* ---- shared section pieces ---- */
+.kw-sec { padding: clamp(64px, 9vw, 120px) 0; }
+.kw-panel { background: var(--panel); }
+.kw-tag { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--kw); margin-bottom: 14px; }
+.kw-title { font-size: clamp(30px, 4.6vw, 58px); font-weight: 800; letter-spacing: -0.07em; line-height: 1; max-width: 1000px; text-wrap: balance; }
+.kw-title.light { color: #fff; max-width: 760px; }
+.kw-body { margin-top: 22px; font-size: 15px; line-height: 1.8; color: var(--ink-soft); max-width: 620px; }
+.kw-body.light { color: rgba(255, 255, 255, 0.92); }
+.kw-sub { font-size: clamp(22px, 2.6vw, 32px); font-weight: 800; letter-spacing: -0.05em; color: var(--kw); margin: clamp(48px, 6vw, 80px) 0 24px; }
+
+/* ---- the question ---- */
+.kw-question { position: relative; background: var(--kw-deep); overflow: hidden; }
+.kw-question .scene img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: center; }
+.kw-question .top {
+  position: absolute; left: 0; right: 0; top: 0; padding: clamp(36px, 6vw, 84px) 0 clamp(28px, 4vw, 52px); z-index: 1;
+  background: linear-gradient(180deg, rgba(60, 38, 76, 0.9) 0%, rgba(60, 38, 76, 0.82) 70%, rgba(60, 38, 76, 0) 100%);
+}
+.kw-question .top .wrap { padding-right: 38%; }
+.kw-question .rq { position: absolute; left: 0; right: 0; bottom: 0; background: rgba(52, 32, 66, 0.88); padding: 18px 0; z-index: 1; }
+.kw-question .rq p { color: #fff; font-size: clamp(14px, 1.5vw, 19px); line-height: 1.5; font-weight: 300; }
+.kw-question .rq strong { font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; margin-right: 8px; }
+@media (max-width: 860px) {
+  .kw-question .scene img { aspect-ratio: 4 / 3; }
+  .kw-question .top { position: relative; background: var(--kw-deep); padding: 56px 0 40px; }
+  .kw-question .top .wrap { padding-right: var(--pad); }
+  .kw-question .rq { position: relative; }
+}
+
+/* ---- loops ---- */
+.kw-loops { margin-top: 44px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 4vw, 56px); }
+.kw-loops .loop { margin: 0; }
+.kw-loops h3 { font-size: clamp(15px, 1.6vw, 19px); font-weight: 400; color: var(--kw); line-height: 1.4; margin-bottom: 14px; }
+.kw-loops h3 strong { font-weight: 800; }
+.kw-loops svg { width: 100%; height: auto; background: var(--kw-soft); }
+.kw-loops svg .box rect { fill: #fff; stroke: #5b2d6e; stroke-width: 2.2; rx: 3; }
+.kw-loops svg .box.red rect { stroke: #9b1c1c; }
+.kw-loops svg .box.red path { stroke: #9b1c1c; fill: none; }
+.kw-loops svg .lab text { font: 700 14px Inter, Arial, sans-serif; fill: #171717; }
+.kw-loops svg .note text { font: 400 12.5px Inter, Arial, sans-serif; fill: #333; }
+.kw-loops svg .note.it text { font-style: italic; }
+@media (max-width: 860px) { .kw-loops { grid-template-columns: 1fr; } }
+
+/* ---- process rows ---- */
+.kw-flow { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 18px 28px; align-items: center; margin-top: 18px; }
+.kw-flow .who h4 { font-size: 15px; font-weight: 800; letter-spacing: -0.02em; text-transform: uppercase; color: var(--kw); }
+.kw-flow .who p { font-size: 13px; color: var(--kw); margin-top: 4px; }
+.kw-flow .steps { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 30px; }
+.kw-flow .step { position: relative; background: var(--kw-soft); border: 1px solid rgba(91, 45, 110, 0.28); padding: 18px 18px 20px; min-height: 118px; }
+.kw-flow .step:not(:last-child)::after {
+  content: '→'; position: absolute; right: -25px; top: 50%; transform: translateY(-50%); color: var(--kw); font-size: 18px; line-height: 1;
+}
+.kw-flow .step .n { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; color: var(--kw); }
+.kw-flow .step h5 { margin-top: 8px; font-size: 16px; font-weight: 800; letter-spacing: -0.03em; color: var(--kw); }
+.kw-flow .step p { margin-top: 6px; font-size: 13.5px; line-height: 1.5; color: #333; }
+@media (max-width: 1000px) {
+  .kw-flow { grid-template-columns: 1fr; }
+  .kw-flow .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+  .kw-flow .step:nth-child(2)::after { display: none; }
+}
+@media (max-width: 520px) {
+  .kw-flow .steps { grid-template-columns: 1fr; gap: 26px; }
+  .kw-flow .step:not(:last-child)::after { content: '↓'; right: auto; left: 50%; top: auto; bottom: -24px; transform: translateX(-50%); }
+  .kw-flow .step:nth-child(2)::after { display: block; }
+}
+
+/* ---- ideation & prototyping ---- */
+.kw-build { margin-top: 44px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
+.kw-build figure { margin: 0; }
+.kw-build .left { display: grid; gap: 22px; }
+.kw-build img { width: 100%; height: auto; background: #fff; }
+.kw-build figcaption { margin-top: 10px; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+@media (max-width: 860px) { .kw-build { grid-template-columns: 1fr; } }
+
+/* ---- two choices ---- */
+.kw-choices { margin-top: 44px; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
+.kw-dials { background: var(--kw-soft); padding: clamp(22px, 3vw, 34px); display: grid; gap: 28px; }
+.kw-dials .dial { display: grid; grid-template-columns: 44px 1fr; gap: 6px 14px; align-items: end; }
+.kw-dials .n { font-size: 28px; font-weight: 300; color: var(--kw); letter-spacing: -0.04em; grid-row: 1; }
+.kw-dials h3 { font-size: 20px; font-weight: 800; letter-spacing: -0.04em; grid-row: 1; grid-column: 2; }
+.kw-dials .track { list-style: none; grid-column: 1 / -1; position: relative; display: flex; justify-content: space-between; margin-top: 10px; padding-top: 20px; }
+.kw-dials .track::before { content: ''; position: absolute; left: 6px; right: 6px; top: 6px; height: 2px; background: #171717; }
+.kw-dials .track li { position: relative; font-size: 12px; line-height: 1.35; color: #333; max-width: 34%; }
+.kw-dials .track li::before { content: ''; position: absolute; top: -20px; width: 12px; height: 12px; border-radius: 50%; background: var(--kw); }
+.kw-dials .t3 li:nth-child(1) { text-align: left; }
+.kw-dials .t3 li:nth-child(1)::before { left: 0; }
+.kw-dials .t3 li:nth-child(2) { text-align: center; }
+.kw-dials .t3 li:nth-child(2)::before { left: 50%; transform: translateX(-50%); }
+.kw-dials .t3 li:nth-child(3) { text-align: right; }
+.kw-dials .t3 li:nth-child(3)::before { right: 0; }
+.kw-dials .t2 li:nth-child(1)::before { left: 0; }
+.kw-dials .t2 li:nth-child(2) { text-align: right; }
+.kw-dials .t2 li:nth-child(2)::before { right: 0; }
+.kw .col-l, .kw .col-r { min-width: 0; }
+.kw-portrait { margin: 22px 0 0; }
+.kw-portrait img { width: 100%; height: auto; max-width: 520px; }
+
+.kw-matrix-wrap { overflow-x: auto; }
+.kw-matrix { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1.25fr); border-right: 1px solid #171717; border-bottom: 1px solid #171717; min-width: 560px; background: #fff; }
+.kw-matrix .cell { border: 0 solid #171717; border-left-width: 1px; border-top-width: 1px; padding: 12px; font-size: 12px; line-height: 1.45; }
+.kw-matrix .corner { grid-column: 1 / 3; }
+.kw-matrix .head { text-align: center; display: grid; gap: 4px; align-content: center; }
+.kw-matrix .head strong { font-size: 14px; }
+.kw-matrix .head span, .kw-matrix .rowhead span { color: #444; font-size: 11.5px; }
+.kw-matrix .rowhead strong { display: block; font-size: 13.5px; margin-bottom: 4px; }
+.kw-matrix .trace { grid-column: 1; grid-row: 2 / 4; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 12px; text-align: center; }
+.kw-matrix .trace strong { font-size: 14px; }
+.kw-matrix .trace img { width: 100%; border: 1px solid #ccc; border-radius: 4px; }
+.kw-matrix img.cell { width: 100%; height: 100%; object-fit: cover; padding: 8px; }
+
+.kw-trio { margin-top: 34px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0 14px; }
+.kw-trio .f { margin: 0; grid-row: 1; }
+.kw-trio .meant { grid-column: 1 / 3; }
+.kw-trio .made { grid-column: 3 / 5; }
+.kw-trio .saw { grid-column: 5 / 7; }
+.kw-trio figcaption { font-size: 16px; font-weight: 800; letter-spacing: -0.03em; color: var(--kw); margin-bottom: 8px; }
+.kw-trio blockquote { height: calc(100% - 30px); border: 1px solid #171717; padding: 18px; font-size: 13.5px; line-height: 1.55; color: #222; }
+.kw-trio blockquote span { display: block; font-size: 34px; line-height: 0.7; color: #aaa; font-family: Georgia, serif; margin-bottom: 6px; }
+.kw-trio .f img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border: 1px solid #171717; background: #fff; }
+.kw-trio .made img { object-fit: contain; }
+.kw-trio .gap { grid-row: 2; margin-top: 18px; text-align: center; border-top: 2px solid var(--kw); padding-top: 10px; }
+.kw-trio .gap strong { display: block; font-size: 15px; font-weight: 800; letter-spacing: -0.02em; }
+.kw-trio .gap span { display: block; margin-top: 4px; font-size: 12px; line-height: 1.4; color: #444; }
+.kw-trio .g1 { grid-column: 2 / 4; }
+.kw-trio .g2 { grid-column: 4 / 6; }
+@media (max-width: 1000px) {
+  .kw-choices { grid-template-columns: minmax(0, 1fr); }
+  .kw-portrait img { max-width: 420px; }
+}
+@media (max-width: 620px) {
+  .kw-matrix { min-width: 0; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr) minmax(0, 1fr); }
+  .kw-matrix .corner { grid-column: 1; }
+  .kw-matrix .trace { order: -1; grid-column: 1 / -1; grid-row: auto; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+  .kw-matrix .trace img { width: 150px; }
+  .kw-matrix .cell { padding: 8px; }
+  .kw-matrix .head span, .kw-matrix .rowhead span { font-size: 10.5px; }
+  .kw-matrix img.cell { padding: 5px; }
+  .kw-trio { grid-template-columns: 1fr; gap: 16px; }
+  .kw-trio .meant, .kw-trio .made, .kw-trio .saw, .kw-trio .gap { grid-column: 1; grid-row: auto; margin-top: 0; }
+  .kw-trio .meant { order: 1; }
+  .kw-trio .g1 { order: 2; }
+  .kw-trio .made { order: 3; }
+  .kw-trio .g2 { order: 4; }
+  .kw-trio .saw { order: 5; }
+  .kw-trio blockquote { height: auto; }
+}
+
+/* ---- beyond the prototype ---- */
+.kw-beyond { margin-top: 44px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(22px, 4vw, 56px); align-items: start; }
+.kw-beyond figure { margin: 0; }
+.kw-beyond img { width: 100%; height: auto; border: 1px solid var(--line); }
+.kw-beyond figcaption { margin-top: 14px; font-size: 14px; line-height: 1.6; color: var(--ink-soft); }
+.kw-beyond figcaption strong { color: var(--ink); font-weight: 700; margin-right: 6px; }
+.kw-beyond figcaption a { color: var(--kw); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; display: inline-block; }
+.kw-paper { margin-top: 36px; display: flex; align-items: center; gap: 22px; background: #fff; padding: 18px 24px; }
+.kw-paper img { width: 150px; height: auto; flex: none; border: 0; }
+.kw-paper p { font-size: 14.5px; line-height: 1.6; color: #333; }
+.kw-paper p strong { color: var(--ink); }
+.kw-paper a { color: var(--kw); font-weight: 700; white-space: nowrap; text-underline-offset: 3px; }
+@media (max-width: 860px) {
+  .kw-beyond { grid-template-columns: 1fr; }
+  .kw-paper { flex-direction: column; align-items: flex-start; }
+}
+
+/* ---- closing line ---- */
+.kw-close { position: relative; background: linear-gradient(100deg, #35193f 0%, #5b4568 60%, #7a6586 100%); padding: clamp(56px, 8vw, 104px) 0; }
+.kw-close .wrap { position: relative; z-index: 1; }
+.kw-close p { color: #fff; font-weight: 300; font-size: clamp(22px, 3vw, 38px); line-height: 1.3; letter-spacing: -0.03em; max-width: 1000px; }
+.kw-close strong { font-weight: 800; }

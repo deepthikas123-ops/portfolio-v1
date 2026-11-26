@@ -35,7 +35,7 @@ const list: ProjectInput[] = [
     subtitle: 'Cognitive-sensory playmat for neurodivergent children — IIT Madras',
     discipline: 'Human-Centred Design',
     live: true,
-    cover: '/images/tactile-trails/card.jpg',
+    cover: '/images/covers/tactile-trails.jpg',
   },
   {
     slug: 'setu',
@@ -44,7 +44,7 @@ const list: ProjectInput[] = [
     subtitle: 'Rapid Deployment Emergency Logistics System',
     discipline: 'Product Design · Electronics',
     live: true,
-    cover: '/images/setucover.png',
+    cover: '/images/covers/setu.jpg',
   },
   {
     slug: 'morse-code-vault',
@@ -53,7 +53,7 @@ const list: ProjectInput[] = [
     subtitle: 'A game of signals, switches and logic',
     discipline: 'Electronics',
     live: true,
-    cover: '/images/morse-cover.jpg',
+    cover: '/images/covers/morse-code-vault.jpg',
   },
   {
     slug: 'eco-shield',
@@ -62,16 +62,16 @@ const list: ProjectInput[] = [
     subtitle: 'Biomimetic UV protective coating for solar panels',
     discipline: 'Biomimetic Design',
     live: true,
-    cover: '/images/ecoshieldcover.png',
+    cover: '/images/covers/eco-shield.jpg',
   },
   {
     slug: 'kaaya-wearable',
     collection: 'project',
-    title: 'KAAYA — The Wearable',
-    subtitle: 'The wearable IMU-to-generative-art system behind the paper: hardware build and prototype documentation',
-    discipline: 'Wearable · Electronics',
-    live: false,
-    cover: '/images/kaaya-cover.jpg',
+    title: 'KAAYA',
+    subtitle: 'Kinaesthetic Abstract Art using Yaw and Attitude',
+    discipline: 'Wearable · Creative AI',
+    live: true,
+    cover: '/images/covers/kaaya.jpg',
   },
   // ---- Research (live case studies first, then placeholders) ----
   {
