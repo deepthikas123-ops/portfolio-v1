@@ -1,6 +1,6 @@
 /* Curator's Note · 01 / My Story — typography-and-CSS-only vertical timeline. */
 
-.curator-section.is-story { background: #f7f4ee; }
+.curator-section.is-story { background: #f7f4ee; overflow-x: clip; } /* clip (not hidden) so sticky photos keep working and nothing can add sideways scroll */
 
 /* "The making of me." starts on the same left edge as the opening line and the story beneath it
    (the shared section-head grid would otherwise push the title ~12px further in). */
@@ -119,4 +119,58 @@
 @media (prefers-reduced-motion: reduce) {
   .st-item, .st-seg, .st-mark, .st-track, .st-light, .st-dot, .st-item.is-last::after { transition: none !important; }
   .st-item { transform: none; }
+}
+
+/* ---------- photographs beside the story ----------
+   Wide screens: a lane on each side of the timeline. The stack inside a lane is pinned while its milestone is read.
+   Only the milestone being read (li[data-pv]) shows its photographs: they drift in from their own side with a soft
+   fade, and drift back out the same way when the reading position moves on. Exits are quicker than entrances and
+   entrances start after a short beat, so the outgoing set is mostly gone before the next arrives. */
+.st-photos { display: contents; }
+.st-lane { position: absolute; top: 0; bottom: 0; width: var(--lw); pointer-events: none; }
+/* lane widths follow the space that is really free either side of the text column (capped at 300px) */
+.st-lane.is-left { --lw: min(300px, max(calc(25vw - 18px), calc(50vw - 378px))); right: calc(100% + 32px); }
+.st-lane.is-right { --lw: min(300px, calc(50vw - 470px), calc(75vw - 830px)); left: 732px; }
+.st-stack {
+  position: sticky; top: max(96px, 12vh);
+  display: flex; flex-direction: column; gap: 18px;
+  --mh: calc((min(66vh, 600px) - (var(--cnt) - 1) * 18px) / var(--cnt)); /* tallest a photo may be so the whole stack fits the screen */
+}
+.is-left .st-stack { align-items: flex-end; }
+.is-right .st-stack { align-items: flex-start; margin-top: 7vh; }
+.is-left .st-ph:nth-child(even) { align-self: flex-start; }
+.is-right .st-ph:nth-child(even) { align-self: flex-end; }
+
+.st-ph {
+  --dx: -46px; --dy: 0px; --d: calc(0.26s + var(--j) * 0.11s);
+  margin: 0;
+  /* never wider than the file itself (no upscaling), its lane, or the height budget — so nothing is stretched or cropped */
+  width: min(calc(var(--nw) * 1px), calc(var(--lw) * var(--sc)), calc(var(--mh) * var(--ar)));
+  opacity: 0; visibility: hidden;
+  transform: translate3d(var(--dx), var(--dy), 0);
+  transition: opacity 0.5s ease 0s, transform 0.65s cubic-bezier(0.4, 0, 0.7, 0.2) 0s, visibility 0s linear 0.65s;
+}
+.is-right .st-ph { --dx: 46px; }
+/* the site's global greyscale image rule is switched off here: these are personal photographs, shown as they are */
+.st-ph img, .st-ph img:hover { display: block; width: 100%; height: auto; filter: none; transition: none; box-shadow: 0 0 0 1px rgba(23, 23, 23, 0.07); }
+.st-item[data-pv] .st-ph {
+  opacity: 1; visibility: visible; transform: none;
+  transition: opacity 0.9s ease var(--d), transform 1.05s cubic-bezier(0.22, 0.61, 0.36, 1) var(--d), visibility 0s linear var(--d);
+}
+
+/* Tablet and mobile: not enough room beside the text, so each milestone's photographs sit in a compact grid under
+   it (left/right alternation becomes alternating order, and entrances drift in from their side with a small lift). */
+@media (max-width: 1399px) {
+  .st-photos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: start; max-width: 620px; margin-top: 30px; }
+  .st-lane, .st-stack { display: contents; }
+  .st-ph { --dx: -14px; --dy: 16px; order: var(--k); width: min(100%, calc(var(--nw) * 1px)); }
+  .is-right .st-ph { --dx: 14px; }
+}
+@media (max-width: 640px) {
+  .st-photos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .st-ph, .st-item[data-pv] .st-ph { transform: none !important; transition: opacity 0.25s linear 0s, visibility 0s linear 0.25s !important; }
+  .st-item[data-pv] .st-ph { transition: opacity 0.25s linear 0s, visibility 0s !important; }
 }

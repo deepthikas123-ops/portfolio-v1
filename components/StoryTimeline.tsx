@@ -1,7 +1,8 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { Milestone } from './story-data';
+import { storyPhotos, type Photo } from './story-photos';
 import '../app/story.css';
 
 /* How far down the viewport the next milestone's top must travel before it may appear (fraction of viewport height). */
@@ -14,6 +15,25 @@ const MIN_GAP = 520;
 /* Reading line for the per-milestone tracker. Same line as the reveal trigger, so a milestone is always
    fully read (tracker full) by the time the next one is allowed to appear. */
 const READ = TRIGGER;
+
+/* Photographs are dealt out alternately, left / right, in reading order. The side that starts gets the extra photograph
+   when the count is odd, and the starting side flips from one milestone with photographs to the next, so the extra
+   photo (and the overall weight) does not always fall on the same side. */
+type Placed = { photo: Photo; side: 'l' | 'r'; k: number; j: number };
+function arrange(photos: Photo[], startLeft: boolean): Placed[] {
+  const seen = { l: 0, r: 0 };
+  return photos.map((photo, k) => {
+    const left = (k % 2 === 0) === startLeft;
+    const side = left ? 'l' : 'r';
+    return { photo, side, k, j: seen[side]++ };
+  });
+}
+/* How wide a photograph may be relative to its lane, by shape: portraits sit narrower, landscapes fill the lane. */
+const shapeScale = (ar: number) => (ar < 0.85 ? 0.62 : ar < 1.05 ? 0.78 : ar < 1.4 ? 0.9 : 1);
+const PHOTO_KEYS = Object.keys(storyPhotos).sort();
+/* After the reading position settles on a milestone for this long (ms), its photographs come in and the previous
+   milestone's go out. It keeps a fast flick through several milestones from flashing each set in turn. */
+const PHOTO_SETTLE = 140;
 
 /**
  * "01 / My Story" — a vertical timeline that unfolds one milestone at a time.
@@ -28,6 +48,9 @@ export default function StoryTimeline({ items }: { items: Milestone[] }) {
   const list = useRef<HTMLOListElement | null>(null);
   const read = useRef<number[]>([]);
   const activeIdx = useRef(-1);
+  const pvIdx = useRef(-1);
+  const pvWant = useRef(-1);
+  const pvTimer = useRef<number | undefined>(undefined);
   const last = useRef({ t: 0, y: 0 });
   const timer = useRef<number | undefined>(undefined);
   const total = items.length;
@@ -73,6 +96,17 @@ export default function StoryTimeline({ items }: { items: Milestone[] }) {
       els.current[activeIdx.current]?.removeAttribute('data-active');
       els.current[active]?.setAttribute('data-active', '');
       activeIdx.current = active;
+    }
+    // photographs follow the milestone being read, once the reading position has settled on it
+    if (active !== pvWant.current) {
+      pvWant.current = active;
+      window.clearTimeout(pvTimer.current);
+      pvTimer.current = window.setTimeout(() => {
+        if (pvIdx.current === pvWant.current) return;
+        els.current[pvIdx.current]?.removeAttribute('data-pv');
+        els.current[pvWant.current]?.setAttribute('data-pv', '');
+        pvIdx.current = pvWant.current;
+      }, PHOTO_SETTLE);
     }
   }, [total]);
 
@@ -129,6 +163,7 @@ export default function StoryTimeline({ items }: { items: Milestone[] }) {
       window.removeEventListener('resize', onScroll);
       ro?.disconnect();
       window.clearTimeout(timer.current);
+      window.clearTimeout(pvTimer.current);
       if (raf) cancelAnimationFrame(raf);
     };
   }, [tick, measure, total]);
@@ -142,7 +177,7 @@ export default function StoryTimeline({ items }: { items: Milestone[] }) {
   return (
     <>
       <noscript>
-        <style>{'.st-item{opacity:1!important;visibility:visible!important;transform:none!important}.st-seg{transform:none!important}.st-track{display:none}'}</style>
+        <style>{'.st-item{opacity:1!important;visibility:visible!important;transform:none!important}.st-seg{transform:none!important}.st-track{display:none}.st-photos{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:24px}.st-lane,.st-stack{display:contents!important}.st-ph{opacity:1!important;visibility:visible!important;transform:none!important;width:100%!important}'}</style>
       </noscript>
       <ol className="story-tl" aria-label="My story, in 17 chapters" ref={list}>
         {items.map((m, i) => {
@@ -179,6 +214,13 @@ export default function StoryTimeline({ items }: { items: Milestone[] }) {
                   </p>
                 ))}
               </div>
+              {storyPhotos[m.n] && (
+                <Lanes
+                  photos={storyPhotos[m.n]}
+                  title={m.title}
+                  startLeft={PHOTO_KEYS.indexOf(m.n) % 2 === 0}
+                />
+              )}
               {i < total - 1 && <span className="st-seg" aria-hidden="true" />}
               <span className="st-track" aria-hidden="true">
                 <i className="st-light" />
@@ -190,5 +232,42 @@ export default function StoryTimeline({ items }: { items: Milestone[] }) {
         })}
       </ol>
     </>
+  );
+}
+
+/* One milestone's photographs: a lane on each side of the timeline on wide screens (pinned beside the text while the
+   milestone is read), or a compact grid under the text on tablet and mobile. Every image reserves its box up front
+   (width/height + aspect ratio) and loads lazily. */
+function Lanes({ photos, title, startLeft }: { photos: Photo[]; title: string; startLeft: boolean }) {
+  const placed = arrange(photos, startLeft);
+  return (
+    <div className="st-photos">
+      {(['l', 'r'] as const).map((side) => {
+        const mine = placed.filter((p) => p.side === side);
+        if (!mine.length) return null;
+        return (
+          <div key={side} className={`st-lane ${side === 'l' ? 'is-left' : 'is-right'}`} style={{ '--cnt': mine.length } as CSSProperties}>
+            <div className="st-stack">
+              {mine.map(({ photo, k, j }) => (
+                <figure
+                  key={photo.src}
+                  className="st-ph"
+                  style={{ '--nw': photo.w, '--ar': (photo.w / photo.h).toFixed(4), '--sc': shapeScale(photo.w / photo.h), '--k': k, '--j': j } as CSSProperties}
+                >
+                  <img
+                    src={photo.src}
+                    width={photo.w}
+                    height={photo.h}
+                    alt={photo.label ?? `${title} — image ${k + 1} of ${photos.length}`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
 }
