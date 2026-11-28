@@ -3,7 +3,7 @@ import { Reveal, Stagger, StaggerItem } from '@/components/Motion';
 import ProjectNav from '@/components/ProjectNav';
 import { getProject } from '@/components/projects';
 
-const p = getProject('calculator-fallacy');
+const p = getProject('the-calculator-fallacy');
 
 export const metadata: Metadata = {
   title: 'The Calculator Fallacy — Learners Blindly Trust Confident AI | Deepthika S',
@@ -643,7 +643,7 @@ export default function CalculatorFallacyPage() {
         </div>
       </section>
 
-      <ProjectNav slug="calculator-fallacy" />
+      <ProjectNav slug="the-calculator-fallacy" />
     </article>
   );
 }

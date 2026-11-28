@@ -32,8 +32,10 @@ export default function Header() {
   const dialog = useRef<HTMLDivElement>(null);
 
   // the case study being read decides which top-level item is highlighted
-  const slug = pathname?.match(/^\/(?:projects|research)\/([^/]+)/)?.[1];
-  const current = slug ? projects.find((p) => p.slug === slug) : undefined;
+  const route = pathname?.match(/^\/(projects|research)\/([^/]+)/);
+  const current = route
+    ? projects.find((p) => p.slug === route[2] && p.collection === (route[1] === 'research' ? 'research' : 'project'))
+    : undefined;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);

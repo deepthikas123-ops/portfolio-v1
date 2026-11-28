@@ -131,32 +131,44 @@ components/
 public/images/                     All images, including figures extracted from the papers
 ```
 
-## Projects
+## Projects and research
 
-| #  | Project                     | Route                          |
-| -- | --------------------------- | ------------------------------ |
-| 01 | Tactile Trails              | `/projects/tactile-trails`     |
-| 02 | SETU                        | `/projects/setu`               |
-| 03 | ECO-SHIELD                  | `/projects/eco-shield`         |
-| 04 | Morse Code Logic Game       | `/projects/morse-code-logic-game` |
-| 05 | Chain-Snatch Alert          | `/projects/chain-snatch-alert` |
-| 06 | Atomic User Model           | `/research/atomic-user-model`  |
-| 07 | Aesthetic Fingerprint       | `/research/aesthetic-fingerprint` |
-| 08 | FLAVOVR                     | `/research/flavovr`            |
-| 09 | KAAYA                       | `/research/kaaya`              |
-| 10 | VAPOURS                     | `/research/vapours`            |
-| 11 | The Calculator Fallacy      | `/research/calculator-fallacy` |
-| 12 | When the Majority Is Wrong  | `/research/llm-conformity`     |
+URLs are always generated from each entry's **title** in `components/projects.ts`: the title is lower-cased and
+hyphenated, then used as `/projects/<title-slug>` (Projects) or `/research/<title-slug>` (Research). Nobody types a
+slug by hand.
 
-## Adding or publishing a project
+| Collection | Title                       | Route                                   |
+| ---------- | --------------------------- | --------------------------------------- |
+| Project    | Tactile Trails              | `/projects/tactile-trails`              |
+| Project    | SETU                        | `/projects/setu`                        |
+| Project    | Morse Code Logic Game       | `/projects/morse-code-logic-game`       |
+| Project    | ECO-SHIELD                  | `/projects/eco-shield`                  |
+| Project    | KAAYA                       | `/projects/kaaya`                       |
+| Research   | Atomic User Model           | `/research/atomic-user-model`           |
+| Research   | Aesthetic Fingerprint       | `/research/aesthetic-fingerprint`       |
+| Research   | FLAVOVR                     | `/research/flavovr`                     |
+| Research   | KAAYA                       | `/research/kaaya`                       |
+| Research   | VAPOURS                     | `/research/vapours`                     |
+| Research   | The Calculator Fallacy      | `/research/the-calculator-fallacy`      |
+| Research   | When the Majority Is Wrong  | `/research/when-the-majority-is-wrong`  |
 
-1. Build the page at `app/projects/<slug>/page.tsx` (`app/research/<slug>/page.tsx` for Research; any recent case study is a good reference;
-   end it with `<ProjectNav slug="<slug>" />`).
-2. In `components/projects.ts`, add the entry (or set `live: true`) with a `cover` image.
-   Use `coverClass: 'fit-contain'` for charts and diagrams so they are not cropped.
+## Adding or publishing a project or research entry
 
-Project numbers come from the order of the array. The header dropdown, mobile menu, home grid,
-project index and previous/next links all update automatically.
+1. In `components/projects.ts`, add the entry (no slug) with `collection: 'project'` or `'research'`, a `title`, and a
+   `cover` image. Use `coverClass: 'fit-contain'` for charts and diagrams so they are not cropped.
+2. Work out its slug from the title (e.g. "When the Majority Is Wrong" gives `when-the-majority-is-wrong`) and build the
+   page at `app/projects/<slug>/page.tsx` or `app/research/<slug>/page.tsx`. Use the same slug in
+   `getProject('<slug>')` and end the page with `<ProjectNav slug="<slug>" />`.
+3. Set `live: true`.
+
+`npm run build` runs `scripts/check-routes.mjs` first (also `npm run check:routes`). It stops with a clear message if a
+page folder, `getProject()` call or `ProjectNav` slug does not match the title, so a URL can never drift from its title.
+
+If you rename a title, its URL changes: rename the page folder to match and add a redirect from the old URL in
+`vercel.json`.
+
+Numbers come from the order of the array, separately for Projects and Research. The header dropdown, mobile menu,
+home grid, index and previous/next links all update automatically.
 
 ## Research figures
 

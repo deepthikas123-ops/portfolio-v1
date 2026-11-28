@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "check:routes": "node scripts/check-routes.mjs",
+    "prebuild": "node scripts/check-routes.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

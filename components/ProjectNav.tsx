@@ -22,8 +22,8 @@ function Side({ label, p, align }: { label: string; p: Project; align: 'left' | 
 }
 
 /** Previous / next project links, derived from the project registry. */
-export default function ProjectNav({ slug }: { slug: string }) {
-  const { prev, next } = getNeighbours(slug);
+export default function ProjectNav({ slug, collection }: { slug: string; collection?: Project['collection'] }) {
+  const { prev, next } = getNeighbours(slug, collection);
   const noun = prev.collection === 'research' ? 'research' : 'project';
   return (
     <nav className="proj-nav" aria-label="Project navigation">

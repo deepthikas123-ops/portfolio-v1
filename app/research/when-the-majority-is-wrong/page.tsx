@@ -3,7 +3,7 @@ import { Reveal, Stagger, StaggerItem } from '@/components/Motion';
 import ProjectNav from '@/components/ProjectNav';
 import { getProject } from '@/components/projects';
 
-const p = getProject('llm-conformity');
+const p = getProject('when-the-majority-is-wrong');
 
 export const metadata: Metadata = {
   title: 'When the Majority Is Wrong — Conformity and Authority Bias in Multi-Agent LLMs | Deepthika S',
@@ -546,7 +546,7 @@ export default function LlmConformityPage() {
         </div>
       </section>
 
-      <ProjectNav slug="llm-conformity" />
+      <ProjectNav slug="when-the-majority-is-wrong" />
     </article>
   );
 }

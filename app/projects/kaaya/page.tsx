@@ -5,7 +5,7 @@ import ProjectNav from '@/components/ProjectNav';
 import { getProject } from '@/components/projects';
 import './kaaya-wearable.css';
 
-const p = getProject('kaaya-wearable');
+const p = getProject('kaaya', 'project');
 const img = (f: string) => `/images/kaaya-wearable/${f}`;
 
 export const metadata: Metadata = {
@@ -440,7 +440,7 @@ export default function Page() {
         </div>
       </section>
 
-      <ProjectNav slug="kaaya-wearable" />
+      <ProjectNav slug="kaaya" collection="project" />
     </article>
   );
 }

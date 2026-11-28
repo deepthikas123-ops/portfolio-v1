@@ -31,16 +31,6 @@
       "permanent": true
     },
     {
-      "source": "/projects/kaaya",
-      "destination": "/research/kaaya/",
-      "permanent": true
-    },
-    {
-      "source": "/projects/kaaya/",
-      "destination": "/research/kaaya/",
-      "permanent": true
-    },
-    {
       "source": "/projects/vapours",
       "destination": "/research/vapours/",
       "permanent": true
@@ -52,22 +42,42 @@
     },
     {
       "source": "/projects/calculator-fallacy",
-      "destination": "/research/calculator-fallacy/",
+      "destination": "/research/the-calculator-fallacy/",
       "permanent": true
     },
     {
       "source": "/projects/calculator-fallacy/",
-      "destination": "/research/calculator-fallacy/",
+      "destination": "/research/the-calculator-fallacy/",
+      "permanent": true
+    },
+    {
+      "source": "/research/calculator-fallacy",
+      "destination": "/research/the-calculator-fallacy/",
+      "permanent": true
+    },
+    {
+      "source": "/research/calculator-fallacy/",
+      "destination": "/research/the-calculator-fallacy/",
       "permanent": true
     },
     {
       "source": "/projects/llm-conformity",
-      "destination": "/research/llm-conformity/",
+      "destination": "/research/when-the-majority-is-wrong/",
       "permanent": true
     },
     {
       "source": "/projects/llm-conformity/",
-      "destination": "/research/llm-conformity/",
+      "destination": "/research/when-the-majority-is-wrong/",
+      "permanent": true
+    },
+    {
+      "source": "/research/llm-conformity",
+      "destination": "/research/when-the-majority-is-wrong/",
+      "permanent": true
+    },
+    {
+      "source": "/research/llm-conformity/",
+      "destination": "/research/when-the-majority-is-wrong/",
       "permanent": true
     },
     {
@@ -78,6 +88,16 @@
     {
       "source": "/projects/morse-code-vault/",
       "destination": "/projects/morse-code-logic-game/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/kaaya-wearable",
+      "destination": "/projects/kaaya/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/kaaya-wearable/",
+      "destination": "/projects/kaaya/",
       "permanent": true
     }
   ]

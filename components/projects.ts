@@ -1,17 +1,39 @@
 /**
- * Single source of truth for every project in the portfolio.
+ * Single source of truth for every project and research entry in the portfolio.
  *
- * When a new case-study page is ready:
- *  1. Build the page under app/projects/<slug>/page.tsx (or app/research/<slug>/page.tsx for Research)
- *  2. Add / flip the entry here (`live: true` plus a `cover` image)
- * The header dropdown, mobile menu, home grid, project index and prev/next
- * navigation all update automatically. Exhibit numbers are derived from the
- * order of this array, separately for Projects and Research, so never hard-code
- * a number or count anywhere else.
+ * Adding a case study:
+ *  1. Add the entry below. Do NOT write a slug: the URL is generated from `title`
+ *     (Projects -> /projects/<title-slug>, Research -> /research/<title-slug>).
+ *  2. Build the page at app/projects/<title-slug>/page.tsx (app/research/<title-slug>/page.tsx for Research)
+ *     and use the same slug in getProject('<title-slug>') and <ProjectNav slug="<title-slug>" />.
+ *  3. Set `live: true` and a `cover` image.
+ * Renaming a title changes its URL: rename the page folder to match (and add a redirect in vercel.json
+ * from the old URL). `npm run build` runs scripts/check-routes.mjs first and stops with a clear message
+ * if any folder, getProject() call or ProjectNav slug does not match the title.
+ * The header dropdown, mobile menu, home grid, index and prev/next navigation all update automatically.
+ * Exhibit numbers come from the order of this array, separately for Projects and Research, so never
+ * hard-code a number or count anywhere else.
  */
+/**
+ * The URL slug is never typed by hand: it is always the entry's `title`, lower-cased and hyphenated
+ * ("The Calculator Fallacy" -> the-calculator-fallacy, "ECO-SHIELD" -> eco-shield).
+ * scripts/check-routes.mjs (runs before every build) fails if a page folder does not match.
+ */
+export function slugify(title: string): string {
+  return title
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/['\u2018\u2019]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 export type Project = {
   index: string; // display index, e.g. '02'
   collection: 'project' | 'research';
+  /** Derived from `title` (see slugify), so the URL always follows the title. */
   slug: string;
   title: string;
   subtitle: string;
@@ -23,13 +45,12 @@ export type Project = {
   coverClass?: string;
 };
 
-type ProjectInput = Omit<Project, 'index'>;
+type ProjectInput = Omit<Project, 'index' | 'slug'>;
 
 
 const list: ProjectInput[] = [
   // ---- Projects ----
   {
-    slug: 'tactile-trails',
     collection: 'project',
     title: 'Tactile Trails',
     subtitle: 'Cognitive-sensory playmat for neurodivergent children — IIT Madras',
@@ -38,7 +59,6 @@ const list: ProjectInput[] = [
     cover: '/images/covers/tactile-trails.jpg',
   },
   {
-    slug: 'setu',
     collection: 'project',
     title: 'SETU',
     subtitle: 'Rapid Deployment Emergency Logistics System',
@@ -47,7 +67,6 @@ const list: ProjectInput[] = [
     cover: '/images/covers/setu.jpg',
   },
   {
-    slug: 'morse-code-logic-game',
     collection: 'project',
     title: 'Morse Code Logic Game',
     subtitle: 'A game of signals, switches and logic',
@@ -56,7 +75,6 @@ const list: ProjectInput[] = [
     cover: '/images/covers/morse-code-vault.jpg',
   },
   {
-    slug: 'eco-shield',
     collection: 'project',
     title: 'ECO-SHIELD',
     subtitle: 'Biomimetic UV protective coating for solar panels',
@@ -65,7 +83,6 @@ const list: ProjectInput[] = [
     cover: '/images/covers/eco-shield.jpg',
   },
   {
-    slug: 'kaaya-wearable',
     collection: 'project',
     title: 'KAAYA',
     subtitle: 'Kinaesthetic Abstract Art using Yaw and Attitude',
@@ -75,7 +92,6 @@ const list: ProjectInput[] = [
   },
   // ---- Research (live case studies first, then placeholders) ----
   {
-    slug: 'atomic-user-model',
     collection: 'research',
     title: 'Atomic User Model',
     subtitle: 'A structured representation for personality-aware LLM interaction',
@@ -84,7 +100,6 @@ const list: ProjectInput[] = [
     cover: '/images/aum-atom.png',
   },
   {
-    slug: 'aesthetic-fingerprint',
     collection: 'research',
     title: 'Aesthetic Fingerprint',
     subtitle: 'Immersive VR eye-tracking that reads taste from where the gaze lingers',
@@ -93,7 +108,6 @@ const list: ProjectInput[] = [
     cover: '/images/gaze-instrument.png',
   },
   {
-    slug: 'flavovr',
     collection: 'research',
     title: 'FLAVOVR',
     subtitle:
@@ -104,7 +118,6 @@ const list: ProjectInput[] = [
     coverClass: 'fit-contain',
   },
   {
-    slug: 'kaaya',
     collection: 'research',
     title: 'KAAYA',
     subtitle: 'Blind drawing through the body, interpreted by a machine',
@@ -113,7 +126,6 @@ const list: ProjectInput[] = [
     cover: '/images/kaaya-cover-placeholder.png',
   },
   {
-    slug: 'vapours',
     collection: 'research',
     title: 'VAPOURS',
     subtitle: 'Sculpting fog in VR to find the form before the form',
@@ -122,7 +134,6 @@ const list: ProjectInput[] = [
     cover: '/images/vapour-cover-placeholder.png',
   },
   {
-    slug: 'calculator-fallacy',
     collection: 'research',
     title: 'The Calculator Fallacy',
     subtitle: 'Learners blindly trust confident AI, even when it is wrong',
@@ -132,7 +143,6 @@ const list: ProjectInput[] = [
     coverClass: 'fit-contain fit-light',
   },
   {
-    slug: 'llm-conformity',
     collection: 'research',
     title: 'When the Majority Is Wrong',
     subtitle: 'Would AI still follow the crowd? Conformity in multi-agent LLMs',
@@ -141,7 +151,6 @@ const list: ProjectInput[] = [
     cover: '/images/llm-conformity-cover-placeholder.png',
   },
   {
-    slug: 'synthetic-consensus',
     collection: 'research',
     title: 'When a Hundred Machines Agree to Disagree',
     subtitle: 'Visualising synthetic consensus, conflict and compromise among agents in AI-assisted design ideation',
@@ -154,7 +163,7 @@ const list: ProjectInput[] = [
 const counters: Record<string, number> = {};
 export const projects: Project[] = list.map((p) => {
   counters[p.collection] = (counters[p.collection] ?? 0) + 1;
-  return { ...p, index: String(counters[p.collection]).padStart(2, '0') };
+  return { ...p, slug: slugify(p.title), index: String(counters[p.collection]).padStart(2, '0') };
 });
 
 /** Public URL path of a case study: Research lives under /research/, everything else under /projects/. */
@@ -162,10 +171,16 @@ export function projectHref(p: Pick<Project, 'collection' | 'slug'>): string {
   return `/${p.collection === 'research' ? 'research' : 'projects'}/${p.slug}`;
 }
 
-export function getProject(slug: string): Project {
-  const p = projects.find((x) => x.slug === slug);
-  if (!p) throw new Error(`Unknown project slug: ${slug}`);
-  return p;
+/**
+ * A slug is unique within its collection, not across both: a project and a research paper can share a title
+ * (KAAYA), and so the same slug. Pass the collection whenever the slug exists in both; this throws at build time
+ * if it is needed but missing.
+ */
+export function getProject(slug: string, collection?: Project['collection']): Project {
+  const matches = projects.filter((x) => x.slug === slug && (!collection || x.collection === collection));
+  if (matches.length === 0) throw new Error(`Unknown ${collection ?? 'project or research'} slug: ${slug}`);
+  if (matches.length > 1) throw new Error(`Slug "${slug}" exists in both collections; pass 'project' or 'research'.`);
+  return matches[0];
 }
 
 /**
@@ -173,8 +188,8 @@ export function getProject(slug: string): Project {
  * live yet are skipped so readers never land on a "coming soon" dead end; the
  * current slug is always kept so a not-yet-live page can still find its place.
  */
-export function getNeighbours(slug: string) {
-  const current = projects.find((p) => p.slug === slug);
+export function getNeighbours(slug: string, collection?: Project['collection']) {
+  const current = getProject(slug, collection);
   const navigable = projects.filter((p) => p.collection === current?.collection && (p.live || p.slug === slug));
   const idx = navigable.findIndex((p) => p.slug === slug);
   return {

@@ -3,7 +3,7 @@ import { Reveal, Stagger, StaggerItem } from '@/components/Motion';
 import ProjectNav from '@/components/ProjectNav';
 import { getProject } from '@/components/projects';
 
-const p = getProject('kaaya');
+const p = getProject('kaaya', 'research');
 
 export const metadata: Metadata = {
   title: 'KAAYA — The Body Draws What the Eye Never Sees | Deepthika S',
@@ -492,7 +492,7 @@ export default function KaayaPage() {
         </div>
       </section>
 
-      <ProjectNav slug="kaaya" />
+      <ProjectNav slug="kaaya" collection="research" />
     </article>
   );
 }
