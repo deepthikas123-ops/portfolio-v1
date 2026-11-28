@@ -2289,6 +2289,38 @@ a.pi-row .pi-s {
   color: var(--ink-soft);
 }
 
+/* table whose columns are text, not numbers (left-aligned) */
+.data-table.text-cols th,
+.data-table.text-cols td {
+  text-align: left;
+}
+
+/* five-stage sequence and two-column commitments (the cascade page) */
+.sequence.cols-5 {
+  --cols: 5;
+}
+@media (max-width: 1100px) and (min-width: 861px) {
+  .sequence.cols-5 {
+    --cols: 3;
+  }
+  .sequence.cols-5 > div:nth-child(n + 4) {
+    border-top: 1px solid var(--line);
+    margin-top: 24px;
+  }
+  .sequence.cols-5 > div:nth-child(4) {
+    border-left: 0;
+    padding-left: 0;
+  }
+}
+.commit-grid.two-up {
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (max-width: 820px) {
+  .commit-grid.two-up {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* sequence: connected stages that really are a sequence */
 .sequence {
   display: grid;

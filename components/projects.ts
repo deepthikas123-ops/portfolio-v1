@@ -155,7 +155,9 @@ const list: ProjectInput[] = [
     title: 'When a Hundred Machines Agree to Disagree',
     subtitle: 'Visualising synthetic consensus, conflict and compromise among agents in AI-assisted design ideation',
     discipline: 'Design Research · Information+ 2027',
-    live: false,
+    live: true,
+    cover: '/images/hundred-machines-meaning-space.png',
+    coverClass: 'fit-contain fit-light',
   },
 ];
 

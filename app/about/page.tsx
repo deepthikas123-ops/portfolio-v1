@@ -23,7 +23,7 @@ type Research = { slug?: string; t: string; v: string };
 const research: Research[] = [
   { slug: 'kaaya', t: 'KAAYA: The Body Draws What the Eye Never Sees', v: 'Accepted · NeurIPS 2026 · Creative AI Track (Agency), Sydney' },
   { slug: 'aesthetic-fingerprint', t: 'Where the Gaze Lingers: From Immersive Free-Viewing to a Stable Aesthetic Fingerprint', v: 'Accepted · VRST 2026 (Sendai, Japan) · Poster and Demo Track' },
-  { t: 'When a Hundred Machines Agree to Disagree: Visualising Synthetic Consensus, Conflict and Compromise among Agents in AI-Assisted Design Ideation', v: 'Submitted · Information+ 2027, Politecnico di Milano' },
+  { slug: 'when-a-hundred-machines-agree-to-disagree', t: 'When a Hundred Machines Agree to Disagree: Visualising Synthetic Consensus, Conflict and Compromise among Agents in AI-Assisted Design Ideation', v: 'Submitted · Information+ 2027, Politecnico di Milano' },
   { slug: 'flavovr', t: 'Neophilic and Neophobic Design Preferences Across Generational Cohorts', v: 'Submitted · International Journal of Human–Computer Interaction (Taylor & Francis)' },
   { slug: 'vapours', t: 'VAPOURS: Sculpting Fog to Find the Form Before the Form', v: 'NeurIPS 2026 · Creative AI Track' },
   { slug: 'the-calculator-fallacy', t: 'The Calculator Fallacy: Learners Blindly Trust AI, Even When It Is Wrong', v: 'Submitted · 16th International Conference of the European Academy of Design (TRUST–DISTRUST)' },
