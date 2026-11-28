@@ -4,7 +4,7 @@ import ProjectNav from '@/components/ProjectNav';
 import { getProject } from '@/components/projects';
 import './morse.css';
 
-const p = getProject('morse-code-vault');
+const p = getProject('morse-code-logic-game');
 
 export const metadata: Metadata = {
   title: 'Morse Code Logic Game — A Game of Signals, Switches and Logic | Deepthika S',
@@ -498,7 +498,7 @@ export default function MorseCodeLogicGamePage() {
         </div>
       </section>
 
-      <ProjectNav slug="morse-code-vault" />
+      <ProjectNav slug="morse-code-logic-game" />
     </article>
   );
 }

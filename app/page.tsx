@@ -3,13 +3,13 @@ import { Reveal, Stagger, StaggerItem } from '@/components/Motion';
 import BadgeHero from '@/components/BadgeHero';
 import Corkboard from '@/components/Corkboard';
 import MissingPiece from '@/components/MissingPiece';
-import { projects } from '@/components/projects';
+import { projects, projectHref } from '@/components/projects';
 
 function Cards({ items }: { items: typeof projects }) {
   return <Stagger as="ul" className="index-card-grid">{items.map((p) => (
     <StaggerItem as="li" key={p.slug}>
       {p.live ? (
-        <Link href={`/projects/${p.slug}`} className="index-card">
+        <Link href={projectHref(p)} className="index-card">
           <div className={`index-card-image ${p.coverClass ?? ''}`}>
             {p.cover ? <img src={p.cover} alt="" loading="lazy" /> : <span aria-hidden="true">{p.title}</span>}
             <span className="index-card-number">EXHIBIT {p.index}</span>

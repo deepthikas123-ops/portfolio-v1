@@ -425,7 +425,7 @@ export default function Page() {
             <p>
               <strong>Paper #99, KAAYA: The Body Draws What the Eye Never Sees</strong> — Selected for presentation
               under Creative AI Track at NeurIPS 2026, Sydney.{' '}
-              <Link href="/projects/kaaya">Read the research write-up →</Link>
+              <Link href="/research/kaaya">Read the research write-up →</Link>
             </p>
           </Reveal>
         </div>

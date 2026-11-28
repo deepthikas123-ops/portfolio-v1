@@ -2,7 +2,7 @@
  * Single source of truth for every project in the portfolio.
  *
  * When a new case-study page is ready:
- *  1. Build the page under app/projects/<slug>/page.tsx
+ *  1. Build the page under app/projects/<slug>/page.tsx (or app/research/<slug>/page.tsx for Research)
  *  2. Add / flip the entry here (`live: true` plus a `cover` image)
  * The header dropdown, mobile menu, home grid, project index and prev/next
  * navigation all update automatically. Exhibit numbers are derived from the
@@ -47,7 +47,7 @@ const list: ProjectInput[] = [
     cover: '/images/covers/setu.jpg',
   },
   {
-    slug: 'morse-code-vault',
+    slug: 'morse-code-logic-game',
     collection: 'project',
     title: 'Morse Code Logic Game',
     subtitle: 'A game of signals, switches and logic',
@@ -156,6 +156,11 @@ export const projects: Project[] = list.map((p) => {
   counters[p.collection] = (counters[p.collection] ?? 0) + 1;
   return { ...p, index: String(counters[p.collection]).padStart(2, '0') };
 });
+
+/** Public URL path of a case study: Research lives under /research/, everything else under /projects/. */
+export function projectHref(p: Pick<Project, 'collection' | 'slug'>): string {
+  return `/${p.collection === 'research' ? 'research' : 'projects'}/${p.slug}`;
+}
 
 export function getProject(slug: string): Project {
   const p = projects.find((x) => x.slug === slug);

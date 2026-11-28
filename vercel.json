@@ -1,0 +1,84 @@
+{
+  "redirects": [
+    {
+      "source": "/projects/atomic-user-model",
+      "destination": "/research/atomic-user-model/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/atomic-user-model/",
+      "destination": "/research/atomic-user-model/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/aesthetic-fingerprint",
+      "destination": "/research/aesthetic-fingerprint/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/aesthetic-fingerprint/",
+      "destination": "/research/aesthetic-fingerprint/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/flavovr",
+      "destination": "/research/flavovr/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/flavovr/",
+      "destination": "/research/flavovr/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/kaaya",
+      "destination": "/research/kaaya/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/kaaya/",
+      "destination": "/research/kaaya/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/vapours",
+      "destination": "/research/vapours/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/vapours/",
+      "destination": "/research/vapours/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/calculator-fallacy",
+      "destination": "/research/calculator-fallacy/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/calculator-fallacy/",
+      "destination": "/research/calculator-fallacy/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/llm-conformity",
+      "destination": "/research/llm-conformity/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/llm-conformity/",
+      "destination": "/research/llm-conformity/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/morse-code-vault",
+      "destination": "/projects/morse-code-logic-game/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/morse-code-vault/",
+      "destination": "/projects/morse-code-logic-game/",
+      "permanent": true
+    }
+  ]
+}

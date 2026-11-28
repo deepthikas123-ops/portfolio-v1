@@ -11,7 +11,7 @@ import { usePathname } from 'next/navigation';
 export default function Interactions() {
   const pathname = usePathname();
   const [zoom, setZoom] = useState<{ src: string; alt: string } | null>(null);
-  const isCase = pathname?.startsWith('/projects/') ?? false;
+  const isCase = /^\/(projects|research)\//.test(pathname ?? '');
 
   // soft fade-in of the page on every route change (opacity only, no layout effect)
   useEffect(() => {

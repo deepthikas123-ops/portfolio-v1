@@ -1,12 +1,12 @@
 import Link from 'next/link';
-import { getNeighbours, type Project } from '@/components/projects';
+import { getNeighbours, projectHref, type Project } from '@/components/projects';
 
 function Side({ label, p, align }: { label: string; p: Project; align: 'left' | 'right' }) {
   return (
     <div style={{ textAlign: align }}>
       <p className="hint">{label}</p>
       {p.live ? (
-        <Link href={`/projects/${p.slug}`} className="name">
+        <Link href={projectHref(p)} className="name">
           <span className="nav-idx">{p.index}</span>
           {p.title}
         </Link>

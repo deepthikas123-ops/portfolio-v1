@@ -99,7 +99,7 @@ export default function About() {
       <div className="wrap">
         <Head num="03 / RESEARCH" title="Questions I keep following." sub="Research projects exploring perception, interaction, creativity and human–AI relationships." />
         <div className="curator-list">{research.map((r, i) => r.slug
-          ? <Link href={`/projects/${r.slug}`} className="curator-list-item" key={r.t}><span className="n">{pad(i)}</span><div><h3>{r.t}</h3><p>{r.v}</p></div><span className="meta">OPEN CASE STUDY ↗</span></Link>
+          ? <Link href={`/research/${r.slug}`} className="curator-list-item" key={r.t}><span className="n">{pad(i)}</span><div><h3>{r.t}</h3><p>{r.v}</p></div><span className="meta">OPEN CASE STUDY ↗</span></Link>
           : <div className="curator-list-item is-soon" key={r.t}><span className="n">{pad(i)}</span><div><h3>{r.t}</h3><p>{r.v}</p></div><span className="meta">CASE STUDY SOON</span></div>)}</div>
       </div>
     </section>

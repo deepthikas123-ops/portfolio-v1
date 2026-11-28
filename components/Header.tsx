@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { projects } from './projects';
+import { projects, projectHref } from './projects';
 
 type NavItem = { label: string; href: string; section?: string; collection?: 'project' | 'research' };
 
@@ -32,7 +32,7 @@ export default function Header() {
   const dialog = useRef<HTMLDivElement>(null);
 
   // the case study being read decides which top-level item is highlighted
-  const slug = pathname?.match(/^\/projects\/([^/]+)/)?.[1];
+  const slug = pathname?.match(/^\/(?:projects|research)\/([^/]+)/)?.[1];
   const current = slug ? projects.find((p) => p.slug === slug) : undefined;
 
   useEffect(() => {
@@ -133,7 +133,7 @@ export default function Header() {
                   {link}
                   <div className="nav-dd-menu">
                     {items.map((p) => (
-                      <Link key={p.slug} href={`/projects/${p.slug}`}>
+                      <Link key={p.slug} href={projectHref(p)}>
                         <span className="nav-idx">{p.index}</span>
                         {p.title}
                       </Link>
@@ -178,7 +178,7 @@ export default function Header() {
                 {items.length > 0 && (
                   <div className="mobile-sub">
                     {items.map((p) => (
-                      <Link key={p.slug} href={`/projects/${p.slug}`} onClick={() => setMobile(false)}>
+                      <Link key={p.slug} href={projectHref(p)} onClick={() => setMobile(false)}>
                         {p.index} · {p.title}
                       </Link>
                     ))}

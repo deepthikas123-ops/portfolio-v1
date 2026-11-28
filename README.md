@@ -138,19 +138,19 @@ public/images/                     All images, including figures extracted from 
 | 01 | Tactile Trails              | `/projects/tactile-trails`     |
 | 02 | SETU                        | `/projects/setu`               |
 | 03 | ECO-SHIELD                  | `/projects/eco-shield`         |
-| 04 | Morse Code Logic Vault      | `/projects/morse-code-vault`   |
+| 04 | Morse Code Logic Game       | `/projects/morse-code-logic-game` |
 | 05 | Chain-Snatch Alert          | `/projects/chain-snatch-alert` |
-| 06 | Atomic User Model           | `/projects/atomic-user-model`  |
-| 07 | Aesthetic Fingerprint       | `/projects/aesthetic-fingerprint` |
-| 08 | FLAVOVR                     | `/projects/flavovr`            |
-| 09 | KAAYA                       | `/projects/kaaya`              |
-| 10 | VAPOURS                     | `/projects/vapours`            |
-| 11 | The Calculator Fallacy      | `/projects/calculator-fallacy` |
-| 12 | When the Majority Is Wrong  | `/projects/llm-conformity`     |
+| 06 | Atomic User Model           | `/research/atomic-user-model`  |
+| 07 | Aesthetic Fingerprint       | `/research/aesthetic-fingerprint` |
+| 08 | FLAVOVR                     | `/research/flavovr`            |
+| 09 | KAAYA                       | `/research/kaaya`              |
+| 10 | VAPOURS                     | `/research/vapours`            |
+| 11 | The Calculator Fallacy      | `/research/calculator-fallacy` |
+| 12 | When the Majority Is Wrong  | `/research/llm-conformity`     |
 
 ## Adding or publishing a project
 
-1. Build the page at `app/projects/<slug>/page.tsx` (any recent case study is a good reference;
+1. Build the page at `app/projects/<slug>/page.tsx` (`app/research/<slug>/page.tsx` for Research; any recent case study is a good reference;
    end it with `<ProjectNav slug="<slug>" />`).
 2. In `components/projects.ts`, add the entry (or set `live: true`) with a `cover` image.
    Use `coverClass: 'fit-contain'` for charts and diagrams so they are not cropped.
