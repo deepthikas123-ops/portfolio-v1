@@ -8,7 +8,7 @@ const p = getProject('vapours');
 export const metadata: Metadata = {
   title: 'VAPOURS — Sculpting Fog to Find the Form Before the Form | Deepthika S',
   description:
-    'VAPOURS is a fully specified VR system in which a designer shapes continuously dissipating volumetric fog with bare hands to find a product’s preform. In a medium that forgets, persistence becomes evidence of care. NeurIPS 2026 Creative AI Track.',
+    'VAPOURS is a fully specified VR system in which a designer shapes continuously dissipating volumetric fog with bare hands to find a product’s preform. In a medium that forgets, persistence becomes evidence of care.',
   openGraph: {
     title: 'VAPOURS — Sculpting Fog to Find the Form Before the Form',
     description:
@@ -110,7 +110,7 @@ export default function VapoursPage() {
         </span>
         <div className="inner">
           <Reveal delay={0.2}>
-            <p className="kicker">Creative AI · NeurIPS 2026 Creative AI Track</p>
+            <p className="kicker">Research · Creative AI · Immersive</p>
             <h1>
               VAPOURS.
               <span className="small">Sculpting fog to find the form before the form</span>

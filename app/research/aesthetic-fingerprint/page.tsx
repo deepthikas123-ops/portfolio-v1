@@ -66,7 +66,7 @@ export default function AestheticFingerprintPage() {
           </Reveal>
           <div className="copy">
             <Reveal delay={0.3}>
-              <p className="kicker">Research · VRST 2026</p>
+              <p className="kicker">Research · Accepted · IEEE AIxVR 2027, Canada</p>
               <h1>
                 Aesthetic Fingerprint.
                 <span className="small">Where the gaze lingers</span>

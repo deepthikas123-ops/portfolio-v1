@@ -8,7 +8,7 @@ const p = getProject('kaaya', 'research');
 export const metadata: Metadata = {
   title: 'KAAYA — The Body Draws What the Eye Never Sees | Deepthika S',
   description:
-    'KAAYA cuts the sensorimotor loop of drawing in two: a blindfolded artist draws by proprioception through an IMU on the back of the hand, and a generative image model interprets the trace they never see. NeurIPS 2026 Creative AI Track.',
+    'KAAYA cuts the sensorimotor loop of drawing in two: a blindfolded artist draws by proprioception through an IMU on the back of the hand, and a generative image model interprets the trace they never see. Accepted at NeurIPS 2026, Creative AI Track (Agency), Sydney.',
   openGraph: {
     title: 'KAAYA — The Body Draws What the Eye Never Sees',
     description:
@@ -60,7 +60,7 @@ export default function KaayaPage() {
           </Reveal>
           <div className="copy">
             <Reveal delay={0.3}>
-              <p className="kicker">Creative AI · NeurIPS 2026 Creative AI Track</p>
+              <p className="kicker">Creative AI · Accepted · NeurIPS 2026, Creative AI Track (Agency), Sydney</p>
               <h1>
                 KAAYA.
                 <span className="small">The body draws what the eye never sees</span>

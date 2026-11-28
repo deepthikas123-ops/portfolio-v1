@@ -19,13 +19,13 @@ const SCHOLAR = 'https://scholar.google.com/citations?user=susKJWYAAAAJ&hl=en';
 const HERO_ROLE = ['PRODUCT DESIGN', 'RESEARCH', 'ENGINEERING', 'ART', 'EVERYTHING IN BETWEEN'];
 const GITHUB = 'https://github.com/deepthikas123-ops';
 
-type Research = { slug?: string; t: string; v: string };
+type Research = { slug?: string; t: string; v?: string };
 const research: Research[] = [
   { slug: 'kaaya', t: 'KAAYA: The Body Draws What the Eye Never Sees', v: 'Accepted · NeurIPS 2026 · Creative AI Track (Agency), Sydney' },
-  { slug: 'aesthetic-fingerprint', t: 'Where the Gaze Lingers: From Immersive Free-Viewing to a Stable Aesthetic Fingerprint', v: 'Accepted · VRST 2026 (Sendai, Japan) · Poster and Demo Track' },
+  { slug: 'aesthetic-fingerprint', t: 'Beyond the Salient: Individual Gaze Fingerprints in Immersive Free Viewing using Deep Saliency and Vision Language Models', v: 'Accepted · IEEE AIxVR 2027, Canada' },
   { slug: 'when-a-hundred-machines-agree-to-disagree', t: 'When a Hundred Machines Agree to Disagree: Visualising Synthetic Consensus, Conflict and Compromise among Agents in AI-Assisted Design Ideation', v: 'Submitted · Information+ 2027, Politecnico di Milano' },
-  { slug: 'flavovr', t: 'Neophilic and Neophobic Design Preferences Across Generational Cohorts', v: 'Submitted · International Journal of Human–Computer Interaction (Taylor & Francis)' },
-  { slug: 'vapours', t: 'VAPOURS: Sculpting Fog to Find the Form Before the Form', v: 'NeurIPS 2026 · Creative AI Track' },
+  { slug: 'flavovr', t: 'Neophilic and Neophobic Design Preferences Across Generational Cohorts: Consumer Attraction to Conventional and Unconventional Product Aesthetics', v: 'Submitted · International Journal of Human–Computer Interaction (Taylor & Francis)' },
+  { slug: 'vapours', t: 'VAPOURS: Sculpting Fog to Find the Form Before the Form' },
   { slug: 'the-calculator-fallacy', t: 'The Calculator Fallacy: Learners Blindly Trust AI, Even When It Is Wrong', v: 'Submitted · 16th International Conference of the European Academy of Design (TRUST–DISTRUST)' },
   { slug: 'when-the-majority-is-wrong', t: 'When the Majority Is Wrong: Would AI Still Follow the Crowd?', v: '13th IEEE UPCON 2026' },
   { slug: 'atomic-user-model', t: 'Creating an Atomic User Model for Personality-Aware LLM Interaction', v: 'Position paper · EMNLP 2026' },
@@ -100,8 +100,8 @@ export default function About() {
       <div className="wrap">
         <Head num="03 / RESEARCH" title="Questions I keep following." sub="Research projects exploring perception, interaction, creativity and human–AI relationships." />
         <div className="curator-list">{research.map((r, i) => r.slug
-          ? <Link href={projectHref(getProject(r.slug, 'research'))} className="curator-list-item" key={r.t}><span className="n">{pad(i)}</span><div><h3>{r.t}</h3><p>{r.v}</p></div><span className="meta">OPEN CASE STUDY ↗</span></Link>
-          : <div className="curator-list-item is-soon" key={r.t}><span className="n">{pad(i)}</span><div><h3>{r.t}</h3><p>{r.v}</p></div><span className="meta">CASE STUDY SOON</span></div>)}</div>
+          ? <Link href={projectHref(getProject(r.slug, 'research'))} className="curator-list-item" key={r.t}><span className="n">{pad(i)}</span><div><h3>{r.t}</h3>{r.v && <p>{r.v}</p>}</div><span className="meta">OPEN CASE STUDY ↗</span></Link>
+          : <div className="curator-list-item is-soon" key={r.t}><span className="n">{pad(i)}</span><div><h3>{r.t}</h3>{r.v && <p>{r.v}</p>}</div><span className="meta">CASE STUDY SOON</span></div>)}</div>
       </div>
     </section>
 

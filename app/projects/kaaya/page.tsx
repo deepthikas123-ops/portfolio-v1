@@ -11,7 +11,7 @@ const img = (f: string) => `/images/kaaya-wearable/${f}`;
 export const metadata: Metadata = {
   title: 'KAAYA — Kinaesthetic Abstract Art using Yaw and Attitude | Deepthika S',
   description:
-    'A wearable IMU-to-generative-art system that splits drawing’s sensorimotor loop between a blindfolded artist and a machine. Shortlisted for presentation at NeurIPS 2026, Sydney.',
+    'A wearable IMU-to-generative-art system that splits drawing’s sensorimotor loop between a blindfolded artist and a machine. Accepted at NeurIPS 2026, Creative AI Track (Agency), Sydney.',
   openGraph: {
     title: 'KAAYA — Kinaesthetic Abstract Art using Yaw and Attitude',
     description: 'When humans create and machines interpret, who is really making the art?',
@@ -155,7 +155,7 @@ export default function Page() {
               alt="A black glove with a small circuit board strapped to the back of the hand and copper tape on the index finger, against a fluted glass backdrop"
             />
             <figcaption>
-              Research Project (Shortlisted for Presentation @NeurIPS 2026, Sydney)
+              Research Project (Accepted · NeurIPS 2026, Creative AI Track (Agency), Sydney)
               <br />
               2026 | 2 months | group project (2 members)
             </figcaption>
@@ -423,8 +423,8 @@ export default function Page() {
           <Reveal className="kw-paper">
             <img src={img('neurips.png')} alt="Neural Information Processing Systems (NeurIPS)" />
             <p>
-              <strong>Paper #99, KAAYA: The Body Draws What the Eye Never Sees</strong> — Selected for presentation
-              under Creative AI Track at NeurIPS 2026, Sydney.{' '}
+              <strong>Paper #99, KAAYA: The Body Draws What the Eye Never Sees</strong> — Accepted at NeurIPS 2026,
+              Creative AI Track (Agency), Sydney.{' '}
               <Link href="/research/kaaya">Read the research write-up →</Link>
             </p>
           </Reveal>
