@@ -28,7 +28,7 @@ const research: Research[] = [
   { slug: 'vapours', t: 'VAPOURS: Sculpting Fog to Find the Form Before the Form' },
   { slug: 'the-calculator-fallacy', t: 'The Calculator Fallacy: Learners Blindly Trust AI, Even When It Is Wrong', v: 'Submitted · 16th International Conference of the European Academy of Design (TRUST–DISTRUST)' },
   { slug: 'when-the-majority-is-wrong', t: 'When the Majority Is Wrong: Would AI Still Follow the Crowd?', v: '13th IEEE UPCON 2026' },
-  { slug: 'atomic-user-model', t: 'Creating an Atomic User Model for Personality-Aware LLM Interaction', v: 'Position paper · EMNLP 2026' },
+  { slug: 'atomic-user-model', t: 'Creating an Atomic User Model for Personality-Aware LLM Interaction' },
 ];
 
 const honors = [

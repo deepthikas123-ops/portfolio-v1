@@ -163,7 +163,7 @@ export default function AtomicUserModelPage() {
           </Reveal>
           <div className="copy">
             <Reveal delay={0.3}>
-              <p className="kicker">Position Paper · EMNLP 2026</p>
+              <p className="kicker">Research · AI Research</p>
               <h1>
                 AUM.
                 <span className="small">Atomic User Model</span>
@@ -183,7 +183,6 @@ export default function AtomicUserModelPage() {
             </Reveal>
             <Reveal delay={0.6}>
               <div className="tags">
-                <span>Position Paper</span>
                 <span>Human–AI Interaction</span>
                 <span>LLM Personalisation</span>
                 <span>User Modelling</span>
